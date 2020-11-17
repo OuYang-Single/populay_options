@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:orientation="vertical"
+             android:background="@color/white"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:src="@mipmap/log_bg_top"
+                style="@style/style_bg_top_image"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:id="@+id/icon_image"
+                android:src="@mipmap/log_icon"
+                style="@style/style_icon_image"/>
+        <LinearLayout style="@style/style_log_input_llayout">
+            <EditText
+                    android:id="@+id/log_edit_phone"
+                    android:hint="@string/username"
+                    style="@style/style_log_edit"/>
+            <TextView
+                    style="@style/style_log_line_txt"/>
+            <LinearLayout android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+                <!--2acaff-->
+                <EditText
+                        android:id="@+id/log_edit_password"
+                        android:hint="@string/code"
+                        style="@style/style_log_cole_edit"/>
+                <TextView
+                        android:visibility="gone"
+                        android:id="@+id/log_txt_highlight"
+                        android:text="@string/get_cold"
+                        style="@style/style_log_highlight_txt"/>
+            </LinearLayout>
+
+            <TextView style="@style/style_log_line_txt"/>
+
+            <Button
+                    android:layout_marginTop="@dimen/log_bt_log_in_margin_top"
+                    android:layout_marginLeft="@dimen/log_bt_log_in_margin_left_right"
+                    android:layout_marginRight="@dimen/log_bt_log_in_margin_left_right"
+                    android:background="@drawable/log_bt_log_in_bg"
+                    android:id="@+id/log_bt_log_in"
+                    android:text="@string/log_bt_log_in"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            />
+
+            <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:id="@+id/log_linearl_other"
+                    android:layout_marginTop="@dimen/log_linearl_other_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_marginRight="@dimen/log_forget_password_margin_left"
+                        android:id="@+id/log_linearl_other_forget_password_txt"
+                        android:text="@string/log_linearl_other_forget_password_txt"
+                        style="@style/style_other_txt"/>
+                <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        style="@style/style_log_line_txt"
+                        android:background="@color/prompt_other_line_color"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                <TextView
+
+                        android:layout_marginLeft="@dimen/log_forget_password_margin_left"
+                        android:id="@+id/log_linearl_other_registered_txt"
+                        android:text="@string/log_linearl_other_registered_txt"
+                        style="@style/style_other_txt"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:gravity="center"
+              android:layout_height="match_parent">
+    <ImageView
+            android:id="@+id/option_icon_image"
+            android:src="@mipmap/ic_star_anchor"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+    <TextView
+            android:id="@+id/option_name_txt"
+            android:textColor="@color/txt_color"
+            android:text="明星主播"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/toolbar_bg"
+        android:minHeight="?android:attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+    <ImageView
+            android:visibility="gone"
+            android:id="@+id/img_left_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:src="@mipmap/back1"/>
+
+    <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/toolbar_title_color"
+                android:textSize="17sp"
+                tools:text="title"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_marginTop="@dimen/toolbar_layout_edit_top"
+            android:id="@+id/toolbar_edit"
+            android:layout_marginLeft="@dimen/toolbar_layout_edit_left"
+            android:layout_marginRight="@dimen/toolbar_layout_edit_right"
+            android:background="@drawable/toolbar_layout_edit_bg"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:padding="2dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="@dimen/toolbar_layout_edit_imge_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_toolbar_layout_left_img_magnifier"/>
+        <EditText
+
+                android:editable="false"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:hint="美女主播"
+                android:textSize="@dimen/toolbar_layout_edit_size"
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/toolbar_layout_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:background="@null"
+                android:id="@+id/img_right_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:visibility="gone"/>
+
+        <TextView
+                android:id="@+id/tv_right_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="right"
+                android:textColor="@color/toolbar_right_color"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+    </LinearLayout>
+
+</android.widget.Toolbar >
