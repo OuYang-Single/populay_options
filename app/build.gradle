@@ -75,6 +75,7 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
+    implementation project(':MPChartLib')
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     //注意 Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
@@ -88,6 +89,7 @@ dependencies {
     implementation "com.android.support:multidex:1.0.3"
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
+    debugImplementation rootProject.ext.dependencies["retrofit-converter-gson"]
     testImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["junit"]
     testImplementation rootProject.ext.dependencies["fastjson"]
@@ -97,5 +99,5 @@ dependencies {
     // From 1.0.0-b3, library is compiled with data binding v2
     implementation 'eu.davidea:flexible-adapter-databinding:1.0.0'
     implementation 'com.github.wbaizx:VideoLive:3.1.1'
-    implementation 'com.github.LambdaXiao:StockChart-MPAndroidChart:1.1'
+
 }

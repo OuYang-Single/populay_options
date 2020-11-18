@@ -42,5 +42,7 @@ public interface CommonCache {
     Observable<Reply<Request<User>>> getLogin(Observable<Request<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
   @LifeCache(duration = 3, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<ResponseBody>> getdownload(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    @LifeCache(duration = 4, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<ResponseBody>> chart(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 
 }
