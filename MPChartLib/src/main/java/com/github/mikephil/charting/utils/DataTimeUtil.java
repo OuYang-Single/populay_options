@@ -106,21 +106,25 @@ public class DataTimeUtil {
     }
 
     // a integer to xxxxxx
-    public static String secToDate(long time,int i) {
-        //数据类型 1 分时图 ；2 5分时K；3 15分时K；4 30分时K；5 60分时K； 6 日K线图
+    public static String secToDate(long time,String i) {
+        //数据类型 1M,5M,10M,15M,30M,1H,2H,4H,D
         String timeStr = null;
         switch (i){
-            case 1:
+            case "1M":
                 break;
-            case 2:
+            case "5M":
                 break;
-            case 3:
+            case "10M":
                 break;
-            case 4:
+            case "30M":
                 break;
-            case 5:
+            case "1H":
                 break;
-            case 6:
+            case "2H":
+                break;
+            case "4H":
+                break;
+            case "D":
                 break;
             default:
                 break;

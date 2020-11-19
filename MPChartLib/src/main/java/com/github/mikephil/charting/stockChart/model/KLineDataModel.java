@@ -10,19 +10,30 @@ import java.io.Serializable;
 public class KLineDataModel implements Serializable {
     public String m_szInstrumentID;// 合约ID
 
-    //时间戳
+    //时间戳 "C": 16.47, 		--收盘价
+    //      "Tick": 1529856000,	--标准时间戳
+    //      "O": 16.59,		--开盘价
+    //      "H": 16.62,		--最高
+    //      "L": 16.4,		--最低
+    //      "A": 352461552,		--交易额
+    //      "V": 21345191,		--交易量
+    //      "D":"2018-01-01"          --日期
 
-    @SerializedName("d")
+    @SerializedName("D")
     private String dateMills ;
-    @SerializedName("h")
+    private Long Tick ;
+    @SerializedName("H")
     private double high;// 最高价
-    @SerializedName("l")
+    @SerializedName("L")
     private double low;// 最低价
-    @SerializedName("o")
+    @SerializedName("O")
     private double open;// 开盘价
-    @SerializedName("c")
+    @SerializedName("C")
     private double close;// 收盘价
+    @SerializedName("V")
     private double volume;// 成交量
+
+    @SerializedName("A")
     private double total;// 成交额
 
     private double preClose;// 昨收价
@@ -134,5 +145,13 @@ public class KLineDataModel implements Serializable {
 
     public void setMa60(double ma60) {
         this.ma60 = ma60;
+    }
+
+    public Long getTick() {
+        return Tick;
+    }
+
+    public void setTick(Long tick) {
+        Tick = tick;
     }
 }

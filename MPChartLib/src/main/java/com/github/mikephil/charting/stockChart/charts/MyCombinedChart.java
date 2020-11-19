@@ -87,7 +87,7 @@ public class MyCombinedChart extends CombinedChart {
             if (this.timeType == TimeType.TIME_HOUR) {
                 date = DataTimeUtil.secToTime(getDate(kLineData.getKLineDatas().get((int) e.getX()).getDateMills()));
             } else {
-                date = DataTimeUtil.secToDate(getDate(kLineData.getKLineDatas().get((int) e.getX()).getDateMills()),0);
+                date = DataTimeUtil.secToDate(getDate(kLineData.getKLineDatas().get((int) e.getX()).getDateMills()),"1M");
             }
 
             markerBottom.setData(date);

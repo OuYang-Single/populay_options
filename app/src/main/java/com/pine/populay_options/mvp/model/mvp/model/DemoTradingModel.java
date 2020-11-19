@@ -8,7 +8,9 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.pine.populay_options.mvp.model.api.AliyunExchangeApi;
-import com.pine.populay_options.mvp.model.entity.ExchangeChart;
+import com.pine.populay_options.mvp.model.entity.AliyunRequest;
+
+import com.pine.populay_options.mvp.model.entity.ExchangEreal;
 import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingContract;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Query;
 
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.APP_DOMAIN;
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.appcode;
@@ -46,12 +49,18 @@ public class DemoTradingModel extends BaseModel implements DemoTradingContract.M
         this.mGson = null;
         this.mApplication = null;
     }
+//period	STRING	必选	取 1M,5M,10M,15M,30M,1H,2H,4H,D
+//pidx	INT	必选	页码,排序是从当前往历史方向排,第一页是当前处。接口输出的日周期数据只有最近2年，分钟周期数据只有最近5天(更多历史数据可申请打包下载)。
+//psize	INT	可选	每页最多500个数据
+//symbol	STRING	必选	代码,参考列表
+//withlast	INT	可选	是否包含最新的一个动态k线数据，第一页有效
+
 
     @Override
-    public Observable<List<KLineDataModel>> onChartData(String count, String pairs, String urlName) {
+    public Observable<AliyunRequest<List<KLineDataModel>>> onChartData( String period,String pidx, String psize,String symbol, String withlast) {
 
        return   mRetrofit.create(AliyunExchangeApi.class)
-                .chart(count,pairs,urlName, "APPCODE " + appcode)
+                .chart(period,pidx,psize,symbol,withlast, "APPCODE " + appcode)
                 ;
     }
 
@@ -77,9 +86,9 @@ public class DemoTradingModel extends BaseModel implements DemoTradingContract.M
     }
 
     @Override
-    public Observable<List<ExchangEreal>>  getOffer(String pairs) {
+    public Observable<AliyunRequest<ExchangEreal>>  getOffer(String pairs, String withks, String withticks) {
         return   mRetrofit.create(AliyunExchangeApi.class)
-                .real(pairs, "APPCODE " + appcode)
+                .real(pairs, withks,withticks,"APPCODE " + appcode)
                 ;
     }
 }

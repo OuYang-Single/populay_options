@@ -40,7 +40,7 @@ public class KLineDataManage {
     private float offSet = 0f;//K线图最右边偏移量
     private String assetId;//股票代号
     private boolean landscape = false;//横屏还是竖屏
-    private int  type;
+    private String  type;
     //MA参数
     public int N1 = 5;
     public int N2 = 10;
@@ -110,7 +110,7 @@ public class KLineDataManage {
     public void parseKlineData(List<KLineDataModel> mKLineDataModelLsit, String assetId,boolean landscape,String type) {
         this.assetId = assetId;
         this.landscape = landscape;
-        this.type = Integer.parseInt(type);
+        this.type =type;
         if (mKLineDataModelLsit != null) {
             kDatas.clear();
             lineDataMA.clear();
@@ -175,12 +175,12 @@ public class KLineDataManage {
         }
     }
 
-
+    public  MACDEntity macdEntity;
     /**
      * 初始化自己计算MACD
      */
     public void initMACD() {
-        MACDEntity macdEntity = new MACDEntity(getKLineDatas(), SHORT, LONG, M);
+         macdEntity = new MACDEntity(getKLineDatas(), SHORT, LONG, M);
 
         macdData = new ArrayList<>();
         deaData = new ArrayList<>();
@@ -503,7 +503,7 @@ public class KLineDataManage {
     public String getAssetId() {
         return assetId;
     }
-    public int getType() {
+    public String getType() {
         return type;
     }
     public double getPreClosePrice() {

@@ -1,7 +1,6 @@
 package com.pine.populay_options.mvp.model.mvp.presenter;
 
 import android.app.Application;
-import android.content.Intent;
 import android.util.Log;
 
 import com.github.mikephil.charting.stockChart.model.KLineDataModel;
@@ -10,36 +9,24 @@ import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
-import com.pine.populay_options.mvp.model.entity.ExchangeChart;
-import com.pine.populay_options.mvp.model.entity.Request;
+import com.pine.populay_options.mvp.model.entity.AliyunRequest;
+import com.pine.populay_options.mvp.model.entity.ExchangEreal;
 import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingContract;
-import com.pine.populay_options.mvp.model.mvp.contract.MainContract;
-import com.pine.populay_options.mvp.model.mvp.model.ExchangEreal;
 
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import dagger.Provides;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.util.EmptyComponent;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.APP_DOMAIN;
+import timber.log.Timber;
 
 @ActivityScope
 public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Model, DemoTradingContract.View> {
@@ -55,6 +42,8 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
     private static final int PERIOD =  1000;
     private static final int DELAY = 100;
     private Disposable mDisposable;
+    public int  pidx=1;
+    public int psize=500;
     @Inject
     public DemoTradingPresenter(DemoTradingContract.Model model, DemoTradingContract.View rootView) {
         super(model, rootView);
@@ -74,18 +63,13 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong ->{
-                            getOffer(pairs);
-                               anInt++;
-                            if (anInt==60){
-                                onChartData("1",pairs,"3",1);
-                            }
-
+                            getOffer(pairs,"1","1");
                         });
        //getUnreadCount()执行的任务
     }
 
-    public void getOffer(String pairs){
-                 mModel.getOffer(pairs).subscribeOn(Schedulers.io())
+    public void getOffer(String pairs,String withks, String withticks){
+                 mModel.getOffer(pairs,withks,withticks).subscribeOn(Schedulers.io())
                          .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                          .subscribeOn(AndroidSchedulers.mainThread())
                          .doOnSubscribe(disposable -> {
@@ -96,13 +80,11 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
                              mRootView.hideLoading();//隐藏下拉刷新的进度条
                          })
                          .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                         .subscribe(new ErrorHandleSubscriber<List<ExchangEreal>>(mErrorHandler) {
+                         .subscribe(new ErrorHandleSubscriber<AliyunRequest<ExchangEreal>>(mErrorHandler) {
                              @Override
-                             public void onNext(List<ExchangEreal> mExchangeChart) {
-                                 Log.wtf("ExchangeChart","ExchangeChart");
-                                 if (mExchangeChart.size()>0){
-                                     mRootView.getOffer(mExchangeChart.get(0) );
-                                 }
+                             public void onNext(AliyunRequest<ExchangEreal> mExchangeChart) {
+                                 Timber.w(mExchangeChart.getObj().toString());
+                                 mRootView.getOffer(mExchangeChart.getObj());
 
                                  // mRootView.showMessage("Name" +users.getUser().getUsername());
                              }
@@ -125,9 +107,9 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
         if (mDisposable != null) mDisposable.dispose();
     }
 
-    public void onChartData(String count ,String pairs,  String urlNam,int type) {
+    public void onChartData(String period,String symbol, String withlast) {
 
-        mModel.onChartData(count,pairs,urlNam).subscribeOn(Schedulers.io())
+        mModel.onChartData(period,pidx+"",psize+"",symbol,withlast).subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -138,11 +120,12 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
                     mRootView.hideLoading();//隐藏下拉刷新的进度条
                 })
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                .subscribe(new ErrorHandleSubscriber<List<KLineDataModel>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<AliyunRequest<List<KLineDataModel>>>(mErrorHandler) {
                     @Override
-                    public void onNext(List<KLineDataModel> mExchangeChart) {
-                      Log.wtf("ExchangeChart","ExchangeChart");
-                      mRootView.onCharData(mExchangeChart,pairs ,  urlNam,type);
+                    public void onNext(AliyunRequest<List<KLineDataModel>> mExchangeChart) {
+                        Collections.reverse(mExchangeChart.getObj());
+                        mRootView.onCharData( mExchangeChart.getObj(),symbol,  period);
+                        pidx++;
                         // mRootView.showMessage("Name" +users.getUser().getUsername());
                     }
 

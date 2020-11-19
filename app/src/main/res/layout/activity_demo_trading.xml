@@ -4,7 +4,132 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
     <include layout="@layout/include_title"/>
+    <LinearLayout
+            android:id="@+id/ll_status"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+               >
+
+            <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="1233.51"
+                    android:textColor="@color/chart_green"
+                    android:textSize="25sp" />
+
+            <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/tv_price"
+                    android:id="@+id/tv_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.26"
+                    android:textColor="@color/chart_green"
+                    android:textSize="13sp" />
+            <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="15dp"
+                     android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@id/tv_price"
+                    android:id="@+id/tv_percents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.04%"
+                    android:textColor="@color/chart_green"
+                    android:textSize="13sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+                <TextView
+                        android:layout_marginRight="20dp"
+                        android:text="High"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_high"
+                        android:layout_gravity="right"
+                        android:text="59.09"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+                <TextView
+                        android:layout_marginRight="20dp"
+                        android:text="Low"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_low"
+                        android:layout_gravity="right"
+                        android:text="59.09"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+                <TextView
+                        android:layout_marginRight="20dp"
+                        android:text="24h Vol"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_vol"
+                        android:layout_gravity="right"
+                        android:text="59.09"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#e6e6e6" />
     <com.github.mikephil.charting.stockChart.KLineChart
             android:id="@+id/combinedchart"
             android:layout_width="match_parent"
