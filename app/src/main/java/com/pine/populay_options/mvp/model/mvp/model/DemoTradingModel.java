@@ -75,4 +75,11 @@ public class DemoTradingModel extends BaseModel implements DemoTradingContract.M
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
+
+    @Override
+    public Observable<List<ExchangEreal>>  getOffer(String pairs) {
+        return   mRetrofit.create(AliyunExchangeApi.class)
+                .real(pairs, "APPCODE " + appcode)
+                ;
+    }
 }

@@ -2,6 +2,7 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.github.mikephil.charting.stockChart.KLineChart;
@@ -15,6 +16,7 @@ import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.R;
 import com.pine.populay_options.mvp.model.di.component.DaggerDemoTradingComponent;
 import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingContract;
+import com.pine.populay_options.mvp.model.mvp.model.ExchangEreal;
 import com.pine.populay_options.mvp.model.mvp.presenter.DemoTradingPresenter;
 
 
@@ -54,7 +56,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mCombinedchart.  initChart(false);
-       mPresenter. onChartData("800","EURUSD","1");
+         mPresenter. onChartData("800","EURUSD","3",-1);
     }
 
     @Override
@@ -85,11 +87,21 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
     }
 
     @Override
-    public void onCharData(List<KLineDataModel> mExchangeChart,String pairs,  String type) {
-        KLineDataManage   kLineData = new KLineDataManage(this);
-         kLineData.parseKlineData(mExchangeChart,pairs,false,type);
+    public void onCharData(List<KLineDataModel> mExchangeChart,String pairs,  String type,int t) {
+        if (t==-1){
+            KLineDataManage   kLineData = new KLineDataManage(this);
+            kLineData.parseKlineData(mExchangeChart,pairs,false,type);
+            mCombinedchart.setDataToChart(kLineData);
+        }else {
+            KLineDataManage   kLineData = new KLineDataManage(this);
+            kLineData.parseKlineData(mExchangeChart,pairs,false,type);
+            mCombinedchart.dynamicsAddOne(kLineData);
+        }
+       mPresenter.timeLoop(pairs);
+    }
 
-        mCombinedchart.setDataToChart(kLineData);
-
+    @Override
+    public void getOffer(ExchangEreal exchangEreal) {
+        Log.wtf("ExchangEreal",exchangEreal.getBid()+"");
     }
 }

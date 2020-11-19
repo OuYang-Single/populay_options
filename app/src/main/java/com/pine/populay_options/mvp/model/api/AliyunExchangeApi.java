@@ -5,6 +5,7 @@ import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
 import com.pine.populay_options.mvp.model.entity.ExchangeChart;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
+import com.pine.populay_options.mvp.model.mvp.model.ExchangEreal;
 
 import java.util.List;
 import java.util.Map;
@@ -31,5 +32,7 @@ public interface AliyunExchangeApi {
     @GET("/chart")
     Observable<List<KLineDataModel>> chart(@Query("count")  String count, @Query("pairs")String pairs, @Query("type") String type, @Header("Authorization") String Authorization);
 
+    @GET("/real")
+    Observable<List<ExchangEreal>> real(@Query("pairs")String pairs, @Header("Authorization") String Authorization);
 
 }
