@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#f4f4f4</color>
     <color name="colorPrimaryDark">#3FA862</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="prompt_txt_color">#b1b1b1</color>
     <color name="prompt_line_color">#e4e3e3</color>
@@ -18,8 +18,12 @@
     <color name="toolbar_right_color">#2A2C33</color>
 
 
-    <color name="chart_red">#DF3536</color>
-    <color name="chart_green">#35DF7E</color>
+    <color name="chart_red">#ff7858</color>
+    <color name="chart_green">#00c087</color>
+    <color name="chart_prompt">#cccccc</color>
+    <color name="chart_table_line">#ddb060</color>
+    <color name="chart_table_text">#edd3a4</color>
+    <color name="chart_text_minor">#999999</color>
 
     <color name="chart_ma5">#18CCF6</color>
     <color name="chart_ma10">#FE5EDF</color>
@@ -32,4 +36,5 @@
     <color name="chart_selector">#c830343C</color>
     <color name="chart_tab_background">#30343C</color>
     <color name="chart_tab_indicator">#FF6601</color>
+    <color name="chart_highlight">#232833</color>
 </resources>

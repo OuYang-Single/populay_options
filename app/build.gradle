@@ -86,6 +86,7 @@ dependencies {
     implementation rootProject.ext.dependencies["androideventbus"]
     implementation rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
     implementation rootProject.ext.dependencies["permissiongen"]
+    implementation rootProject.ext.dependencies["eventbus"]
     implementation "com.android.support:multidex:1.0.3"
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
@@ -99,5 +100,10 @@ dependencies {
     // From 1.0.0-b3, library is compiled with data binding v2
     implementation 'eu.davidea:flexible-adapter-databinding:1.0.0'
     implementation 'com.github.wbaizx:VideoLive:3.1.1'
+    implementation 'com.github.open-android:EmphasisTextView:0.1.0'
+    implementation 'me.kareluo.ui:popmenu:1.1.0'
+    implementation 'm.zz.zzlibrary:zzlibrary:1.0'
+    implementation 'com.github.VolleyCN.Android-FlowLayout:library:1.0.2'
+    implementation 'com.github.open-android:ShoppingCartAddSubtract:0.1.0'
 
 }

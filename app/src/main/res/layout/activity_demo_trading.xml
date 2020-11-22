@@ -1,13 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
     <include layout="@layout/include_title"/>
     <LinearLayout
             android:id="@+id/ll_status"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -15,7 +16,7 @@
         <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                >
 
@@ -24,61 +25,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="1233.51"
-                    android:textColor="@color/chart_green"
-                    android:textSize="25sp" />
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/chart_highlight"
+                    android:textSize="@dimen/sp24" />
 
             <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@id/tv_price"
                     android:id="@+id/tv_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+0.26"
-                    android:textColor="@color/chart_green"
-                    android:textSize="13sp" />
+                    android:text=""
+                    android:textColor="@color/chart_highlight"
+                    android:textSize="@dimen/sp10" />
             <TextView
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="15dp"
                      android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@id/tv_price"
                     android:id="@+id/tv_percents"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+0.04%"
-                    android:textColor="@color/chart_green"
-                    android:textSize="13sp" />
+                    android:text=""
+                    android:textColor="@color/chart_highlight"
+                    android:textSize="@dimen/sp10" />
         </RelativeLayout>
 
         <LinearLayout
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="5dp"
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-
             <LinearLayout
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                 <TextView
-                        android:layout_marginRight="20dp"
-                        android:text="High"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        style="@style/style_trading_text"
+                        android:text="@string/trad_high"
+                    />
                 <TextView
                         android:id="@+id/tv_high"
-                        android:layout_gravity="right"
-                        android:text="59.09"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        style="@style/style_trading_highight"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_marginTop="3dp"
@@ -88,51 +83,193 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                 <TextView
-                        android:layout_marginRight="20dp"
-                        android:text="Low"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        style="@style/style_trading_text"
+                        android:text="@string/trad_low"
+                      />
                 <TextView
+
                         android:id="@+id/tv_low"
-                        android:layout_gravity="right"
-                        android:text="59.09"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        style="@style/style_trading_highight"/>
             </LinearLayout>
             <LinearLayout
+                    android:gravity="right"
                     android:layout_marginTop="3dp"
                     android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
                 <TextView
-                        android:layout_marginRight="20dp"
-                        android:text="24h Vol"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+
+                        android:text="@string/trad_vol"
+                        style="@style/style_trading_text" />
                 <TextView
                         android:id="@+id/tv_vol"
-                        android:layout_gravity="right"
-                        android:text="59.09"
-                        android:textSize="13sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        style="@style/style_trading_highight" />
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
     <View
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#e6e6e6" />
-    <com.github.mikephil.charting.stockChart.KLineChart
-            android:id="@+id/combinedchart"
+            android:layout_height="5dp"
+            android:background="#f5f5f5" />
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"/>
+            android:layout_height="38dp">
+        <TextView
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:text="Time"
+                android:textSize="14sp"
+                android:textColor="@color/chart_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        <com.google.android.material.tabs.TabLayout
+                app:tabMaxWidth="200dp"
+                app:tabMinWidth="20dp"
+                android:id="@+id/tab"
+                app:tabMode="scrollable"
+                android:textSize="14sp"
+                app:tabTextColor="@color/chart_prompt"
+                android:layout_weight="1"
+                app:tabIndicatorFullWidth="false"
+                android:layout_width="0dp"
+                app:tabIndicatorColor="@color/chart_table_line"
+                app:tabSelectedTextColor="@color/chart_table_line"
+                app:tabRippleColor="#fff"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+        <FrameLayout
+                android:id="@+id/time"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            <TextView
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center"
+                    android:text="1m"
+                    android:textSize="14sp"
+                    android:textColor="@color/chart_prompt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            <ImageView
+                    android:layout_gravity="right|bottom"
+                    android:src="@mipmap/ic_angle"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
+        </FrameLayout>
+
+    </LinearLayout>
+    <View
+
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#f5f5f5" />
+    <com.pine.populay_options.mvp.model.wigth.NoScrollViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:background="@color/white" />
+
+
+    <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/llayout_sell"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_sell"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ImageView
+                        android:id="@+id/img_left_arrow"
+                        android:layout_marginLeft="20dp"
+                        android:background="#869C9B9B"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_arrow_down"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                <TextView
+                        android:id="@+id/tv_sell"
+                        android:layout_marginRight="20dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp16"
+                        android:text="@string/sell"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_sell_value"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/tv_sell"
+                        android:text="0.000"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/llayout_buy"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_buy"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:layout_width="0dp"
+                android:layout_height="60dp">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ImageView
+                        android:layout_marginLeft="20dp"
+                        android:background="#869C9B9B"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_arrow_up"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                <TextView
+                        android:id="@+id/tv_buy"
+                        android:layout_marginRight="20dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp16"
+                        android:text="@string/buy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_buy_value"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/tv_buy"
+                        android:text="0.000"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

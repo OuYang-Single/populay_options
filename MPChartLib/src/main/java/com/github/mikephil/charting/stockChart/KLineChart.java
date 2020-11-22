@@ -38,6 +38,7 @@ import com.github.mikephil.charting.stockChart.markerView.LeftMarkerView;
 import com.github.mikephil.charting.stockChart.charts.MyCombinedChart;
 import com.github.mikephil.charting.stockChart.dataManage.KLineDataManage;
 import com.github.mikephil.charting.stockChart.enums.TimeType;
+import com.github.mikephil.charting.stockChart.model.KLineDataModel;
 import com.github.mikephil.charting.utils.CommonUtil;
 import com.github.mikephil.charting.utils.DataTimeUtil;
 import com.github.mikephil.charting.utils.NumberUtils;
@@ -708,6 +709,66 @@ public class KLineChart extends BaseChart {
                 barChart.setDescriptionCustom(ContextCompat.getColor(mContext, R.color.label_text), getResources().getString(R.string.vol_name) + NumberUtils.formatVol(mContext, kLineData.getAssetId(), kLineData.getKLineDatas().get(index).getVolume()));
                 break;
         }
+    }
+
+    public void dynamicsReset(KLineDataManage kLineData) {
+        this.kLineData=kLineData;
+        int size = this.kLineData.getKLineDatas().size();
+        int d = size - 1;
+        int i = kLineData.getKLineDatas().size() - 1;
+        CombinedData candleChartData = candleChart.getData();
+        LineData mLineData = candleChartData.getLineData();
+
+        for (ILineDataSet mLineDataSet:mLineData.getDataSets()){
+            if ("mablue".equals( mLineDataSet.getLabel())){
+                mLineDataSet.clear();
+                for (KLineDataModel model: kLineData.getKLineDatas()){
+                    mLineDataSet.addEntry(new Entry(d + kLineData.getOffSet(),  (float) model.getMa5()));
+                }
+            }
+            if ("mayellow".equals( mLineDataSet.getLabel())){
+                mLineDataSet.clear();
+                for (KLineDataModel model: kLineData.getKLineDatas()){
+                    mLineDataSet.addEntry(new Entry(d + kLineData.getOffSet(),  (float) model.getMa10()));
+                }
+            }
+            if ("mapurple".equals( mLineDataSet.getLabel())){
+                mLineDataSet.clear();
+                for (KLineDataModel model: kLineData.getKLineDatas()){
+                    mLineDataSet.addEntry(new Entry(d + kLineData.getOffSet(),  (float) model.getMa20()));
+                }
+            }
+        }
+        CandleData candleData = candleChartData.getCandleData();
+        ICandleDataSet candleDataSet = candleData.getDataSetByIndex(0);
+        candleDataSet.clear();
+        for (KLineDataModel model: kLineData.getKLineDatas()){
+            candleDataSet.addEntry(new CandleEntry(d + kLineData.getOffSet(), (float)model.getHigh(), (float)model.getLow(), (float) model.getOpen(), (float) model.getClose()));
+        }
+        if (chartType1 == 1) {//副图是成交量
+            CombinedData barChartData = barChart.getData();
+            IBarDataSet barDataSet = barChartData.getBarData().getDataSetByIndex(0);
+            barDataSet.clear();
+            for (KLineDataModel model: kLineData.getKLineDatas()){
+                float color = model.getOpen() ==model.getClose()?0f:model.getOpen() >model.getClose() ? -1f : 1f;
+                BarEntry barEntry = new BarEntry(i + kLineData.getOffSet(), (float) model.getVolume(), color);
+                barDataSet.addEntry(barEntry);
+            }
+
+        } else {//副图是其他技术指标
+
+            this.kLineData.initMACD();
+            this.kLineData.initKDJ();
+            this.kLineData.initBOLL();
+            this.kLineData. initRSI();
+            doBarChartSwitch(chartType1);
+        }
+        barChart.getXAxis().setAxisMaximum( this.kLineData.getKLineDatas().size() < 70 ? 70 : this.kLineData.getKLineDatas().size());
+        candleChart.getXAxis().setAxisMaximum( this.kLineData.getKLineDatas().size() < 70 ? 70 :  this.kLineData.getKLineDatas().size());
+        candleChart.notifyDataSetChanged();
+        barChart.notifyDataSetChanged();
+        candleChart.invalidate();
+        barChart.invalidate();
     }
 
 }

@@ -2,6 +2,8 @@ package com.pine.populay_options.app.utils;
 
 import android.content.Context;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by tian on 2016/4/11.
  */
@@ -15,4 +17,12 @@ public class ViewUtil {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
     }
+    static public String Conversion(String s){
+
+        DecimalFormat decimalFormat =new DecimalFormat("0000");
+       return decimalFormat.format(Integer.parseInt(s));
+
+    }
+
+
 }

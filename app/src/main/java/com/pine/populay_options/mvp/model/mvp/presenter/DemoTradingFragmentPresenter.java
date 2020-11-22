@@ -12,6 +12,7 @@ import com.jess.arms.utils.RxLifecycleUtils;
 import com.pine.populay_options.mvp.model.entity.AliyunRequest;
 import com.pine.populay_options.mvp.model.entity.ExchangEreal;
 import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingContract;
+import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingFragmentContract;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import timber.log.Timber;
 
 @ActivityScope
-public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Model, DemoTradingContract.View> {
+public class DemoTradingFragmentPresenter extends BasePresenter<DemoTradingFragmentContract.Model, DemoTradingFragmentContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -38,14 +39,14 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-  int anInt=0;
+    int anInt=0;
     private static final int PERIOD =  1000;
     private static final int DELAY = 100;
     private Disposable mDisposable;
     public int  pidx=1;
     public int psize=500;
     @Inject
-    public DemoTradingPresenter(DemoTradingContract.Model model, DemoTradingContract.View rootView) {
+    public DemoTradingFragmentPresenter(DemoTradingFragmentContract.Model model, DemoTradingFragmentContract.View rootView) {
         super(model, rootView);
     }
 
@@ -58,44 +59,43 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
 
 
     public void timeLoop(String pairs) {
-   /*     mDisposable = Observable.interval(DELAY, PERIOD, TimeUnit.MILLISECONDS)
+        mDisposable = Observable.interval(DELAY, PERIOD, TimeUnit.MILLISECONDS)
                 .map((aLong -> aLong + 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong ->{
-
-                        });*/
-        getOffer(pairs,"1","1");
-       //getUnreadCount()执行的任务
+                    getOffer(pairs,"1","1");
+                });
+        //getUnreadCount()执行的任务
     }
 
     public void getOffer(String pairs,String withks, String withticks){
-                 mModel.getOffer(pairs,withks,withticks).subscribeOn(Schedulers.io())
-                         .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                         .subscribeOn(AndroidSchedulers.mainThread())
-                         .doOnSubscribe(disposable -> {
-                             mRootView.showLoading();//显示下拉刷新的进度条
-                         })
-                         .observeOn(AndroidSchedulers.mainThread())
-                         .doFinally(() -> {
-                             mRootView.hideLoading();//隐藏下拉刷新的进度条
-                         })
-                         .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                         .subscribe(new ErrorHandleSubscriber<AliyunRequest<ExchangEreal>>(mErrorHandler) {
-                             @Override
-                             public void onNext(AliyunRequest<ExchangEreal> mExchangeChart) {
-                                 Timber.w(mExchangeChart.getObj().toString());
-                                 mRootView.getOffer(mExchangeChart.getObj());
+        mModel.getOffer(pairs,withks,withticks).subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<AliyunRequest<ExchangEreal>>(mErrorHandler) {
+                    @Override
+                    public void onNext(AliyunRequest<ExchangEreal> mExchangeChart) {
+                        Timber.w(mExchangeChart.getObj().toString());
+                        mRootView.getOffer(mExchangeChart.getObj());
 
-                                 // mRootView.showMessage("Name" +users.getUser().getUsername());
-                             }
+                        // mRootView.showMessage("Name" +users.getUser().getUsername());
+                    }
 
-                             @Override
-                             public void onError(Throwable t) {
-                                 super.onError(t);
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
 
-                             }
-                         });;
+                    }
+                });;
     }
 
     @Override
