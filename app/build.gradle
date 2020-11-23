@@ -105,5 +105,6 @@ dependencies {
     implementation 'm.zz.zzlibrary:zzlibrary:1.0'
     implementation 'com.github.VolleyCN.Android-FlowLayout:library:1.0.2'
     implementation 'com.github.open-android:ShoppingCartAddSubtract:0.1.0'
-
+    implementation 'com.zhouyou:segmentedbar:1.0.9'
+    implementation 'com.dld.seg:SegControlView:1.0.0'
 }

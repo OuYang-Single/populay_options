@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.github.mikephil.charting.stockChart.KLineChart;
 import com.github.mikephil.charting.stockChart.dataManage.KLineDataManage;
 import com.github.mikephil.charting.stockChart.model.KLineDataModel;
@@ -62,7 +64,7 @@ import me.kareluo.ui.PopupView;
 import static android.widget.LinearLayout.VERTICAL;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.pine.populay_options.app.utils.DateUtil.timeStamp2Date;
-
+@Route(path = "/analogDisk/demoTrading")
 public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> implements DemoTradingContract.View, IActivity, ActivityLifecycleable, View.OnClickListener {
 
     @BindView(R.id.vp_content)
@@ -461,8 +463,10 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
                   customDialog.setYesOnclickListener("Check my paper accoun", new CustomDialog.onYesOnclickListener() {
                       @Override
                       public void onYesClick() {
-                          //这里是确定的逻辑代码，别忘了点击确定后关闭对话框
                           customDialog.dismiss();
+                          Intent intent=new Intent(DemoTradingActivity.this,PositionActivity.class);
+                          DemoTradingActivity.this.startActivity(intent);
+                       //   ARouter.getInstance().build("/analogDisk/position").navigation();
                       }
                   });
 
