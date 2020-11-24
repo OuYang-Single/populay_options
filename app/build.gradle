@@ -107,4 +107,5 @@ dependencies {
     implementation 'com.github.open-android:ShoppingCartAddSubtract:0.1.0'
     implementation 'com.zhouyou:segmentedbar:1.0.9'
     implementation 'com.dld.seg:SegControlView:1.0.0'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 }

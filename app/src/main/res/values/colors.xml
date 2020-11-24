@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#f4f4f4</color>
-    <color name="colorPrimaryDark">#3FA862</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="prompt_txt_color">#b1b1b1</color>
@@ -37,4 +37,5 @@
     <color name="chart_tab_background">#30343C</color>
     <color name="chart_tab_indicator">#FF6601</color>
     <color name="chart_highlight">#232833</color>
+    <color name="selected_text_color">#FFCB6D</color>
 </resources>
