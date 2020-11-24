@@ -8,8 +8,10 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.pine.populay_options.mvp.model.entity.PositionOrder;
 import com.pine.populay_options.mvp.model.mvp.contract.PaperFragmentContract;
 import com.pine.populay_options.mvp.model.mvp.contract.PositionContract;
+import com.pine.populay_options.mvp.model.mvp.ui.adapter.PaperAdapter;
 
 import java.util.List;
 
@@ -26,8 +28,10 @@ public class PaperFragmentPresenter extends BasePresenter<PaperFragmentContract.
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-
-
+    @Inject
+    PaperAdapter mPaperAdapter;
+    @Inject
+    List<PositionOrder> positionOrderList;
     @Inject
     public PaperFragmentPresenter(PaperFragmentContract.Model model, PaperFragmentContract.View rootView) {
         super(model, rootView);
@@ -36,7 +40,6 @@ public class PaperFragmentPresenter extends BasePresenter<PaperFragmentContract.
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -46,5 +49,14 @@ public class PaperFragmentPresenter extends BasePresenter<PaperFragmentContract.
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void initData() {
+        positionOrderList.add(new PositionOrder());
+        positionOrderList.add(new PositionOrder());
+        positionOrderList.add(new PositionOrder());
+        positionOrderList.add(new PositionOrder());
+        positionOrderList.add(new PositionOrder());
+        mPaperAdapter.notifyDataSetChanged();
     }
 }

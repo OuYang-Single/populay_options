@@ -33,5 +33,9 @@
     <string name="margin">Margin (USD)</string>
     <string name="Fee" >Fee (USD)</string>
     <string name="input_order_price">Input order price</string>
+    <string name="performance">Performance</string>
+    <string name="free_margin">Free Margin</string>
+    <string name="used_margin">Used Margin</string>
+    <string name="balance">Balance</string>
 
 </resources>
