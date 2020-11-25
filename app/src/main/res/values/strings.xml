@@ -37,5 +37,8 @@
     <string name="free_margin">Free Margin</string>
     <string name="used_margin">Used Margin</string>
     <string name="balance">Balance</string>
+    <string name="buying_price">Buying price</string>
+    <string name="current_price">Current prive</string>
+    <string name="close">Close</string>
 
 </resources>
