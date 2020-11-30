@@ -1,6 +1,8 @@
 package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,8 +28,8 @@ import butterknife.BindView;
 public class DetailsActivity extends BaseActivity<DetailsPresenter> implements DetailsContract.View{
     @BindView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.toolbar_title)
-    TextView mToolbarTitle;
+    @BindView(R.id.toolbar_back)
+    RelativeLayout mToolbarBack;
     @Inject
     DetailsAdapter mDetailsAdapter;
     @Override
@@ -49,8 +51,9 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     public void initData(@Nullable Bundle savedInstanceState) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mDetailsAdapter);
+        mToolbarBack.setVisibility(View.VISIBLE);
         mPresenter.initData();
-        mToolbarTitle.setText(R.string.details);
+        setTitle(R.string.details);
     }
 
     @Override

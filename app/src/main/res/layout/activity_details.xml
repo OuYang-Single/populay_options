@@ -11,13 +11,13 @@
             android:layout_width="match_parent"
             android:layout_height="8dp"/>
     <LinearLayout
-            android:padding="10dp"
+            android:padding="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <LinearLayout
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <RelativeLayout
@@ -120,7 +120,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginLeft="15dp"
             android:background="@color/chart_green"
-            android:layout_width="8dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"/>
     <TextView
             android:layout_marginLeft="10dp"

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import com.pine.populay_options.R;
+import com.pine.populay_options.app.utils.StatusBarUtil;
 import com.pine.populay_options.mvp.model.di.component.DaggerMainComponent;
 import com.pine.populay_options.mvp.model.mvp.contract.MainContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.MainPresenter;

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.pine.populay_options.R;
+import com.pine.populay_options.app.utils.StatusBarUtil;
+
 import timber.log.Timber;
 
 /**
@@ -48,6 +50,7 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
             if (activity.findViewById(R.id.toolbar_title) != null) {
                 ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
             }
+            StatusBarUtil.setStatusBarLightMode(activity.getWindow());
             if (activity.findViewById(R.id.toolbar_back) != null) {
                 activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
                     activity.onBackPressed();
