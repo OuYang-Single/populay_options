@@ -59,14 +59,14 @@ public class DemoTradingPresenter extends BasePresenter<DemoTradingContract.Mode
 
 
     public void timeLoop(String pairs) {
-   /*     mDisposable = Observable.interval(DELAY, PERIOD, TimeUnit.MILLISECONDS)
+        mDisposable = Observable.interval(DELAY, PERIOD, TimeUnit.MILLISECONDS)
                 .map((aLong -> aLong + 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong ->{
+ getOffer(pairs,"1","1");
+                        });
 
-                        });*/
-        getOffer(pairs,"1","1");
        //getUnreadCount()执行的任务
     }
 

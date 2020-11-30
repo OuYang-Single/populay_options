@@ -16,14 +16,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications"></string>
     <string name="title_add">Notifications</string>
-    <string name="title_periphery">周边</string>
+    <string name="title_periphery">行情</string>
     <string name="title_message">消息</string>
     <string name="title_mine">我的</string>
-    <string name="home_itme_option_beauty">美女主播</string>
-    <string name="home_itme_option_star">明星主播</string>
-    <string name="home_itme_option_game">游戏主播</string>
-    <string name="home_itme_option_stand_alone_game">单机游戏</string>
-    <string name="home_itme_option_more_categories">更多分类</string>
+
     <string name="trad_high">High  </string>
     <string name="trad_low">Low  </string>
     <string name="trad_vol">24h Vol</string>
@@ -40,5 +36,9 @@
     <string name="buying_price">Buying price</string>
     <string name="current_price">Current prive</string>
     <string name="close">Close</string>
+    <string name="Topics">Topics</string>
+    <string name="new_topic">New topic</string>
+    <string name="publish">Publish</string>
+    <string name="details">Details</string>
 
 </resources>

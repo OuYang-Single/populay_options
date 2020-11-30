@@ -118,36 +118,41 @@ public class DemoTradingFragment extends BaseFragment<DemoTradingFragmentPresent
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onExchangErealEvent(ExchangEreal exchangEreal) {
-        if (mCombinedchart!=null){
+        int multiple=1;
+        if (mCombinedchart!=null&&mExchangeChart!=null){
             if (getContext()!=null){
                 String NEW= exchangEreal.getM1();
                 switch (mType){
                     case  "1M":
-                        exchangEreal.getM1();
+                        multiple=1;
+                        NEW= exchangEreal.getM1();
                         break;
                     case "5M":
-                        exchangEreal.getM5();
+                        multiple=5;
+                        NEW= exchangEreal.getM5();
                         break;
                     case "10M":
-                        exchangEreal.getM10();
+                        multiple=10;
+                        NEW= exchangEreal.getM10();
                         break;
                     case "15M":
-                        exchangEreal.getM15();
+
+                        NEW=  exchangEreal.getM15();
                         break;
                     case "30M":
-                        exchangEreal.getM30();
+                        NEW= exchangEreal.getM30();
                         break;
                     case "1H":
-                        exchangEreal.getH1();
+                        NEW= exchangEreal.getH1();
                         break;
                     case  "2H":
-                        exchangEreal.getH2();
+                        NEW=   exchangEreal.getH2();
                         break;
                     case "4H":
-                        exchangEreal.getH4();
+                        NEW=  exchangEreal.getH4();
                         break;
                     case  "D":
-                        exchangEreal.getD();
+                        NEW= exchangEreal.getD();
                         break;
                 }
                 String[] NewData=  NEW.split(",");//秒时间戳,开盘价,最高价,最低价,量
@@ -162,6 +167,7 @@ public class DemoTradingFragment extends BaseFragment<DemoTradingFragmentPresent
                 model.setClose(exchangEreal.getP());
                 model.setTick(Long.parseLong(NewData[0]));
                 modelList.add(model);
+
                 if (Long.parseLong(NewData[0]) == mExchangeChart.get(mExchangeChart.size() - 1).getTick()){
                     kLineData.parseKlineData(modelList,"",false,urlNam);
                     mCombinedchart.dynamicsUpdateOne(kLineData);

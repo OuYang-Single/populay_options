@@ -1,6 +1,8 @@
 package com.pine.populay_options.mvp.model.mvp.presenter;
 
 import android.app.Application;
+import android.view.MenuItem;
+
 import com.pine.populay_options.R;
 import com.pine.populay_options.mvp.model.mvp.contract.MainContract;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,7 +46,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     }
 
     public void setBottomNavigationItem(BottomNavigationView mNavView, int i) {
-        mModel.setBottomNavigationItem(mNavView,i);
+      //  mModel.setBottomNavigationItem(mNavView,i);
     }
 
     public void RestoreSelected(int id) {
@@ -54,7 +56,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 image=    R.mipmap.ic_home_black_click;
                 break;
             case R.id.navigation_periphery:
-                image=    R.mipmap.ic_periphery_black_click;
+                image=    R.mipmap.ic_quotes_black_click;
                 break;
             case R.id.navigation_message:
                 image=    R.mipmap.ic_message_black_click;
@@ -65,4 +67,10 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         }
         mRootView.RestoreSelected(image);
     }
+
+    public void RestoreIcon() {
+
+    }
+
+
 }

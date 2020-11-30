@@ -8,14 +8,16 @@
         android:layout_height="match_parent"
         tools:context=".mvp.model.mvp.ui.activity.MainActivity">
 
+
     <com.pine.populay_options.mvp.model.wigth.NoScrollViewPager
             app:layout_constraintBottom_toTopOf="@+id/nav_view"
             android:id="@+id/vp_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" tools:layout_editor_absoluteX="0dp">
+            android:layout_height="match_parent"
+            tools:layout_editor_absolutey="60dp"
+            android:layout_marginBottom="60dp">
 
     </com.pine.populay_options.mvp.model.wigth.NoScrollViewPager>
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"

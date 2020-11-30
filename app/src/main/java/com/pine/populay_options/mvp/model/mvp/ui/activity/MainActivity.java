@@ -2,6 +2,8 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -42,12 +44,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        setFullscreen(this);
         return R.layout.activity_main;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        Resources resource=(Resources)getBaseContext().getResources();
+        ColorStateList csl=(ColorStateList)resource.getColorStateList(R.color.navigation_menu_item_color);
+        mNavView.setItemTextColor(csl);
         mNavView.setOnNavigationItemSelectedListener(this);
         mNavView.setItemIconTintList(null);    //删除默认的选中效果\
         mPresenter.setBottomNavigationItem(mNavView, 40);
@@ -60,6 +64,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         RestoreIcon();
+
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 selectedItemId = item.getItemId();
@@ -68,14 +73,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 return true;
             case R.id.navigation_periphery:
                 selectedItemId = item.getItemId();
-                item.setIcon(R.mipmap.ic_periphery_black_click);
+                item.setIcon(R.mipmap.ic_quotes_black_click);
                 mVpContent.setCurrentItem(1);
                 return true;
-            case R.id.navigation_add:
-                mPresenter.RestoreSelected(selectedItemId);
-                item.setIcon(R.mipmap.ic_add_black);
 
-                return true;
             case R.id.navigation_message:
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_message_black_click);
@@ -92,7 +93,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void RestoreIcon() {
         mNavView.getMenu().findItem(R.id.navigation_home).setIcon(R.mipmap.ic_home_black);
-        mNavView.getMenu().findItem(R.id.navigation_periphery).setIcon(R.mipmap.ic_periphery_black);
+        mNavView.getMenu().findItem(R.id.navigation_periphery).setIcon(R.mipmap.ic_quotes_black);
         mNavView.getMenu().findItem(R.id.navigation_message).setIcon(R.mipmap.ic_message_black);
         mNavView.getMenu().findItem(R.id.navigation_mine).setIcon(R.mipmap.ic_mine_black);
     }

@@ -108,4 +108,8 @@ dependencies {
     implementation 'com.zhouyou:segmentedbar:1.0.9'
     implementation 'com.dld.seg:SegControlView:1.0.0'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    implementation 'com.github.ydslib:MultiImageView:1.0.4'
+    implementation 'com.android.support:appcompat-v7:25.3.1'//版本随意
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 }

@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
+import com.pine.populay_options.mvp.model.mvp.ui.fragment.TopicsFragment;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -39,7 +40,7 @@ public class MainModel extends BaseModel implements MainContract.Model {
     List<Fragment> fragmentList;
     @Override
     public void onStart() {
-
+        fragmentList.add(new TopicsFragment());
         mViewPagerContentAdapterl.notifyDataSetChanged();
     }
     @Override

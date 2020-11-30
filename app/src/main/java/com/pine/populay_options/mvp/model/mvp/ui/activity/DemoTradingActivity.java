@@ -347,12 +347,11 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
             }
 
         }
+        EventBus.getDefault().postSticky(exchangEreal);
 
-        if (mExchangeChart!=null){
 
-            EventBus.getDefault().postSticky(String.format("%.2f",exchangEreal.getP()));
+          //  EventBus.getDefault().postSticky(String.format("%.2f",exchangEreal.getP()));
 
-        }
     }
 
 

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/white"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+    <include layout="@layout/include_title"/>
+    <View
+            android:background="#f5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+    <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/neo"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/ic_neo"
+                        app:siArrowPosition="right"
+                        app:siBorderWidth="1dp"
+                        android:layout_alignParentLeft="true"
+                        app:siBorderColor="@color/white"
+                        app:siSquare="true"/>
+                <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/tv_name"
+                        android:textColor="@color/chart_highlight"
+                        android:textSize="@dimen/sp16"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/neo"
+                        android:layout_centerVertical="true"
+                        android:text="frankkn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:textColor="@color/chart_text"
+                        android:text="3 days ago"
+                        android:textSize="@dimen/sp14"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+            <TextView
+                    android:textColor="@color/chart_highlight"
+                    android:textSize="@dimen/sp14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="70dp"
+                    android:text="It seems like price of gas is going up and down sharply..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <com.yds.library.MultiImageView
+                    android:visibility="gone"
+                    android:id="@+id/image_multi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:imgGap="3dp"
+                    app:maxSize="9"
+                    />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+        <ImageView
+                android:layout_marginLeft="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/image_comment"
+                android:src="@mipmap/ic_bells"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+            <TextView
+                    android:layout_toRightOf="@+id/image_comment"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_comment"
+                    android:text="Report spam"
+                    android:textColor="@color/chart_text"
+                    android:textSize="@dimen/sp14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    <View
+            android:layout_marginTop="30dp"
+            android:background="#f5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+
+    <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+    <TextView
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/chart_green"
+            android:layout_width="8dp"
+            android:layout_height="match_parent"/>
+    <TextView
+            android:layout_marginLeft="10dp"
+            android:text="Comments"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+</LinearLayout>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mRecyclerView">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
