@@ -15,7 +15,7 @@ public abstract class  BaseAseActivitys<P extends IPresenter> extends BaseActivi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ARouter.getInstance().inject(this);
+
 
     }
 

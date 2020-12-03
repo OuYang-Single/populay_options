@@ -23,5 +23,7 @@ public interface AliyunExchangeApi {
 
     @GET("/query/com")
     Observable<AliyunRequest<ExchangEreal>> real(@Query("symbol")String pairs, @Query("withks")String withks, @Query("withticks")String withticks, @Header("Authorization") String Authorization);
+    @GET("/query/comrms")
+    Observable<AliyunRequest<List<ExchangEreal>>> reals(@Query("symbols")String symbols, @Header("Authorization") String Authorization);
 
 }

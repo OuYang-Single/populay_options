@@ -1,8 +1,11 @@
 package com.pine.populay_options.mvp.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class ExchangEreal {
+public class ExchangEreal implements Parcelable {
    private String  FS;//唯一完整编码
    private String  S;//品种代码
    private double  P;//最新价
@@ -36,6 +39,59 @@ public class ExchangEreal {
    private String H2;// -当前2小时周期k线（可能有）,字段间逗号分隔（字段意义为：秒时间戳,开盘价,最高价,最低价,量。其中收盘价统一为当前价P)
    private String H4;// -当前4小时周期k线（可能有）,字段间逗号分隔（字段意义为：秒时间戳,开盘价,最高价,最低价,量。其中收盘价统一为当前价P)
    private String D;// -当前1天周期k线（可能有）,字段间逗号分隔（字段意义为：秒时间戳,开盘价,最高价,最低价,量。其中收盘价统一为当前价P)
+   private int PAndn;//
+
+    protected ExchangEreal(Parcel in) {
+        FS = in.readString();
+        S = in.readString();
+        P = in.readDouble();
+        NV = in.readString();
+        if (in.readByte() == 0) {
+            Tick = null;
+        } else {
+            Tick = in.readLong();
+        }
+        H = in.readDouble();
+        L = in.readDouble();
+        YC = in.readDouble();
+        B1 = in.readDouble();
+        S1 = in.readDouble();
+        V = in.readDouble();
+        SY = in.readDouble();
+        HS = in.readDouble();
+        ZS = in.readDouble();
+        LS = in.readDouble();
+        Z = in.readDouble();
+        Z2 = in.readDouble();
+        VF = in.readDouble();
+        ZF = in.readDouble();
+        ZD = in.readDouble();
+        JS = in.readDouble();
+        YJS = in.readDouble();
+        A2 = in.readString();
+        M1 = in.readString();
+        M5 = in.readString();
+        M10 = in.readString();
+        M15 = in.readString();
+        M30 = in.readString();
+        H1 = in.readString();
+        H2 = in.readString();
+        H4 = in.readString();
+        D = in.readString();
+        PAndn = in.readInt();
+    }
+
+    public static final Creator<ExchangEreal> CREATOR = new Creator<ExchangEreal>() {
+        @Override
+        public ExchangEreal createFromParcel(Parcel in) {
+            return new ExchangEreal(in);
+        }
+
+        @Override
+        public ExchangEreal[] newArray(int size) {
+            return new ExchangEreal[size];
+        }
+    };
 
     public String getFS() {
         return FS;
@@ -299,5 +355,60 @@ public class ExchangEreal {
 
     public void setD(String d) {
         D = d;
+    }
+
+    public int getPAndn() {
+        return PAndn;
+    }
+
+    public void setPAndn(int PAndn) {
+        this.PAndn = PAndn;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(FS);
+        parcel.writeString(S);
+        parcel.writeDouble(P);
+        parcel.writeString(NV);
+        if (Tick == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(Tick);
+        }
+        parcel.writeDouble(H);
+        parcel.writeDouble(L);
+        parcel.writeDouble(YC);
+        parcel.writeDouble(B1);
+        parcel.writeDouble(S1);
+        parcel.writeDouble(V);
+        parcel.writeDouble(SY);
+        parcel.writeDouble(HS);
+        parcel.writeDouble(ZS);
+        parcel.writeDouble(LS);
+        parcel.writeDouble(Z);
+        parcel.writeDouble(Z2);
+        parcel.writeDouble(VF);
+        parcel.writeDouble(ZF);
+        parcel.writeDouble(ZD);
+        parcel.writeDouble(JS);
+        parcel.writeDouble(YJS);
+        parcel.writeString(A2);
+        parcel.writeString(M1);
+        parcel.writeString(M5);
+        parcel.writeString(M10);
+        parcel.writeString(M15);
+        parcel.writeString(M30);
+        parcel.writeString(H1);
+        parcel.writeString(H2);
+        parcel.writeString(H4);
+        parcel.writeString(D);
+        parcel.writeInt(PAndn);
     }
 }

@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.github.mikephil.charting.stockChart.KLineChart;
@@ -52,12 +53,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.Attributes;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import m.zz.zzlibrary.widget.BottomShareMenu;
 import me.kareluo.ui.OptionMenu;
+import me.kareluo.ui.OptionMenuView;
 import me.kareluo.ui.PopupMenuView;
 import me.kareluo.ui.PopupView;
 
@@ -65,7 +68,7 @@ import static android.widget.LinearLayout.VERTICAL;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.pine.populay_options.app.utils.DateUtil.timeStamp2Date;
 @Route(path = "/analogDisk/demoTrading")
-public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> implements DemoTradingContract.View, IActivity, ActivityLifecycleable, View.OnClickListener {
+public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> implements DemoTradingContract.View, IActivity, ActivityLifecycleable, View.OnClickListener, OptionMenuView.OnOptionMenuClickListener {
 
     @BindView(R.id.vp_content)
     NoScrollViewPager vpContent;
@@ -120,6 +123,9 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
     float fee=10.23f;
     double buy;
     double sell;
+    @Autowired(name="exchangEreal")
+    ExchangEreal mExchangEreal;
+    int Digits;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerDemoTradingComponent //如找不到该类,请编译一下项目
@@ -138,12 +144,16 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        toolbar.setTitle("XAU");
-        mPresenter.timeLoop("XAU");
+//
+        if (mExchangEreal==null){
+            mExchangEreal=     getIntent().getParcelableExtra("exchangEreal");
+        }
+        setTitle(mExchangEreal.getFS());
+        mPresenter.timeLoop(mExchangEreal.getFS());
         fragments=new ArrayList<>();
         for (int i=0;i<titles.length;i++){
             tabLayout.addTab(tabLayout.newTab().setText(titles[i]));
-            fragments.add(DemoTradingFragment.newInstance(titles[i],false,"XAU"));
+            fragments.add(DemoTradingFragment.newInstance(titles[i],false,mExchangEreal.getFS()));
         }
         vpContent.setOffscreenPageLimit(fragments.size());
         vpContent.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -179,6 +189,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
                 new OptionMenu("30M"), new OptionMenu("1H"), new OptionMenu("2H"), new OptionMenu("4H"), new OptionMenu("D")));
         menuView.setSites(PopupView.SITE_BOTTOM);
         menuView.setOrientation(VERTICAL);//vertical
+        menuView.setOnMenuClickListener(this);
          bottomShareMenu=new BottomShareMenu(this) {
 
             @Override
@@ -241,7 +252,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
                 img_chart_bottom_view_minus.setOnClickListener(DemoTradingActivity.this);
                 img_chart_bottom_view_add.setOnClickListener(DemoTradingActivity.this);
                 tv_chart_bottom_view_transaction.setOnClickListener(DemoTradingActivity.this);
-                tv_chart_bottom_view_text.setText("XAU");
+                tv_chart_bottom_view_text.setText(mExchangEreal.getFS());
 
 
             }
@@ -312,7 +323,9 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
 
     @Override
     public void getOffer(ExchangEreal exchangEreal) {
-        tvPrice.setText(String.format("%.2f",exchangEreal.getP()));
+
+
+        tvPrice.setText(exchangEreal.getP()+"");
         tvHigh.setText(exchangEreal.getH() +"");
         tvLow.setText(exchangEreal.getL()+"");
         tvVol.setText(exchangEreal.getNV() +"");
@@ -449,7 +462,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
                   }else {
                       customDialog.setPriceValue(buy+"");
                   }
-                  customDialog.setLots("XAU"+"  Long");
+                  customDialog.setLots(mExchangEreal.getFS()+"  Long");
                   KSelectBean itmes=null;
                   for (KSelectBean itme:mFlowlist){
                       if (itme.isChecked()){
@@ -482,5 +495,11 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
             textVIew.setTextColor(ResourcesUtils.getColor(this,R.color.chart_text_minor));
             textVIew.setBackgroundResource(R.drawable.chart_bottom_view_buy);
         }
+    }
+
+    @Override
+    public boolean onOptionMenuClick(int position, OptionMenu menu) {
+        vpContent.setCurrentItem(position);
+        return false;
     }
 }

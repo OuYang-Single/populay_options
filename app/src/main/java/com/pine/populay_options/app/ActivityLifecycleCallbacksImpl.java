@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.utils.StatusBarUtil;
 
@@ -31,6 +33,8 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
     @Override
     public void onActivityStarted(Activity activity) {
         Timber.i(activity + " - onActivityStarted");
+        StatusBarUtil.setStatusBarLightMode(activity.getWindow());
+        ARouter.getInstance().inject(this);
         if (!activity.getIntent().getBooleanExtra("isInitToolbar", false)) {
             //由于加强框架的兼容性,故将 setContentView 放到 onActivityCreated 之后,onActivityStarted 之前执行
             //而 findViewById 必须在 Activity setContentView() 后才有效,所以将以下代码从之前的 onActivityCreated 中移动到 onActivityStarted 中执行
@@ -50,7 +54,6 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
             if (activity.findViewById(R.id.toolbar_title) != null) {
                 ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
             }
-            StatusBarUtil.setStatusBarLightMode(activity.getWindow());
             if (activity.findViewById(R.id.toolbar_back) != null) {
                 activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
                     activity.onBackPressed();
