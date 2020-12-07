@@ -42,5 +42,15 @@
     <string name="details">Details</string>
     <string name="quotes">Quotes</string>
     <string name="traders_title">Most Famous Forex Traders</string>
+    <string name="mine_string">点击登录</string>
+    <string name="assets">Assets</string>
+    <string name="top_brokers">Top brokers</string>
+    <string name="forex_videos">Forex Videos</string>
+    <string name="most_famous_forex_traders">Most Famous Forex Traders</string>
+    <string name="study_forex">Study Forex</string>
+    <string name="tools">Tools</string>
+    <string name="customer_service">Customer service</string>
+    <string name="Mine">Mine</string>
+    <string name="videos">Forex Videos</string>
 
 </resources>
