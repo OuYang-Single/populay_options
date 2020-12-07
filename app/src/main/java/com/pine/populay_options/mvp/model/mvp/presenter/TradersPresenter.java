@@ -30,8 +30,7 @@ public class TradersPresenter extends BasePresenter<TradersContract.Model, Trade
     AppManager mAppManager;
     @Inject
     TradersAdapter mTradersAdapter;
-    @Inject
-    List<TradersEntity> mTradersEntitys;
+
     @Inject
     public TradersPresenter(TradersContract.Model model, TradersContract.View rootView) {
         super(model, rootView);
@@ -53,16 +52,7 @@ public class TradersPresenter extends BasePresenter<TradersContract.Model, Trade
     }
 
     public void initData() {
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
-        mTradersEntitys.add(new TradersEntity());
+        mModel.initData();
         mTradersAdapter.notifyDataSetChanged();
     }
 }

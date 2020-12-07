@@ -69,7 +69,7 @@ public class LogInActivity extends BaseActivity<LogInPresenter> implements LogIn
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        setFullscreen(this);
+
         return R.layout.activity_login; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 

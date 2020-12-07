@@ -90,7 +90,7 @@ public class QuotesFragmentPresenter extends BasePresenter<QuotesFragmentContrac
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong ->{
-                  getOffer(0);
+                //  getOffer(0);
                 });
     }
     private void   getOffer(int i){

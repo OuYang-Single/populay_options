@@ -2,6 +2,7 @@ package com.pine.populay_options.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.utils.StatusBarUtil;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.VideoActivity;
 
 import timber.log.Timber;
 
@@ -59,6 +61,9 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
                     activity.onBackPressed();
                 });
             }
+        }
+        if (activity instanceof VideoActivity){
+            activity.  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
     }
 

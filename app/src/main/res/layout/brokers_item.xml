@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+<TextView
+    android:layout_weight="1"
+    android:textColor="@color/black"
+    android:textSize="@dimen/sp14"
+    android:layout_gravity="center"
+    android:text="1"
+    android:gravity="center"
+    android:id="@+id/brokers_rank"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@mipmap/u346"
+        android:id="@+id/brokers_img"
+        android:layout_width="60dp"
+        android:layout_height="40dp"/>
+    <TextView
+        android:id="@+id/tv_brokers_item_max"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="1:888"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_brokers_item_min"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_marginLeft="60dp"
+        android:layout_gravity="center"
+        android:text="0.6 pips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_brokers_item_pairs"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="55+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

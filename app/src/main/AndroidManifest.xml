@@ -46,9 +46,19 @@
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity">
         </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.BrokersActivity">
+
+        </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.TradersActivity">
+
+        </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.VideosActivity">
+
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.TradersDetailsActivity">
+
+        </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.VideoActivity">
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.AddDetailsActivity">
 

@@ -16,6 +16,7 @@
     <color name="toolbar_color">#ffffff</color>
     <color name="toolbar_title_color">#2A2C33</color>
     <color name="toolbar_right_color">#2A2C33</color>
+    <color name="mine_title_bg">#2e343e</color>
 
 
     <color name="chart_red">#ff7858</color>

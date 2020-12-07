@@ -4,7 +4,15 @@
     android:background="@color/white"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/include_title"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+    <include
+
+        layout="@layout/include_title"/>
     <View
         android:background="#f5f5f5"
         android:layout_width="match_parent"

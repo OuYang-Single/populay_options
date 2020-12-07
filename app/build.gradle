@@ -112,4 +112,5 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:25.3.1'//版本随意
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+
 }

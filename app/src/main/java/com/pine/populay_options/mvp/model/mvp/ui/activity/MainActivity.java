@@ -45,11 +45,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
+        setFullscreen(this);
         return R.layout.activity_main;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
         Resources resource=(Resources)getBaseContext().getResources();
         ColorStateList csl=(ColorStateList)resource.getColorStateList(R.color.navigation_menu_item_color);
         mNavView.setItemTextColor(csl);

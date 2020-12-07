@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+<ImageView
+    android:src="@mipmap/u311"
+    android:layout_width="120dp"
+    android:layout_height="120dp"/>
+    <TextView
+        android:textSize="@dimen/sp16"
+        android:typeface="normal"
+        android:textColor="@color/black"
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/sp14"
+        android:typeface="normal"
+        android:textColor="@color/black"
+        android:text="2020-04-20 17:33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
