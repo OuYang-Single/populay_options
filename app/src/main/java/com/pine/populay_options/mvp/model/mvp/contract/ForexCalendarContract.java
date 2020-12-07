@@ -13,5 +13,9 @@ public interface ForexCalendarContract {
     interface Model extends IModel {
 
         String getTime();
+
+        String Future(String string);
+
+        String Previous(String text);
     }
 }

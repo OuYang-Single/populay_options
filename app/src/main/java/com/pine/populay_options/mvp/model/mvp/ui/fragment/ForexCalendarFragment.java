@@ -26,6 +26,7 @@ import com.pine.populay_options.mvp.model.mvp.ui.adapter.PaperAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ForexCalendarFragment extends BaseFragment<ForexCalendarPresenter> implements ForexCalendarContract.View {
     @BindView(R.id.recycler_forex_calendar)
@@ -67,6 +68,17 @@ public class ForexCalendarFragment extends BaseFragment<ForexCalendarPresenter> 
 
     }
 
+    @OnClick({R.id.Future,R.id.Previous})
+    public void OnClick(View view){
+        switch (view.getId()){
+            case R.id.Future:
+                mPresenter.Future(tvTime.getText().toString());
+                break;
+            case R.id.Previous:
+                mPresenter.Previous(tvTime.getText().toString());
+                break;
+        }
+    }
     @Override
     public void setData(@Nullable Object data) {
 

@@ -57,4 +57,12 @@ public class ForexCalendarPresenter extends BasePresenter<ForexCalendarContract.
         forexCalendars.add(new ForexCalendar("07:50","JPY","Economy Watchers Index for Current Conditions"));
         mRootView.setTime(mModel.getTime());
     }
+
+    public void Future(String text) {
+        mRootView.setTime(mModel.Future(text));
+    }
+
+    public void Previous(String text) {
+        mRootView.setTime(mModel.Previous(text));
+    }
 }
