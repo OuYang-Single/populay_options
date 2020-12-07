@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_forex_calendar_item_time"
+        android:layout_marginLeft="10dp"
+        android:text="7:10"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/black"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_forex_calendar_item_currency"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/black"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Currency"/>
+    <TextView
+        android:id="@+id/tv_forex_calendar_item_event"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/black"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Evsdfasdfafsdasdfasdfsdfsadfsdfsdfsdfsdfsdfsdfsdfent"/>
+
+</LinearLayout>

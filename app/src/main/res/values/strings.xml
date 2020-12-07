@@ -52,5 +52,7 @@
     <string name="customer_service">Customer service</string>
     <string name="Mine">Mine</string>
     <string name="videos">Forex Videos</string>
+    <string name="forex">Study Forex</string>
+    <string name="book_detalis">Book Detalis</string>
 
 </resources>

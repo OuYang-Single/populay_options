@@ -67,4 +67,5 @@
                 android:textColor="@color/toolbar_right_color"
                 android:textSize="14sp"/>
     </LinearLayout>
+
 </androidx.appcompat.widget.Toolbar>

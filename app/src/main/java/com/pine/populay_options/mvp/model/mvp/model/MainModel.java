@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
+import com.pine.populay_options.mvp.model.mvp.ui.fragment.ForexCalendarFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.MineFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.QuotesFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.TopicsFragment;
@@ -44,6 +45,7 @@ public class MainModel extends BaseModel implements MainContract.Model {
     public void onStart() {
         fragmentList.add(new TopicsFragment());
         fragmentList.add(new QuotesFragment());
+        fragmentList.add(new ForexCalendarFragment());
         fragmentList.add(new MineFragment());
         mViewPagerContentAdapterl.notifyDataSetChanged();
     }

@@ -1,5 +1,6 @@
 package com.pine.populay_options.mvp.model.mvp.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.pine.populay_options.mvp.model.mvp.contract.MineFragmentContract;
 import com.pine.populay_options.mvp.model.mvp.contract.PaperFragmentContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.MineFragmentPresenter;
 import com.pine.populay_options.mvp.model.mvp.presenter.PaperFragmentPresenter;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.ForexActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +56,7 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
 
     @OnClick({R.id.mine_assets,R.id.mine_top_brokers,R.id.mine_forex_videos,R.id.mine_most_famous_forex_traders,R.id.mine_study_forex,R.id.mine_tools,R.id.mine_customer_service})
     public void OnClick(View view){
+        Intent intent;
         switch (view.getId()){
             case R.id.mine_assets:
                 ARouter.getInstance().build("/analogDisk/position").navigation();
@@ -68,7 +71,9 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
                 ARouter.getInstance().build("/analogDisk/Traders").navigation();
                 break;
             case R.id.mine_study_forex:
-                ARouter.getInstance().build("/analogDisk/study_forex").navigation();
+              //  ARouter.getInstance().build("/analogDisk/study_forex").navigation();
+                intent=new Intent(getContext(), ForexActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.mine_tools:
                 ARouter.getInstance().build("/analogDisk/tools").navigation();
