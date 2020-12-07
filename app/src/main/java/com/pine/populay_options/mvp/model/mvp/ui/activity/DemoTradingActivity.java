@@ -476,9 +476,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
                       @Override
                       public void onYesClick() {
                           customDialog.dismiss();
-                          Intent intent=new Intent(DemoTradingActivity.this,PositionActivity.class);
-                          DemoTradingActivity.this.startActivity(intent);
-                       //   ARouter.getInstance().build("/analogDisk/position").navigation();
+                          ARouter.getInstance().build("/analogDisk/position").navigation();
                       }
                   });
 
