@@ -49,6 +49,9 @@
         <activity android:name=".mvp.model.mvp.ui.activity.BrokersActivity">
 
         </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.CustomerActivity">
+
+        </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.TradersActivity">
 
         </activity>

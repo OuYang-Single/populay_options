@@ -54,5 +54,5 @@
     <string name="videos">Forex Videos</string>
     <string name="forex">Study Forex</string>
     <string name="book_detalis">Book Detalis</string>
-
+    <string name="font_fontFamily_medium">sans-serif-medium</string>
 </resources>

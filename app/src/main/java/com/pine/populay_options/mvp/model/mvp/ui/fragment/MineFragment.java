@@ -71,9 +71,7 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
                 ARouter.getInstance().build("/analogDisk/Traders").navigation();
                 break;
             case R.id.mine_study_forex:
-              //  ARouter.getInstance().build("/analogDisk/study_forex").navigation();
-                intent=new Intent(getContext(), ForexActivity.class);
-                getActivity().startActivity(intent);
+                ARouter.getInstance().build("/analogDisk/study_forex").navigation();
                 break;
             case R.id.mine_tools:
                 ARouter.getInstance().build("/analogDisk/tools").navigation();

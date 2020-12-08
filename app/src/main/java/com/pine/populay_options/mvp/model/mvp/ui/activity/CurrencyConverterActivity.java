@@ -7,25 +7,22 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.pine.populay_options.R;
-import com.pine.populay_options.mvp.model.di.component.DaggerStudyForexComponent;
-import com.pine.populay_options.mvp.model.di.component.DaggerTradersComponent;
-import com.pine.populay_options.mvp.model.di.component.DaggerVideoComponent;
-import com.pine.populay_options.mvp.model.mvp.contract.StudyForexContract;
-import com.pine.populay_options.mvp.model.mvp.presenter.StudyForexPresenter;
+import com.pine.populay_options.mvp.model.mvp.contract.CurrencyConverterContract;
+import com.pine.populay_options.mvp.model.mvp.contract.MarginCalculatorContract;
+import com.pine.populay_options.mvp.model.mvp.presenter.CurrencyConverterPresenter;
+import com.pine.populay_options.mvp.model.mvp.presenter.MarginCalculatorPresenter;
 
 import butterknife.BindView;
 
-@Route(path = "/analogDisk/study_forex")
-public class StudyForexActivity extends BaseActivity<StudyForexPresenter> implements StudyForexContract.View {
+public class CurrencyConverterActivity extends BaseActivity<CurrencyConverterPresenter> implements CurrencyConverterContract.View {
     @BindView(R.id.toolbar_back)
     RelativeLayout mToolbarBack;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerStudyForexComponent //如找不到该类,请编译一下项目
+        DaggerCurrencyConverterComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -35,7 +32,7 @@ public class StudyForexActivity extends BaseActivity<StudyForexPresenter> implem
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.study_forex_activity;
+        return R.layout.study_currency_converter;
     }
 
     @Override
