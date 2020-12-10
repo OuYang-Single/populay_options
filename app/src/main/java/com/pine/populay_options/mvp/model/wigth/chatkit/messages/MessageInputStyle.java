@@ -119,7 +119,7 @@ class MessageInputStyle extends Style {
         style.inputButtonDefaultBgPressedColor = typedArray.getColor(R.styleable.MessageInput_inputButtonDefaultBgPressedColor,
                 style.getColor(R.color.cornflower_blue_two_dark));
         style.inputButtonDefaultBgDisabledColor = typedArray.getColor(R.styleable.MessageInput_inputButtonDefaultBgDisabledColor,
-                style.getColor(R.color.white_four));
+                style.getColor(R.color.bt_wait_bg_color));
 
         style.inputButtonIcon = typedArray.getResourceId(R.styleable.MessageInput_inputButtonIcon, -1);
         style.inputButtonDefaultIconColor = typedArray.getColor(R.styleable.MessageInput_inputButtonDefaultIconColor,

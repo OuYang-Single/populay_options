@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
+@Route(path = "/analogDisk/Forex")
 public class ForexActivity extends BaseActivity<ForexPresenter> implements ForexContract.View, DefaultAdapter.OnRecyclerViewItemClickListener {
     @BindView(R.id.toolbar_back)
     RelativeLayout mToolbarBack;

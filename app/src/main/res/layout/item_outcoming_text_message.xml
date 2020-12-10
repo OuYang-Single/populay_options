@@ -8,7 +8,7 @@
     android:layout_marginRight="16dp"
     android:layout_marginTop="8dp">
 
-    <LinearLayout
+    <com.google.android.flexbox.FlexboxLayout
         android:id="@id/bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +34,6 @@
             app:layout_alignSelf="center"
             app:layout_order="1"/>
 
-    </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 
 </RelativeLayout>

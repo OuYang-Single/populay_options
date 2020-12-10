@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.pine.populay_options.R;
+import com.pine.populay_options.mvp.model.di.component.DaggerCurrencyConverterComponent;
 import com.pine.populay_options.mvp.model.mvp.contract.CurrencyConverterContract;
 import com.pine.populay_options.mvp.model.mvp.contract.MarginCalculatorContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.CurrencyConverterPresenter;

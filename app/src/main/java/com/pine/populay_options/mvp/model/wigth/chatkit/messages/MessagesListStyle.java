@@ -120,9 +120,9 @@ class MessagesListStyle extends Style {
 
         style.incomingBubbleDrawable = typedArray.getResourceId(R.styleable.MessagesList_incomingBubbleDrawable, -1);
         style.incomingDefaultBubbleColor = typedArray.getColor(R.styleable.MessagesList_incomingDefaultBubbleColor,
-                style.getColor(R.color.white_two));
+                style.getColor(R.color.dark_mint));
         style.incomingDefaultBubblePressedColor = typedArray.getColor(R.styleable.MessagesList_incomingDefaultBubblePressedColor,
-                style.getColor(R.color.white_two));
+                style.getColor(R.color.dark_mint));
         style.incomingDefaultBubbleSelectedColor = typedArray.getColor(R.styleable.MessagesList_incomingDefaultBubbleSelectedColor,
                 style.getColor(R.color.cornflower_blue_two_24));
 

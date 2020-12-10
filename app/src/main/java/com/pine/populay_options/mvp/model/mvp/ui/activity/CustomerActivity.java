@@ -18,6 +18,7 @@ import com.pine.populay_options.mvp.model.mvp.contract.CustomerContract;
 import com.pine.populay_options.mvp.model.mvp.contract.VideoContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.CustomerPresenter;
 import com.pine.populay_options.mvp.model.mvp.presenter.VideoPresenter;
+import com.pine.populay_options.mvp.model.wigth.chatkit.messages.MessageInput;
 import com.pine.populay_options.mvp.model.wigth.chatkit.messages.MessagesList;
 
 import butterknife.BindView;
@@ -31,6 +32,8 @@ public class CustomerActivity extends BaseActivity<CustomerPresenter> implements
     RelativeLayout mToolbarBack;
     @BindView(R.id.recycler_customer)
     MessagesList mRecyclerCustomer;
+    @BindView(R.id.message_input)
+    MessageInput mMessageInput;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerCustomerComponent //如找不到该类,请编译一下项目
@@ -49,6 +52,7 @@ public class CustomerActivity extends BaseActivity<CustomerPresenter> implements
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         setTitle(R.string.customer_service);
+        mMessageInput.set
         mToolbarBack.setVisibility(View.VISIBLE);
         mPresenter.initData();
 
