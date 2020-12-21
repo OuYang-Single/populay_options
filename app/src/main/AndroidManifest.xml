@@ -23,11 +23,7 @@
         <activity
                 android:name=".mvp.model.mvp.ui.activity.MainActivity"
                 android:label="@string/title_activity_main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.DemoTradingActivity">
 
@@ -44,7 +40,11 @@
                 android:name=".mvp.model.mvp.ui.activity.WaitActivity"
                 android:label="@string/title_activity_wait"
                 android:theme="@style/LunchTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity">
         </activity>
@@ -61,6 +61,9 @@
 
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.TradersDetailsActivity">
+
+        </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.CurrencyConverterActivity">
 
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.VideoActivity">

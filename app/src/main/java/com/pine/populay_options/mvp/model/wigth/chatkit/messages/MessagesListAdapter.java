@@ -33,7 +33,7 @@ import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pine.populay_options.R;
-import com.pine.populay_options.mvp.model.wigth.chatkit.commons.ImageLoader;
+import com.jess.arms.http.imageloader.ImageLoader;
 import com.pine.populay_options.mvp.model.wigth.chatkit.commons.ViewHolder;
 import com.pine.populay_options.mvp.model.wigth.chatkit.commons.models.IMessage;
 import com.pine.populay_options.mvp.model.wigth.chatkit.utils.DateFormatter;

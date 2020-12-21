@@ -9,10 +9,10 @@
         tools:showIn="@layout/activity_wait"
         tools:context=".mvp.model.mvp.ui.activity.WaitActivity">
 
-    <com.pine.populay_options.mvp.model.mvp.ui.CustomizeView.FullScreenVideoView
-            android:id="@+id/wait_ad_video"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"/>
+<WebView
+    android:id="@+id/webview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

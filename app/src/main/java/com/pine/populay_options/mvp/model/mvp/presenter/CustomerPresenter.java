@@ -44,6 +44,6 @@ public class CustomerPresenter extends BasePresenter<CustomerContract.Model, Cus
     }
 
     public void initData() {
-
+         mModel.initData();
     }
 }

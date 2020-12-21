@@ -49,8 +49,15 @@
     <color name="white_five">#dadada</color>
     <color name="blue">#031cd7</color>
     <color name="black">#000000</color>
+    <color name="ivory">#000000</color>
+    <color name="ivory_dark">#000000</color>
+    <color name="black_10">#000000</color>
+    <color name="gray_transparent">#000000</color>
+    <color name="green_dark">#000000</color>
+    <color name="gray_dark_transparent">#000000</color>
+    <color name="brown">#000000</color>
     <color name="transparent">#00000000</color>
-    <color name="gray">#333333</color>
+    <color name="gray">#e0e0e0</color>
     <color name="dark_gray">#282a2b</color>
     <color name="dark_grey_two">#191a1b</color>
     <color name="warm_grey">#7f7f7f</color>

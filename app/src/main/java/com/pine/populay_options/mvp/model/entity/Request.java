@@ -5,25 +5,26 @@ import android.os.Parcelable;
 
 public class Request<T> implements Parcelable {
     private T data;
-    private int status;
+    private int code;
     private String timestamp;
     private String token;
-    private String message;
+    private String msg;
 
-    public T getUser() {
+    public Request(){}
+    public T getData() {
         return data;
     }
 
-    public void setUser(T user) {
-        this.data = user;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getTimestamp() {
@@ -42,19 +43,32 @@ public class Request<T> implements Parcelable {
         this.token = token;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     protected Request(Parcel in) {
-        status = in.readInt();
+        code = in.readInt();
         timestamp = in.readString();
         token = in.readString();
-        message = in.readString();
+        msg = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(code);
+        dest.writeString(timestamp);
+        dest.writeString(token);
+        dest.writeString(msg);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Request> CREATOR = new Creator<Request>() {
@@ -68,17 +82,4 @@ public class Request<T> implements Parcelable {
             return new Request[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(status);
-        parcel.writeString(timestamp);
-        parcel.writeString(token);
-        parcel.writeString(message);
-    }
 }

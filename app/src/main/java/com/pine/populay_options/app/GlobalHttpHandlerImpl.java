@@ -53,7 +53,7 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
          Gson gson=new Gson();
          com.pine.populay_options.mvp.model.entity.Request mRequest= null;
           mRequest = gson.fromJson(httpResult, com.pine.populay_options.mvp.model.entity.Request.class);
-         response=response.newBuilder().message(mRequest.getMessage()).build();
+         response=response.newBuilder().message(mRequest.getMsg()).build();
 
         }
         return response;

@@ -18,6 +18,8 @@
         android:layout_toRightOf="@id/attachmentButton"/>
 
     <EditText
+        android:textSize="@dimen/sp12"
+        android:lines="1"
         android:paddingRight="15dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"

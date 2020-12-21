@@ -80,6 +80,6 @@ public class LogInModel extends BaseModel implements LogInContract.Model {
     @Override
     public void seve(Request<User> users) {
         mManagerFactory.getStudentManager(mApplication.getApplicationContext()).deleteAll();
-        mManagerFactory.getStudentManager(mApplication.getApplicationContext()).save(users.getUser());
+        mManagerFactory.getStudentManager(mApplication.getApplicationContext()).save(users.getData());
     }
 }

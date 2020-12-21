@@ -5,7 +5,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.pine.populay_options.R;
+import com.pine.populay_options.mvp.model.entity.Request;
+import com.pine.populay_options.mvp.model.entity.User;
+import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.LogInActivity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
@@ -13,7 +18,13 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
@@ -88,5 +99,33 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
             intent = new Intent(mRootView.getContent(), LogInActivity.class);
         }
         mRootView.launchActivity(intent);
+    }
+
+    public void vestSign() {
+        mModel.vestSign().subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<Request<VestSignEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(Request<VestSignEntity> data) {
+                       if (data.getCode()==200){
+                           mRootView.vestSign(data.getData());
+                       }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+
+                    }
+                });;
     }
 }

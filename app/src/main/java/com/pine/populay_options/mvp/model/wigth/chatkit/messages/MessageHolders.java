@@ -16,8 +16,9 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.pine.populay_options.R;
-import com.pine.populay_options.mvp.model.wigth.chatkit.commons.ImageLoader;
+import com.jess.arms.http.imageloader.ImageLoader;
 import com.pine.populay_options.mvp.model.wigth.chatkit.commons.ViewHolder;
 import com.pine.populay_options.mvp.model.wigth.chatkit.commons.models.IMessage;
 import com.pine.populay_options.mvp.model.wigth.chatkit.commons.models.MessageContentType;
@@ -883,7 +884,7 @@ public class MessageHolders {
         public void onBind(MESSAGE message) {
             super.onBind(message);
             if (image != null && imageLoader != null) {
-                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
+                imageLoader.loadImage(image.getContext(), ImageConfigImpl.builder().imageView(image).url(message.getImageUrl()).build());
             }
 
             if (imageOverlay != null) {
@@ -953,7 +954,8 @@ public class MessageHolders {
         public void onBind(MESSAGE message) {
             super.onBind(message);
             if (image != null && imageLoader != null) {
-                imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
+
+                imageLoader.loadImage(image.getContext(), ImageConfigImpl.builder().imageView(image).imageRadius(message.getUser().getAvatars()).build());
             }
 
             if (imageOverlay != null) {
@@ -1070,7 +1072,9 @@ public class MessageHolders {
 
                 userAvatar.setVisibility(isAvatarExists ? View.VISIBLE : View.GONE);
                 if (isAvatarExists) {
-                    imageLoader.loadImage(userAvatar, message.getUser().getAvatar(), null);
+                //userAvatar,, null
+
+                    imageLoader.loadImage(userAvatar.getContext(), ImageConfigImpl.builder().imageView(userAvatar).url( message.getUser().getAvatar()).build());
                 }
             }
         }

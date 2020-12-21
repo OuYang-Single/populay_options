@@ -14,6 +14,8 @@ import com.jess.arms.integration.ConfigModule;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.pine.populay_options.mvp.model.api.Api.APP_DOMAINS;
+
 /**
  * ================================================
  * App 的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
@@ -39,7 +41,7 @@ public final class GlobalConfiguration implements ConfigModule {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 
-        builder.baseurl(Api.APP_DOMAIN)
+        builder.baseurl(Api.APP_DOMAINS)
                 //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
                 .imageLoaderStrategy(new GlideImageLoaderStrategy())

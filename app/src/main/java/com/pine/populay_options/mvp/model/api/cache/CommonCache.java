@@ -17,6 +17,8 @@ package com.pine.populay_options.mvp.model.api.cache;
 
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
+import com.pine.populay_options.mvp.model.entity.VestSignEntity;
+
 import io.reactivex.Observable;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictProvider;
@@ -44,5 +46,6 @@ public interface CommonCache {
     Observable<Reply<ResponseBody>> getdownload(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
     @LifeCache(duration = 4, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<ResponseBody>> chart(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
-
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+   Observable<Reply<Request<VestSignEntity>>> vestSign( Observable<Request<VestSignEntity>>  users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 }
