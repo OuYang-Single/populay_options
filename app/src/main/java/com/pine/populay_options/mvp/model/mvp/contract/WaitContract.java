@@ -8,6 +8,7 @@ import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
+import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
 import io.reactivex.Observable;
 
@@ -31,6 +32,8 @@ public interface WaitContract {
 
         IRepositoryManager getRepositoryManager();
 
-        Observable<Request<VestSignEntity>> vestSign();
+        Observable<Request<VestSignEntity>> vestSign(AppJs appJs);
+
+        void onStart();
     }
 }

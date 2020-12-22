@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Qiming</string>
+    <string name="app_name">RupeeOption</string>
     <string name="username">请输入您的手机号</string>
     <string name="code">输入验证码</string>
     <string name="get_cold">获取验证码</string>

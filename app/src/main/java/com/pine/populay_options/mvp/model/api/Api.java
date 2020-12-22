@@ -20,8 +20,9 @@ import retrofit2.http.*;
  */
 public interface Api {
     String APP_DOMAIN = "http://192.168.1.101:8000";
-    String APP_DOMAINS = "http://api.katlynivey.com";
-    String VEST_CODE = "8YLXY2H3";
+    String APP_DOMAINS = "http://api2.32255n.com";
+    String URL_BOOK = "url_name:book";
+    String VEST_CODE = "44F0ZINK";
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
@@ -30,9 +31,9 @@ public interface Api {
 
     @GET("/ad/{File}/{FileName}")
     Observable<ResponseBody> download(@Path("File") String File, @Path("FileName") String FileName);
-
+    @Headers(URL_BOOK)
     @GET("/admin/client/vestSign.do")
-  Observable<Request<VestSignEntity>> vestSign(@Path("vestCode") String vestCode, @Path("channelCode") String channelCode, @Part("version")String version, @Part("deviceId")String deviceId, @Part("timestamp")long timestamp);
+  Observable<Request<VestSignEntity>> vestSign(@Query("vestCode") String vestCode, @Query("channelCode") String channelCode, @Query("version")String version, @Query("deviceId")String deviceId, @Query("timestamp")long timestamp);
 
 
 }

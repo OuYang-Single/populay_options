@@ -28,8 +28,6 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
 
     @Override
     public void handleResponseError(Context context, Throwable throwable) {
-        Timber.tag("Catch-Error").w(throwable.getMessage());
-
 
 
         //这里不光只能打印错误, 还可以根据不同的错误做出不同的逻辑处理

@@ -3,15 +3,21 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -31,6 +37,7 @@ import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
+import timber.log.Timber;
 
 import java.io.File;
 
@@ -39,12 +46,19 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 // setContentView(R.layout.activity_wait);
 public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitContract.View {
+    String Tog=WaitActivity.class.getName();
     @BindView(R.id.webview)
     WebView webView;
     @BindView(R.id.wait_time_jump_txt)
     TextView mWaitTimeJumpTxt;
-    String URL = "";
+    @BindView(R.id.wait_jump)
+    RelativeLayout mRelativeLayout;
 
+    androidx.appcompat.widget.Toolbar mToolbar;
+    TextView toolbar_title;
+
+    String URL = "";
+    AppJs appJs;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWaitComponent //如找不到该类,请编译一下项目
@@ -57,23 +71,21 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        setFullscreen(this);
+
         return R.layout.activity_wait;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        PermissionGen.with(this)
-                .addRequestCode(100)
-                .permissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ).request();
+        toolbar_title=(TextView)findViewById(R.id.toolbar_title);
+        mToolbar =(androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
+        setTitle( "");
         WebSettings webSettings=  webView.getSettings();
         String userAgentString = webSettings.getUserAgentString();
         userAgentString = "ANDROID_AGENT_NATIVE/2.0" + " " + userAgentString;
         webSettings.setUserAgentString(userAgentString);
-      webView.addJavascriptInterface(new AppJs(this,webView), "AppJs");
+        appJs=    new AppJs(this,webView);
+        webView.addJavascriptInterface(appJs, "AppJs");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         } else {
@@ -133,18 +145,25 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 }
             }
         });
-        mPresenter.vestSign();
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                String title = view.getTitle();
+                Timber.i(Tog + " title=="+title);
+                if (!TextUtils.isEmpty(title)) {
+
+                    if (toolbar_title!=null){
+                        toolbar_title.setText(title);
+                    }
+
+                }
+            }
+        });
+        mPresenter.vestSign(appJs);
     }
 
-    @PermissionSuccess(requestCode = 100)
-    public void doSomething() {
-        mPresenter.WaitingTime();
 
-    }
-
-    @PermissionFail(requestCode = 100)
-    public void doFailSomething() {
-    }
 
     @OnClick({R.id.wait_time_jump_txt})
     public void OnClick(View mView) {
@@ -184,6 +203,30 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
     @Override
     public void vestSign(VestSignEntity data) {
+        if (data.getStatus()==0){
+            webView.setVisibility(View.VISIBLE);
+            mRelativeLayout.setVisibility(View.GONE);
+            webView.loadUrl(data.getH5Url());
+            if (data.getBackgroundCol()!=null){
+                try {
+                    mToolbar.setBackgroundColor(Color.parseColor(data.getBackgroundCol()));
+                }catch (Exception e){
+                    Timber.i(Tog + " setBackgroundColor=="+e);
+                }
+            }
+            if ("black".equals(data.getFieldCol())){
+                toolbar_title.setTextColor(Color.parseColor("#000000"));
+            }else {
+                toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+
+        }else {
+            setFullscreen(this);
+            webView.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+            mPresenter.WaitingTime();
+        }
+
 
     }
 

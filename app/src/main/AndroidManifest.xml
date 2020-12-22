@@ -38,8 +38,7 @@
 
         <activity
                 android:name=".mvp.model.mvp.ui.activity.WaitActivity"
-                android:label="@string/title_activity_wait"
-                android:theme="@style/LunchTheme">
+                android:label="@string/title_activity_wait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -18,6 +18,7 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -44,7 +45,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
     Handler mHandler;
     Runnable mRunnable;
     int Time = 1000;
-    int anInt = 10;
+    int anInt = 5;
 
     @Inject
     public WaitPresenter(WaitContract.Model model, WaitContract.View rootView) {
@@ -54,6 +55,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
     @Override
     public void onStart() {
         super.onStart();
+        mModel.onStart();
         mRunnable = new Runnable() {
             @Override
             public void run() {
@@ -101,8 +103,8 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
         mRootView.launchActivity(intent);
     }
 
-    public void vestSign() {
-        mModel.vestSign().subscribeOn(Schedulers.io())
+    public void vestSign(AppJs appJs) {
+        mModel.vestSign(appJs).subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {

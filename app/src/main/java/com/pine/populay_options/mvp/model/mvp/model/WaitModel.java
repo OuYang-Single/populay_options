@@ -4,6 +4,7 @@ import android.app.Application;
 import android.provider.ContactsContract;
 
 import com.pine.populay_options.greendao.ManagerFactory;
+import com.pine.populay_options.mvp.model.api.AliyunExchangeApi;
 import com.pine.populay_options.mvp.model.api.Api;
 import com.pine.populay_options.mvp.model.api.cache.CommonCache;
 import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
@@ -15,9 +16,11 @@ import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
+import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -28,6 +31,14 @@ import io.reactivex.functions.Function;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictDynamicKey;
 import io.rx_cache2.Reply;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.APP_DOMAIN;
+import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.appcode;
+import static com.pine.populay_options.mvp.model.api.Api.APP_DOMAINS;
 
 
 /**
@@ -50,7 +61,7 @@ public class WaitModel extends BaseModel implements WaitContract.Model {
     Application mApplication;
     @Inject
     ManagerFactory mManagerFactory;
-
+    Retrofit mRetrofit;
     @Inject
     public WaitModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
@@ -76,11 +87,12 @@ public class WaitModel extends BaseModel implements WaitContract.Model {
     }
 
     @Override
-    public Observable<Request<VestSignEntity>> vestSign() {
+    public Observable<Request<VestSignEntity>> vestSign(AppJs appJs) {
         Calendar  calendars = Calendar.getInstance();
-        return Observable.just(mRepositoryManager
+
+       return Observable.just(mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .vestSign( Api.VEST_CODE,"google","1.0.0","ebe2f38b83fcd5d1",calendars.getTime().getTime()))
+                .vestSign( Api.VEST_CODE,appJs.takeChannel(),"1.0.0",appJs.getDeviceId(),calendars.getTime().getTime()))
                 .flatMap(new Function<Observable<Request<VestSignEntity>>, ObservableSource<Request<VestSignEntity>>>() {
                     @Override
                     public ObservableSource<Request<VestSignEntity>> apply(@NonNull Observable<Request<VestSignEntity>> listObservable) throws Exception {
@@ -91,5 +103,26 @@ public class WaitModel extends BaseModel implements WaitContract.Model {
                                 .map(Reply::getData);
                     }
                 });
+    }
+
+    @Override
+    public void onStart() {
+        OkHttpClient okHttpClients= new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                //允许失败重试
+                .retryOnConnectionFailure(true)
+                .build();
+        mRetrofit=    new Retrofit.Builder()
+                //设置基站地址(基站地址+描述网络请求的接口上面注释的Post地址,就是要上传文件到服务器的地址,
+                // 这只是一种设置地址的方法,还有其他方式,不在赘述)
+                .baseUrl(APP_DOMAINS)
+                //设置委托,使用OKHttp联网,也可以设置其他的;
+                .client(okHttpClients)
+                .addConverterFactory(GsonConverterFactory.create())
+                //设置支持rxJava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
 }

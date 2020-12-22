@@ -1,6 +1,7 @@
 package com.pine.populay_options.mvp.model.wigth.chatkit.utils;
 
 import android.app.Activity;
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,21 +13,30 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 
+import com.pine.populay_options.mvp.model.entity.BranchEvent;
+
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
 import java.util.UUID;
 
+import timber.log.Timber;
+
 public class AppJs {
+    String TOG=AppJs.class.getName();
     WebView webView;
     Context mContext;
     Activity activity;
   public AppJs(Activity activity,WebView webView){
+
       mContext=activity;
       this.activity=activity;
       this. webView=webView;
   }
+  public AppJs(){
+    };
     /**
      * 获取设备id
      * 必须保证有值
@@ -46,6 +56,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public String takePushId() {
+        Timber.w(TOG + " takePushId");
         return "";
     }
 
@@ -56,6 +67,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public String takeFCMPushId() {
+        Timber.w(TOG + " takeFCMPushId");
         //fcm生成的注册令牌
         //TODO
         return null;
@@ -75,6 +87,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public String getGoogleId() {
+        Timber.w(TOG + " getGoogleId");
         //TODO
         return null;
     }
@@ -86,6 +99,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public String getGaId() {
+        Timber.w(TOG + " getGaId");
         //TODO
         return null;
     }
@@ -99,6 +113,7 @@ public class AppJs {
     @JavascriptInterface
     public void openGoogle(String data) {
         //TODO
+        Timber.w(TOG + " openGoogle"+"   data=="+data);
     }
 
     /**
@@ -109,6 +124,7 @@ public class AppJs {
     @JavascriptInterface
     public void openPayTm(String data) {
         //TODO
+        Timber.w(TOG + " openPayTm"+"   data=="+data);
     }
 
     /**
@@ -120,12 +136,14 @@ public class AppJs {
      */
     @JavascriptInterface
     public void takePortraitPicture(String callbackMethod) {
+        Timber.w(TOG + " takePortraitPicture"+"   callbackMethod=="+callbackMethod);
+
         // TODO
         // 参考实现：成员变量记录下js方法名，图片转成base64字符串后调用该js方法传递给H5
         // 下面一段代码仅供参考，能实现功能即可
-        if (!TextUtils.isEmpty(callbackMethod)) {
+  /*      if (!TextUtils.isEmpty(callbackMethod)) {
             StringBuilder builder = new StringBuilder(callbackMethod).append("(");
-          //  builder.append("'").append("data:image/png;base64,").append(str).append("'");
+            builder.append("'").append("data:image/png;base64,").append(str).append("'");
             builder.append(")");
             String method = builder.toString();
             String javaScript = "javascript:" + method;
@@ -134,7 +152,7 @@ public class AppJs {
             } else {
                 webView.loadUrl(javaScript);
             }
-        }
+        }*/
     }
 
     /**
@@ -146,6 +164,8 @@ public class AppJs {
     @JavascriptInterface
     public void showTitleBar(boolean visible) {
         //TODO
+        Timber.w(TOG + " showTitleBar"+"   visible=="+visible);
+        EventBus.getDefault().post(new BranchEvent<Boolean>(BranchEvent.ShowTitleBarEVent,visible));
     }
 
     /**
@@ -156,6 +176,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void isContainsName(String callbackMethod, String name) {
+        Timber.w(TOG + " isContainsName"+"   callbackMethod=="+callbackMethod+"   name=="+name);
         boolean has = false;
         //TODO 遍历所有提供的@JavascriptInterface，判断否含有name方法，把结果通过JavaScript反馈给H5
     //	···
@@ -180,6 +201,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void shouldForbidSysBackPress(int forbid) {
+        Timber.w(TOG + " shouldForbidSysBackPress"+"   forbid=="+forbid);
         //TODO 以下仅供参考
         //WebActivity成员变量记录下是否禁止
       //  mContext.setShouldForbidBackPress(forbid);
@@ -194,6 +216,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void forbidBackForJS(int forbid, String methodName) {
+        Timber.w(TOG + " forbidBackForJS"+"   forbid=="+forbid+"   methodName=="+methodName);
         //TODO 以下仅供参考
       //  mContext.setShouldForbidBackPress(forbid);
         //同上
@@ -208,6 +231,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void openBrowser(String url) {
+        Timber.w(TOG + " openBrowser"+"   url"+url);
         //TODO 以下仅供参考
         Uri uri = Uri.parse(url);
         Intent intent = new Intent();
@@ -244,6 +268,7 @@ public class AppJs {
     @JavascriptInterface
     public void openPureBrowser(String json) {
         //TODO
+        Timber.w(TOG + " openPureBrowser"+"   json"+json);
     }
 
     /**
@@ -255,6 +280,7 @@ public class AppJs {
     public void branchEvent(String eventName) {
     /*    new BranchEvent(eventName)
                 .logEvent(mContext);*/
+        Timber.w(TOG + " branchEvent"+"   eventName"+eventName);
     }
 
     /**
@@ -265,6 +291,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void branchEvent(String eventName, String parameters) {
+        Timber.w(TOG + " branchEvent"+"   eventName"+eventName+"   parameters"+parameters);
        // BranchEvent branchEvent = new BranchEvent(eventName);
         JSONObject obj = null;
         try {
@@ -296,6 +323,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void branchEvent(String eventName, String parameters, String alias) {
+        Timber.w(TOG + " branchEvent"+"   eventName"+eventName+"   parameters"+parameters+"   alias"+alias);
      //   BranchEvent branchEvent = new BranchEvent(eventName);
     /*    JSONObject obj = new JSONObject(parameters);
         Bundle bundle = new Bundle();
@@ -324,6 +352,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void facebookEvent(String eventName, Double valueToSum, String parameters) {
+        Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   valueToSum"+valueToSum+"   parameters"+parameters);
    /*     AppEventsLogger logger = AppEventsLogger.newLogger();
         JSONObject obj = new JSONObject(parameters);
         Bundle bundle = new Bundle();
@@ -344,6 +373,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void facebookEvent(String eventName, String parameters) {
+        Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   parameters"+parameters);
 /*        AppEventsLogger logger = AppEventsLogger.newLogger();
         JSONObject obj = new JSONObject(parameters);
         Bundle bundle = new Bundle();
@@ -364,6 +394,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void facebookEvent(String eventName, Double valueToSum) {
+        Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   valueToSum"+valueToSum);
    /*     AppEventsLogger logger = AppEventsLogger.newLogger();
         logger.logEvent(eventName, valueToSum);*/
     }
@@ -384,6 +415,7 @@ public class AppJs {
      */
     @JavascriptInterface
     public void firebaseEvent(String category, String parameters) {
+        Timber.w(TOG + " firebaseEvent"+"   category"+category+"   parameters"+parameters);
    /*     JSONObject obj = new JSONObject(parameters);
         Bundle bundle = new Bundle();
         Iterator<String> keys = obj.keys();

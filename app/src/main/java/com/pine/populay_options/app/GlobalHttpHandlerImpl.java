@@ -6,9 +6,14 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.jess.arms.http.GlobalHttpHandler;
 
+import java.util.List;
+
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.pine.populay_options.mvp.model.api.Api.APP_DOMAINS;
 
 /**
  * ================================================
@@ -56,6 +61,7 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
          response=response.newBuilder().message(mRequest.getMsg()).build();
 
         }
+
         return response;
     }
 
@@ -68,9 +74,20 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
      */
     @Override
     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-        /* 如果需要在请求服务器之前做一些操作, 则重新构建一个做过操作的 Request 并 return, 如增加 Header、Params 等请求信息, 不做操作则直接返回参数 request
-        return chain.request().newBuilder().header("token", tokenId)
-                              .build(); */
+
+        List<String> headerValues = request.headers("url_name");
+        if (headerValues != null && headerValues.size() > 0) {
+            String headerValue = headerValues.get(0);
+            if ("book".equals(headerValue)) {
+                HttpUrl httpUrl=   request.url();
+                HttpUrl    newBaseUrl = HttpUrl.parse(APP_DOMAINS);
+                HttpUrl newBaseUrls=   httpUrl.newBuilder().host(newBaseUrl.host()).port(newBaseUrl.port()).build();
+                return chain.request().newBuilder().url(newBaseUrls)
+                        .build();
+            }
+        }
+   /*     return chain.request().newBuilder().header("token", tokenId)
+                .build();*/
         return request;
     }
 }
