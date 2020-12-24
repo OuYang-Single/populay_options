@@ -15,6 +15,8 @@ import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,6 +43,7 @@ import timber.log.Timber;
 
 import java.io.File;
 
+import static com.jess.arms.integration.AppManager.getAppManager;
 import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -53,7 +56,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     TextView mWaitTimeJumpTxt;
     @BindView(R.id.wait_jump)
     RelativeLayout mRelativeLayout;
-
+    @BindView(R.id.view_live)
+    View mView;
     androidx.appcompat.widget.Toolbar mToolbar;
     TextView toolbar_title;
 
@@ -77,6 +81,12 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        PermissionGen.with(this)
+                .addRequestCode(100)
+                .permissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).request();
         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         mToolbar =(androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
         setTitle( "");
@@ -111,12 +121,6 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.setWebContentsDebuggingEnabled(false);
         }
-//TODO 需要实现WebViewClient和WebChromeClient
-// onShowFileChooser() 选择文件(图片)
-      //  webView.setWebChromeClient();
-// onPageFinished在里面可以获取webView.getTitle()给titlebar设置标题
-       // webView.setWebViewClient();
-
         webView.clearHistory();
         webView.setDrawingCacheEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -164,7 +168,15 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     }
 
 
+    @PermissionSuccess(requestCode = 100)
+    public void doSomething() {
+       // mPresenter.WaitingTime();
 
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void doFailSomething() {
+    }
     @OnClick({R.id.wait_time_jump_txt})
     public void OnClick(View mView) {
         switch (mView.getId()) {
@@ -200,9 +212,10 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     public void statusService(Intent intent) {
 
     }
-
+    VestSignEntity data;
     @Override
     public void vestSign(VestSignEntity data) {
+        data=data;
         if (data.getStatus()==0){
             webView.setVisibility(View.VISIBLE);
             mRelativeLayout.setVisibility(View.GONE);
@@ -245,5 +258,13 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void showTitleBar(boolean visible){
+        if (mToolbar!=null){
+            mToolbar.setVisibility(visible?View.VISIBLE:View.GONE);
+            webView.loadUrl(data.getH5Url());
+        }
     }
 }

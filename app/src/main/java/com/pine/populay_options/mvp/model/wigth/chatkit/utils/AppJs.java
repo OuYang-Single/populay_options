@@ -13,16 +13,22 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 
+import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.mvp.model.entity.BranchEvent;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import timber.log.Timber;
+
+import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
 
 public class AppJs {
     String TOG=AppJs.class.getName();
@@ -136,8 +142,14 @@ public class AppJs {
      */
     @JavascriptInterface
     public void takePortraitPicture(String callbackMethod) {
-        Timber.w(TOG + " takePortraitPicture"+"   callbackMethod=="+callbackMethod);
 
+        Timber.w(TOG + " takePortraitPicture"+"   callbackMethod=="+callbackMethod);
+        Map<String ,String >map=new HashMap<>();
+        map.put(CALLBACKMETHOD,callbackMethod);
+        ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
+        EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.EVENT_KEY.takePortraitPicture,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
+
+        // EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.ShowTitleBarEVent,callbackMethod));
         // TODO
         // 参考实现：成员变量记录下js方法名，图片转成base64字符串后调用该js方法传递给H5
         // 下面一段代码仅供参考，能实现功能即可
@@ -165,7 +177,7 @@ public class AppJs {
     public void showTitleBar(boolean visible) {
         //TODO
         Timber.w(TOG + " showTitleBar"+"   visible=="+visible);
-        EventBus.getDefault().post(new BranchEvent<Boolean>(BranchEvent.ShowTitleBarEVent,visible));
+        EventBus.getDefault().post(new BranchEvent<Boolean>(BranchEvent.EVENT_KEY.ShowTitleBarEVent,visible));
     }
 
     /**
@@ -177,6 +189,11 @@ public class AppJs {
     @JavascriptInterface
     public void isContainsName(String callbackMethod, String name) {
         Timber.w(TOG + " isContainsName"+"   callbackMethod=="+callbackMethod+"   name=="+name);
+        Map<String ,String >map=new HashMap<>();
+        map.put(CALLBACKMETHOD,callbackMethod);
+        map.put(BranchEvent.NAME,name);
+        ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
+        EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.EVENT_KEY.ShowTitleBarEVent,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
         boolean has = false;
         //TODO 遍历所有提供的@JavascriptInterface，判断否含有name方法，把结果通过JavaScript反馈给H5
     //	···
