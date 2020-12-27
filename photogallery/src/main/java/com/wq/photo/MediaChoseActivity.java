@@ -59,6 +59,7 @@ public class MediaChoseActivity extends AppCompatActivity {
     boolean isneedCrop = false;
     boolean isNeedfcamera = false;
     int spanCount;
+    String callbackMethod;
     private int actionBarcolor;
     private int statusBarcolor;
     private boolean isSquareCrop;
@@ -75,6 +76,7 @@ public class MediaChoseActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction();
         Bundle bundle = getIntent().getBundleExtra(PickConfig.EXTRA_PICK_BUNDLE);
         statusBarcolor = bundle.getInt(PickConfig.EXTRA_STATUS_BAR_COLOR);
+        callbackMethod = bundle.getString(PickConfig.EXTRA_callbackMethod);
         actionBarcolor = bundle.getInt(PickConfig.EXTRA_ACTION_BAR_COLOR);
         spanCount = bundle.getInt(PickConfig.EXTRA_SPAN_COUNT, PickConfig.DEFAULT_SPANCOUNT);
         chosemode = bundle.getInt(PickConfig.EXTRA_PICK_MODE, PickConfig.MODE_SINGLE_PICK);
@@ -259,6 +261,7 @@ public class MediaChoseActivity extends AppCompatActivity {
                 img.add((String) imasgemap.get(key));
             }
             intent.putExtra("data", img);
+            intent.putExtra("callbackMethod", callbackMethod);
             setResult(RESULT_OK, intent);
             finish();
         }

@@ -1,6 +1,6 @@
 package com.pine.populay_options.mvp.model.mvp.contract;
 
-import com.dld.view.SegmentedControlItem;
+
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 

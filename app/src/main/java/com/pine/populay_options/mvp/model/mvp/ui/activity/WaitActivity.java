@@ -1,7 +1,12 @@
 package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -12,6 +17,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
+import android.webkit.JsResult;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,8 +32,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pine.populay_options.R;
 
+import com.pine.populay_options.app.utils.SPManager;
 import com.pine.populay_options.mvp.model.di.component.DaggerWaitComponent;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
@@ -42,13 +55,19 @@ import kr.co.namee.permissiongen.PermissionSuccess;
 import timber.log.Timber;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static com.jess.arms.integration.AppManager.getAppManager;
 import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
+import static com.wq.photo.widget.CameraPreview.TAG;
+import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
 
 // setContentView(R.layout.activity_wait);
-public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitContract.View {
+public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitContract.View, DownloadListener {
     String Tog=WaitActivity.class.getName();
     @BindView(R.id.webview)
     WebView webView;
@@ -60,7 +79,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     View mView;
     androidx.appcompat.widget.Toolbar mToolbar;
     TextView toolbar_title;
-
+    ValueCallback<Uri> mUploadMessage;
+    ValueCallback<Uri[]> uploadMessageAboveL;
     String URL = "";
     AppJs appJs;
     @Override
@@ -87,74 +107,20 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ).request();
+
+        mPresenter.getToken();
         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         mToolbar =(androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
-        setTitle( "");
-        WebSettings webSettings=  webView.getSettings();
-        String userAgentString = webSettings.getUserAgentString();
-        userAgentString = "ANDROID_AGENT_NATIVE/2.0" + " " + userAgentString;
-        webSettings.setUserAgentString(userAgentString);
+        mPresenter.initWebSettings(webView.getSettings());
         appJs=    new AppJs(this,webView);
-        webView.addJavascriptInterface(appJs, "AppJs");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
-
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setRenderPriority(WebSettings.RenderPriority.NORMAL);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(getExternalCacheDir().getPath());
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setEnableSmoothTransition(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-           // webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setWebContentsDebuggingEnabled(false);
-        }
-        webView.clearHistory();
-        webView.setDrawingCacheEnabled(true);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                WebView.HitTestResult result = webView.getHitTestResult();
-                if (result != null) {
-                    int type = result.getType();
-                    if (type == WebView.HitTestResult.IMAGE_TYPE) {
-                        //TODO实现长按保存图片
-                        //showSaveImageDialog(result);
-                    }
-                }
-                return false;
-            }
-        });
-        webView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition,
-                                        String mimeType, long contentLength) {
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-            }
-        });
+        mPresenter.initWebView(webView,appJs);
+        setTitle( "");
+        webView.setDownloadListener(this);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 String title = view.getTitle();
-                Timber.i(Tog + " title=="+title);
                 if (!TextUtils.isEmpty(title)) {
 
                     if (toolbar_title!=null){
@@ -164,10 +130,44 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 }
             }
         });
+        webView.setWebChromeClient(new WebChromeClient() {
+
+            // Android 3.0 以下
+            public void openFileChooser(ValueCallback<Uri> valueCallback) {
+                mUploadMessage = valueCallback;
+                selectImage(WaitActivity.this);
+            }
+
+            // Android 3~4.1
+            public void openFileChooser(ValueCallback valueCallback, String acceptType) {
+                mUploadMessage = valueCallback;
+                selectImage(WaitActivity.this);
+            }
+
+            // Android  4.1以上
+            public void openFileChooser(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
+                mUploadMessage = valueCallback;
+                selectImage(WaitActivity.this);
+            }
+
+            // Android 5.0以上
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+                uploadMessageAboveL = filePathCallback;
+                selectImage(WaitActivity.this);
+                return true;
+            }
+        });
+       // WebSettings webSettings=  webView.getSettings();
         mPresenter.vestSign(appJs);
     }
 
-
+    public   static void selectImage(Activity context) {
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("*/*");
+        context. startActivityForResult(Intent.createChooser(i, "Image Chooser"), FILECHOOSER_RESULTCODE);
+    }
     @PermissionSuccess(requestCode = 100)
     public void doSomething() {
        // mPresenter.WaitingTime();
@@ -240,7 +240,6 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             mPresenter.WaitingTime();
         }
 
-
     }
 
     @Override
@@ -267,4 +266,83 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             webView.loadUrl(data.getH5Url());
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }else if (requestCode == PICK_REQUEST_CODES && resultCode == Activity.RESULT_OK){
+            ArrayList<String> img = data.getStringArrayListExtra("data");
+           String callbackMethod= data.getStringExtra("callbackMethod");
+            if (!img.isEmpty()){
+                 String imgs=    img.get(0);
+                if (!TextUtils.isEmpty(imgs)) {
+                    StringBuilder builder = new StringBuilder(callbackMethod).append("(");
+                    builder.append("'").append("data:image/png;base64,").append(imageToBase64(imgs)).append("'");
+                    builder.append(")");
+                    String method = builder.toString();
+                    String javaScript = "javascript:" + method;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        webView.evaluateJavascript(javaScript, null);
+                    } else {
+                        webView.loadUrl(javaScript);
+                    }
+                }
+            }
+        }else if (requestCode == FILECHOOSER_RESULTCODE){
+
+            if (null == mUploadMessage && null == uploadMessageAboveL) return;
+            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+            if (uploadMessageAboveL != null) {
+                onActivityResultAboveL(requestCode, resultCode, data);
+            } else if (mUploadMessage != null) {
+                mUploadMessage.onReceiveValue(result);
+                mUploadMessage = null;
+            }
+
+        }
+
+    }
+
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void onActivityResultAboveL(int requestCode, int resultCode, Intent intent) {
+        if (requestCode != FILECHOOSER_RESULTCODE || uploadMessageAboveL == null){
+            uploadMessageAboveL.onReceiveValue(null);
+            uploadMessageAboveL=null;
+            return;
+        }
+        Uri[] results = null;
+            if (intent != null) {
+                String dataString = intent.getDataString();
+                ClipData clipData = intent.getClipData();
+                if (clipData != null) {
+                    results = new Uri[clipData.getItemCount()];
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        ClipData.Item item = clipData.getItemAt(i);
+                        results[i] = item.getUri();
+                    }
+                }
+                if (dataString != null)
+                    results = new Uri[]{Uri.parse(dataString)};
+            }
+        uploadMessageAboveL.onReceiveValue(results);
+        uploadMessageAboveL=null;
+
+    }
+
+    @Override
+    public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * webview没有选择文件也要传null，防止下次无法执行
+     */
+
 }

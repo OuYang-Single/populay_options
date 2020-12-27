@@ -6,17 +6,29 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.utils.StatusBarUtil;
 import com.pine.populay_options.mvp.model.mvp.ui.Service.BranchEventService;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.VideoActivity;
 
+import io.branch.referral.Branch;
 import timber.log.Timber;
+
+import static com.wq.photo.widget.CameraPreview.TAG;
 
 /**
  * ================================================
@@ -32,10 +44,16 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.i(activity + " - onActivityCreated");
+
+        FirebaseApp.initializeApp(activity);
+        String uid = "some-uid";
+
+        //String customToken = FirebaseAuth.getInstance().getUid();
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
+
 
         Timber.i(activity + " - onActivityStarted");
         StatusBarUtil.setStatusBarLightMode(activity.getWindow());
@@ -70,6 +88,7 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
         }
         Intent intentFive = new Intent(activity, BranchEventService.class);
         activity.startService(intentFive);
+        Branch.getAutoInstance(activity);
     }
 
     @Override

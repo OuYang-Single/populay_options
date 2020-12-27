@@ -42,9 +42,9 @@ import com.pine.populay_options.mvp.model.mvp.ui.adapter.ViewPagerContentAdapter
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.DemoTradingFragment;
 import com.pine.populay_options.mvp.model.wigth.CustomDialog;
 import com.pine.populay_options.mvp.model.wigth.NoScrollViewPager;
-import com.volley.library.flowtag.FlowTagLayout;
+/*import com.volley.library.flowtag.FlowTagLayout;
 import com.volley.library.flowtag.adapter.BaseFlowAdapter;
-import com.volley.library.flowtag.adapter.BaseTagHolder;
+import com.volley.library.flowtag.adapter.BaseTagHolder;*/
 
 
 import org.greenrobot.eventbus.EventBus;

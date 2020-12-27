@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.pine.populay_options">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pine.populay_options">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -11,6 +13,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="androidf.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:name="com.jess.arms.base.BaseApplication"
@@ -42,9 +46,14 @@
                 android:label="@string/title_activity_wait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="wia3j.app.link" />
+                <data android:scheme="https" android:host="wia3j-alternate.app.link" />
             </intent-filter>
+
+
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity">
         </activity>
@@ -77,6 +86,9 @@
         <activity android:name=".mvp.model.mvp.ui.activity.ForexActivity">
 
         </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.WebViewActivity">
+
+        </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.BookDetalisActivity">
 
         </activity>
@@ -99,6 +111,30 @@
         <meta-data
                 android:name="com.pine.populay_options.app.GlobalConfiguration"
                 android:value="ConfigModule"/>
+        <!-- Branch init -->
+
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+        <!-- Add this meta-data below, and change "key_live_xxxxxxx" to your actual live Branch key -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" />
+
+        <!-- For your test app, if you have one; Again, use your actual test Branch key -->
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" />
+
+      <service
+            android:name=".mvp.model.mvp.ui.Service.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+
     </application>
 
 </manifest>

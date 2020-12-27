@@ -192,14 +192,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      * @param view
      */
     public void displayImage(String url, ImageView view) {
-        Glide.with(context).load(url).into(view);
-        /*Glide.with(context).load(url).
+
+        Glide.with(context).load(url).
                  centerCrop()
-                .crossFade()
                 .override(sWidthPix / spancount, sWidthPix / spancount)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.loadfaild)
-                .into(view);*/
+                .into(view);
     }
 
     public static int TYPE_IMAGE = 10;

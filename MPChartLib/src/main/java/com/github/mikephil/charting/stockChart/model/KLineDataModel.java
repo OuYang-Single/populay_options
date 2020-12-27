@@ -1,6 +1,8 @@
 package com.github.mikephil.charting.stockChart.model;
 
-import com.google.gson.annotations.SerializedName;
+
+
+
 
 import java.io.Serializable;
 
@@ -19,22 +21,23 @@ public class KLineDataModel implements Serializable {
     //      "V": 21345191,		--交易量
     //      "D":"2018-01-01"          --日期
 
-    @SerializedName("D")
-    private String dateMills ;
-    private Long Tick ;
-    @SerializedName("H")
-    private double high;// 最高价
-    @SerializedName("L")
-    private double low;// 最低价
-    @SerializedName("O")
-    private double open;// 开盘价
-    @SerializedName("C")
-    private double close;// 收盘价
-    @SerializedName("V")
-    private double volume;// 成交量
 
-    @SerializedName("A")
-    private double total;// 成交额
+    private String D ;
+    private Long Tick ;
+   
+    private double H;// 最高价
+  
+    private double L;// 最低价
+   
+    private double O;// 开盘价
+  
+    private double C;// 收盘价
+
+    private double V;// 成交量
+
+ 
+    private double A;// 成交额
+
 
     private double preClose;// 昨收价
     private double ma5;
@@ -44,59 +47,58 @@ public class KLineDataModel implements Serializable {
     private double ma60;
 
     public String getDateMills() {
-        return dateMills;
+        return D;
     }
 
-    public void setDateMills(String dateMills) {
-        this.dateMills = dateMills;
+    public void setDateMills(String D) {
+        this.D = D;
     }
 
     public double getHigh() {
-        return high;
+        return H;
     }
 
     public void setHigh(double high) {
-        this.high = high;
+        this.H = high;
     }
 
     public double getLow() {
-        return low;
+        return L;
     }
 
-    public void setLow(double low) {
-        this.low = low;
+    public void setLow(double L) {
+        this.L = L;
     }
 
     public double getOpen() {
-        return open;
+        return O;
     }
 
-    public void setOpen(double open) {
-        this.open = open;
+    public void setOpen(double O) {
+        this.O = O;
     }
 
     public double getClose() {
-        return close;
+        return C;
     }
 
     public void setClose(double close) {
-        this.close = close;
+        this.C = close;
     }
 
     public double getVolume() {
-        return volume;
+        return V;
     }
 
     public void setVolume(double volume) {
-        this.volume = volume;
+        this.V = volume;
     }
 
     public double getTotal() {
-        return total;
-    }
+        return A ;}
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotal(double A) {
+        this.A = A;
     }
 
     public double getPreClose() {

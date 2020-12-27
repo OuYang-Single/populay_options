@@ -8,27 +8,49 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.appevents.AppEventsLogger;
+
+
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jess.arms.utils.ArmsUtils;
-import com.pine.populay_options.mvp.model.entity.BranchEvent;
+import com.pine.populay_options.R;
+import com.pine.populay_options.app.utils.SPManager;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import io.branch.referral.util.BranchEvent;
 import timber.log.Timber;
 
+import static com.pine.populay_options.BuildConfig.APPLICATION_ID;
 import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
+import static com.wq.photo.widget.CameraPreview.TAG;
 
 public class AppJs {
     String TOG=AppJs.class.getName();
@@ -76,7 +98,8 @@ public class AppJs {
         Timber.w(TOG + " takeFCMPushId");
         //fcm生成的注册令牌
         //TODO
-        return null;
+
+        return  SPManager.getInstance().getToken();
     }
 
     /**
@@ -89,13 +112,13 @@ public class AppJs {
 
     /**
      * 获取ANDROID_ID
-     * public static final String ANDROID_ID
+     *
      */
     @JavascriptInterface
     public String getGoogleId() {
         Timber.w(TOG + " getGoogleId");
         //TODO
-        return null;
+        return APPLICATION_ID;
     }
 
     /**
@@ -107,7 +130,17 @@ public class AppJs {
     public String getGaId() {
         Timber.w(TOG + " getGaId");
         //TODO
-        return null;
+        try {
+           ;
+            return  AdvertisingIdClient.getAdvertisingIdInfo(mContext).getId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        }
+       return null;
     }
 
     /**
@@ -147,7 +180,7 @@ public class AppJs {
         Map<String ,String >map=new HashMap<>();
         map.put(CALLBACKMETHOD,callbackMethod);
         ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
-        EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.EVENT_KEY.takePortraitPicture,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.takePortraitPicture,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
 
         // EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.ShowTitleBarEVent,callbackMethod));
         // TODO
@@ -177,7 +210,7 @@ public class AppJs {
     public void showTitleBar(boolean visible) {
         //TODO
         Timber.w(TOG + " showTitleBar"+"   visible=="+visible);
-        EventBus.getDefault().post(new BranchEvent<Boolean>(BranchEvent.EVENT_KEY.ShowTitleBarEVent,visible));
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<Boolean>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.ShowTitleBarEVent,visible));
     }
 
     /**
@@ -191,9 +224,9 @@ public class AppJs {
         Timber.w(TOG + " isContainsName"+"   callbackMethod=="+callbackMethod+"   name=="+name);
         Map<String ,String >map=new HashMap<>();
         map.put(CALLBACKMETHOD,callbackMethod);
-        map.put(BranchEvent.NAME,name);
+        map.put( com.pine.populay_options.mvp.model.entity.BranchEvent.NAME,name);
         ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
-        EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.EVENT_KEY.ShowTitleBarEVent,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.ShowTitleBarEVent,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
         boolean has = false;
         //TODO 遍历所有提供的@JavascriptInterface，判断否含有name方法，把结果通过JavaScript反馈给H5
     //	···
@@ -295,9 +328,10 @@ public class AppJs {
      */
     @JavascriptInterface
     public void branchEvent(String eventName) {
-    /*    new BranchEvent(eventName)
-                .logEvent(mContext);*/
+      new BranchEvent(eventName)
+                .logEvent(mContext);
         Timber.w(TOG + " branchEvent"+"   eventName"+eventName);
+
     }
 
     /**
@@ -309,7 +343,7 @@ public class AppJs {
     @JavascriptInterface
     public void branchEvent(String eventName, String parameters) {
         Timber.w(TOG + " branchEvent"+"   eventName"+eventName+"   parameters"+parameters);
-       // BranchEvent branchEvent = new BranchEvent(eventName);
+       BranchEvent branchEvent = new BranchEvent(eventName);
         JSONObject obj = null;
         try {
             obj = new JSONObject(parameters);
@@ -322,13 +356,13 @@ public class AppJs {
             String key = keys.next();
             String value = obj.optString(key);
             bundle.putString(key, value);
-           // branchEvent.addCustomDataProperty(
-              //      key,
-         //           value
-         //   );
+            branchEvent.addCustomDataProperty(
+                   key,
+                    value
+            );
         }
-     //   branchEvent
-       //         .logEvent(mContext);
+       branchEvent
+                .logEvent(mContext);
     }
 
     /**
@@ -341,22 +375,28 @@ public class AppJs {
     @JavascriptInterface
     public void branchEvent(String eventName, String parameters, String alias) {
         Timber.w(TOG + " branchEvent"+"   eventName"+eventName+"   parameters"+parameters+"   alias"+alias);
-     //   BranchEvent branchEvent = new BranchEvent(eventName);
-    /*    JSONObject obj = new JSONObject(parameters);
-        Bundle bundle = new Bundle();
-        Iterator<String> keys = obj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = obj.optString(key);
-            bundle.putString(key, value);
-            branchEvent.addCustomDataProperty(
-                    key,
-                    value
-            );
+       BranchEvent branchEvent = new BranchEvent(eventName);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(parameters);
+            Bundle bundle = new Bundle();
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = obj.optString(key);
+                bundle.putString(key, value);
+                branchEvent.addCustomDataProperty(
+                        key,
+                        value
+                );
+            }
+            branchEvent
+                    .setCustomerEventAlias(alias)
+                    .logEvent(mContext);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        branchEvent
-                .setCustomerEventAlias(alias)
-                .logEvent(mContext);*/
+
 
     }
 
@@ -370,16 +410,22 @@ public class AppJs {
     @JavascriptInterface
     public void facebookEvent(String eventName, Double valueToSum, String parameters) {
         Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   valueToSum"+valueToSum+"   parameters"+parameters);
-   /*     AppEventsLogger logger = AppEventsLogger.newLogger();
-        JSONObject obj = new JSONObject(parameters);
-        Bundle bundle = new Bundle();
-        Iterator<String> keys = obj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = obj.optString(key);
-            bundle.putString(key, value);
+     AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(parameters);
+            Bundle bundle = new Bundle();
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = obj.optString(key);
+                bundle.putString(key, value);
+            }
+            logger.logEvent(eventName, valueToSum, bundle);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        logger.logEvent(eventName, valueToSum, bundle);*/
+
     }
 
     /**
@@ -391,16 +437,22 @@ public class AppJs {
     @JavascriptInterface
     public void facebookEvent(String eventName, String parameters) {
         Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   parameters"+parameters);
-/*        AppEventsLogger logger = AppEventsLogger.newLogger();
-        JSONObject obj = new JSONObject(parameters);
-        Bundle bundle = new Bundle();
-        Iterator<String> keys = obj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = obj.optString(key);
-            bundle.putString(key, value);
+        AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(parameters);
+            Bundle bundle = new Bundle();
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = obj.optString(key);
+                bundle.putString(key, value);
+            }
+            logger.logEvent(eventName, bundle);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        logger.logEvent(eventName, bundle);*/
+
     }
 
     /**
@@ -412,8 +464,8 @@ public class AppJs {
     @JavascriptInterface
     public void facebookEvent(String eventName, Double valueToSum) {
         Timber.w(TOG + " facebookEvent"+"   eventName"+eventName+"   valueToSum"+valueToSum);
-   /*     AppEventsLogger logger = AppEventsLogger.newLogger();
-        logger.logEvent(eventName, valueToSum);*/
+       AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent(eventName, valueToSum);
     }
 
     /**
@@ -423,8 +475,8 @@ public class AppJs {
      */
     @JavascriptInterface
     public void facebookEvent(String eventName) {
-     /*   AppEventsLogger logger = AppEventsLogger.newLogger();
-        logger.logEvent(eventName);*/
+      AppEventsLogger logger = AppEventsLogger.newLogger(mContext);
+        logger.logEvent(eventName);
     }
 
     /**
@@ -433,14 +485,20 @@ public class AppJs {
     @JavascriptInterface
     public void firebaseEvent(String category, String parameters) {
         Timber.w(TOG + " firebaseEvent"+"   category"+category+"   parameters"+parameters);
-   /*     JSONObject obj = new JSONObject(parameters);
-        Bundle bundle = new Bundle();
-        Iterator<String> keys = obj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = obj.optString(key);
-            bundle.putString(key, value);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(parameters);
+            Bundle bundle = new Bundle();
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = obj.optString(key);
+                bundle.putString(key, value);
+            }
+            FirebaseAnalytics.getInstance(mContext).logEvent(category, bundle);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        FirebaseAnalytics.getInstance(mContext).logEvent(category, bundle);*/
+
     }
 }

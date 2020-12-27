@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.dld.view.SegmentedControlItem;
+
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
@@ -57,10 +57,10 @@ public class PositionPresenter extends BasePresenter<PositionContract.Model, Pos
     }
 
     public void addItems() {
-        List<SegmentedControlItem> items = new ArrayList<>();
+     /*   List<SegmentedControlItem> items = new ArrayList<>();
         items.add(new SegmentedControlItem( "My paper"));
         items.add(new SegmentedControlItem("Top players"));
-        mRootView.addItems(items);
+        mRootView.addItems(items);*/
     }
 
     public void initViewPager() {

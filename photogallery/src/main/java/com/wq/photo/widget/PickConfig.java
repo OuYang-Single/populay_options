@@ -22,6 +22,8 @@ public class PickConfig {
 
 
     public final static int PICK_REQUEST_CODE = 10607;
+    public final static int PICK_REQUEST_CODES = 10608;
+    public final static int FILECHOOSER_RESULTCODE = 10609;
 
 
     public final static String EXTRA_PICK_BUNDLE = "extra_pick_bundle";
@@ -32,6 +34,7 @@ public class PickConfig {
     public final static String EXTRA_IS_NEED_CAMERA = "extra_isneed_camera";
     public final static String EXTRA_IS_NEED_CROP = "extra_isneed_crop";
     public final static String EXTRA_IS_SQUARE_CROP = "extra_issquare_crop";
+    public final static String EXTRA_callbackMethod = "extra_callbackMethod";
     public final static String EXTRA_ACTION_BAR_COLOR = "extra_actionbar_color";
     public final static String EXTRA_STATUS_BAR_COLOR = "extra_status_bar_color";
 
@@ -45,6 +48,8 @@ public class PickConfig {
     private int statusBarcolor;
     private UCrop.Options options;
     private boolean isSqureCrop;
+    private int requestCode;
+    private String callbackMethod;
 
     private PickConfig(Activity context, PickConfig.Builder builder) {
         this.spanCount = builder.spanCount;
@@ -56,6 +61,8 @@ public class PickConfig {
         this.actionBarcolor = builder.actionBarcolor;
         this.options=builder.options;
         this.isSqureCrop=builder.isSqureCrop;
+        this.requestCode=builder.requestCode;
+        this.callbackMethod=builder.callbackMethod;
 
 
         Bundle bundle = new Bundle();
@@ -68,6 +75,7 @@ public class PickConfig {
         bundle.putBoolean(EXTRA_IS_NEED_CAMERA, this.isneedcamera);
         bundle.putBoolean(EXTRA_IS_NEED_CROP, this.isneedcrop);
         bundle.putBoolean(EXTRA_IS_SQUARE_CROP,this.isSqureCrop);
+        bundle.putString(EXTRA_callbackMethod,this.callbackMethod);
 
         if (this.pickMode == MODE_MULTIP_PICK) {
             this.isneedcrop = false;
@@ -81,7 +89,7 @@ public class PickConfig {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_PICK_BUNDLE, bundle);
         intent.setClass(context, MediaChoseActivity.class);
-        context.startActivityForResult(intent, PICK_REQUEST_CODE);
+        context.startActivityForResult(intent, requestCode);
     }
 
 
@@ -89,11 +97,13 @@ public class PickConfig {
 
         private Activity context;
         private int spanCount = DEFAULT_SPANCOUNT;
+        private int requestCode = PICK_REQUEST_CODE;
         private int pickMode = MODE_SINGLE_PICK;
         private int maxPickSize = DEFAULT_PICKSIZE;
         private boolean isneed_crop = false;
         private boolean isneed_camera = true;
         private boolean isSqureCrop=false;
+        private String callbackMethod="";
         private int actionBarcolor = Color.parseColor("#03A9F4");
         private int statusBarcolor = Color.parseColor("#0288D1");
 
@@ -117,7 +127,13 @@ public class PickConfig {
             }
             return this;
         }
-
+        public PickConfig.Builder requestCode(int requestCode) {
+            this.requestCode = requestCode;
+            if (this.requestCode == 0) {
+                this.requestCode = PICK_REQUEST_CODE;
+            }
+            return this;
+        }
 
         /**
          * this methord must be last call
@@ -172,6 +188,11 @@ public class PickConfig {
 
         public PickConfig build() {
             return new PickConfig(context, this);
+        }
+
+        public Builder callbackMethod(String data) {
+            this.callbackMethod=data;
+            return this;
         }
     }
 

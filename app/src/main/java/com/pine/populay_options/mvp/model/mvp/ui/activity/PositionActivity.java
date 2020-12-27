@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.dld.view.SegmentedControlItem;
-import com.dld.view.SegmentedControlView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.delegate.IActivity;
@@ -35,9 +34,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 @Route(path = "/analogDisk/position")
-public class PositionActivity  extends BaseAseActivitys<PositionPresenter> implements PositionContract.View, SegmentedControlView.OnSegItemClickListener {
-    @BindView(R.id.scv)
-    SegmentedControlView mScv;
+public class PositionActivity  extends BaseAseActivitys<PositionPresenter> implements PositionContract.View {
+ /*   @BindView(R.id.scv)
+    SegmentedControlView mScv;*/
     @BindView(R.id.vp_content)
     NoScrollViewPager mNoScrollViewPager;
     @Inject
@@ -71,9 +70,9 @@ public class PositionActivity  extends BaseAseActivitys<PositionPresenter> imple
     }
 
     @Override
-    public void addItems(List<SegmentedControlItem> items) {
-        mScv.addItems(items);
-        mScv.setOnSegItemClickListener(this);
+    public void addItems() {
+      //  mScv.addItems(items);
+     //   mScv.setOnSegItemClickListener(this);
     }
 
     @Override
@@ -97,8 +96,5 @@ public class PositionActivity  extends BaseAseActivitys<PositionPresenter> imple
 
     }
 
-    @Override
-    public void onItemClick(SegmentedControlItem item, int position) {
-               mNoScrollViewPager.setCurrentItem(position);
-    }
+
 }

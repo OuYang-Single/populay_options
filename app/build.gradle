@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+
+/*apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'*/
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
@@ -26,8 +30,18 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            //绝对路径和相对路径都可以
+            storeFile file("popular_options.jks")
+            storePassword "yang1994"
+            keyAlias "popular_options"
+            keyPassword "yang1994"
+        }
+    }
     buildTypes {
         debug {
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
@@ -35,11 +49,10 @@ android {
         }
 
         release {
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
             minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,6 +66,10 @@ android {
         schemaVersion 1
         targetGenDir 'src/main/java'
         daoPackage "com.pine.populay_options.greendao"
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 }
 
@@ -106,13 +123,29 @@ dependencies {
     implementation 'com.github.VolleyCN.Android-FlowLayout:library:1.0.2'
     implementation 'com.github.open-android:ShoppingCartAddSubtract:0.1.0'
     implementation 'com.zhouyou:segmentedbar:1.0.9'
-    implementation 'com.dld.seg:SegControlView:1.0.0'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     implementation 'com.github.ydslib:MultiImageView:1.0.4'
     implementation 'com.android.support:appcompat-v7:25.3.1'//版本随意
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
-    implementation 'com.google.android:flexbox:1.0.0'
-    compile project(path: ':photogallery')
 
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation('com.scwang.smartrefresh:SmartRefreshHeader:1.0.3') {
+        exclude group: 'com.google.android.gms', module: 'play-services-analytics'
+    }
+    implementation('com.google.android:flexbox:1.0.0') {
+        exclude group: 'com.google.android', module: 'AdvertisingIdClient'
+    }
+    implementation('com.facebook.android:facebook-android-sdk:[4,5)') {
+        exclude group: 'com.google.android.gms', module: 'play-services-analytics'
+    }
+    compile project(path: ':photogallery')
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'io.branch.sdk.android:library:5.+'
+
+
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-messaging'
 }
+apply plugin: 'com.google.gms.google-services'

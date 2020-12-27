@@ -6,16 +6,19 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.multidex.MultiDex;
-import butterknife.ButterKnife;
 
+import butterknife.ButterKnife;
+import androidx.multidex.MultiDex;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pine.populay_options.BuildConfig;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.R;
+import com.pine.populay_options.app.utils.SPManager;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import timber.log.Timber;
@@ -39,6 +42,8 @@ public class AppLifecyclesImpl implements AppLifecycles {
     @Override
     public void onCreate(@NonNull Application application) {
         ARouter.init(application);
+        SPManager. initializeInstance(application);
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         if (LeakCanary.isInAnalyzerProcess(application)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.

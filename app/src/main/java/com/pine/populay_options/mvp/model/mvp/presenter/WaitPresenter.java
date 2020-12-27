@@ -2,12 +2,28 @@ package com.pine.populay_options.mvp.model.mvp.presenter;
 
 import android.app.Application;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.webkit.DownloadListener;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jess.arms.utils.RxLifecycleUtils;
 import com.pine.populay_options.R;
+import com.pine.populay_options.app.utils.SPManager;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
@@ -129,5 +145,74 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
 
                     }
                 });;
+    }
+
+    public void getToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        String token = task.getResult();
+                        Log.w(TAG, token);
+                        SPManager.getInstance().setToken(token);
+                    }
+                });
+    }
+
+    public void initWebSettings(WebSettings webSettings) {
+        String userAgentString = webSettings.getUserAgentString();
+        userAgentString = "ANDROID_AGENT_NATIVE/2.0" + " " + userAgentString;
+        webSettings.setUserAgentString(userAgentString);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.NORMAL);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCachePath(mApplication.getExternalCacheDir().getPath());
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setEnableSmoothTransition(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+    }
+
+    public void initWebView( WebView webView,AppJs appJs) {
+        webView.addJavascriptInterface(appJs, "AppJs");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setWebContentsDebuggingEnabled(false);
+        }
+        webView.clearHistory();
+        webView.setDrawingCacheEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                WebView.HitTestResult result = webView.getHitTestResult();
+                if (result != null) {
+                    int type = result.getType();
+                    if (type == WebView.HitTestResult.IMAGE_TYPE) {
+                        //TODO实现长按保存图片
+                        //showSaveImageDialog(result);
+                    }
+                }
+                return false;
+            }
+        });
+
     }
 }

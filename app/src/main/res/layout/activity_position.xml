@@ -24,7 +24,7 @@
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_arrow_back_white_24dp" />
         </RelativeLayout>
-        <com.dld.view.SegmentedControlView
+     <!--   <com.dld.view.SegmentedControlView
                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 app:segTextColor="@color/white"
@@ -37,7 +37,7 @@
                 app:segMarginTop="3dp"
                 app:segMode="Round"
                 app:segSelectedItem="0"
-                android:id="@+id/scv"/>
+                android:id="@+id/scv"/>-->
         </RelativeLayout>
 
     <com.pine.populay_options.mvp.model.wigth.NoScrollViewPager

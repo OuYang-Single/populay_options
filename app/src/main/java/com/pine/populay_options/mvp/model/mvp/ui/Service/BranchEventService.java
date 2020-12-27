@@ -24,12 +24,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.OnClick;
 import kr.co.namee.permissiongen.PermissionGen;
 
 import static com.jess.arms.integration.AppManager.getAppManager;
+import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
 
 
 public class BranchEventService extends BaseService {
@@ -52,6 +58,7 @@ public class BranchEventService extends BaseService {
                 break;
             case takePortraitPicture:
 
+               Map<String,String>map= ArmsUtils.obtainAppComponentFromContext(this).gson().fromJson(  (String) message.getData(), HashMap.class);
                 //图片剪裁的一些设置
                 UCrop.Options options = new UCrop.Options();
                 //图片生成格式
@@ -62,12 +69,14 @@ public class BranchEventService extends BaseService {
                         .maxPickSize(1)//最多选择几张
                         .isneedcamera(true)//是否需要第一项是相机
                         .spanCount(4)//一行显示几张照片
-                        .actionBarcolor(Color.parseColor("#E91E63"))//设置toolbar的颜色
-                        .statusBarcolor(Color.parseColor("#D81B60")) //设置状态栏的颜色(5.0以上)
+                        .actionBarcolor(Color.parseColor("#ffffff"))//设置toolbar的颜色
+                        .statusBarcolor(Color.parseColor("#ffffff")) //设置状态栏的颜色(5.0以上)
                         .isneedcrop(false)//受否需要剪裁
                         .setUropOptions(options) //设置剪裁参数
                         .isSqureCrop(true) //是否是正方形格式剪裁
+                        .requestCode(PICK_REQUEST_CODES)
                         .pickMode(PickConfig.MODE_SINGLE_PICK)//单选还是多选
+                        .callbackMethod(map.get(CALLBACKMETHOD))
                         .build();
                // getAppManager().getCurrentActivity().
                 break;
