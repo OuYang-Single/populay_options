@@ -24,6 +24,8 @@ public class PickConfig {
     public final static int PICK_REQUEST_CODE = 10607;
     public final static int PICK_REQUEST_CODES = 10608;
     public final static int FILECHOOSER_RESULTCODE = 10609;
+    public final static int RC_SIGN_IN = 10610;
+    public final static int ActivityRequestCode = 10611;
 
 
     public final static String EXTRA_PICK_BUNDLE = "extra_pick_bundle";

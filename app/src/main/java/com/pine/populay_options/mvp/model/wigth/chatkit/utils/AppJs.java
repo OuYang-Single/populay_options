@@ -19,6 +19,10 @@ import com.facebook.appevents.AppEventsLogger;
 
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,8 +36,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.utils.SPManager;
+import com.pine.populay_options.mvp.model.entity.OpenEntity;
+import com.pine.populay_options.mvp.model.entity.PaytmEntity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.WebViewActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -48,8 +55,11 @@ import java.util.UUID;
 import io.branch.referral.util.BranchEvent;
 import timber.log.Timber;
 
+import static com.jess.arms.integration.AppManager.getAppManager;
 import static com.pine.populay_options.BuildConfig.APPLICATION_ID;
 import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
+import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.checkApkExist;
+import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.goToPaytm;
 import static com.wq.photo.widget.CameraPreview.TAG;
 
 public class AppJs {
@@ -153,6 +163,8 @@ public class AppJs {
     public void openGoogle(String data) {
         //TODO
         Timber.w(TOG + " openGoogle"+"   data=="+data);
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.openGoogle,data));
+
     }
 
     /**
@@ -163,7 +175,13 @@ public class AppJs {
     @JavascriptInterface
     public void openPayTm(String data) {
         //TODO
-        Timber.w(TOG + " openPayTm"+"   data=="+data);
+
+         Timber.w(TOG + " openPayTm"+"   data=="+data);
+         PaytmEntity paytmEntity=  ArmsUtils.obtainAppComponentFromContext(mContext).gson().fromJson(data, PaytmEntity.class);
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<PaytmEntity>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.openPayTm,paytmEntity));
+
+
+
     }
 
     /**
@@ -499,6 +517,10 @@ public class AppJs {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void setTOG(){
 
     }
 }

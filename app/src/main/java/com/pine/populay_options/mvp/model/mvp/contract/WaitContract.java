@@ -3,13 +3,18 @@ package com.pine.populay_options.mvp.model.mvp.contract;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
+import com.pine.populay_options.mvp.model.entity.Login;
+import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public interface WaitContract {
@@ -24,6 +29,11 @@ public interface WaitContract {
 
         void vestSign(VestSignEntity data);
         void showTitleBar(boolean visible);
+
+        void setOpenEntity(OpenEntity openEntity);
+
+        void doLogin2(Login data);
+        void doLogin2(OpenEntity openEntity, GoogleSignInAccount account);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -36,5 +46,7 @@ public interface WaitContract {
         Observable<Request<VestSignEntity>> vestSign(AppJs appJs);
 
         void onStart();
+
+        Observable<Request<Login>> doLogin2(OpenEntity openEntity, GoogleSignInAccount account, int type);
     }
 }

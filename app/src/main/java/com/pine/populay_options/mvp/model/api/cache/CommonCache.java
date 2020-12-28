@@ -15,6 +15,7 @@
  */
 package com.pine.populay_options.mvp.model.api.cache;
 
+import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
@@ -48,4 +49,6 @@ public interface CommonCache {
     Observable<Reply<ResponseBody>> chart(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
    Observable<Reply<Request<VestSignEntity>>> vestSign( Observable<Request<VestSignEntity>>  users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    @LifeCache(duration =6, timeUnit = TimeUnit.MINUTES)
+   Observable<Reply<Request<Login>>> doLogin2(Observable<Request<Login>>  users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 }

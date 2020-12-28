@@ -84,6 +84,16 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
                 HttpUrl newBaseUrls=   httpUrl.newBuilder().host(newBaseUrl.host()).port(newBaseUrl.port()).build();
                 return chain.request().newBuilder().url(newBaseUrls)
                         .build();
+            }else if ("login".equals(headerValue)){
+                List<String> host = request.headers("url_names");
+                if (host!=null&&host.size()>0){
+                    HttpUrl httpUrl=   request.url();
+                    HttpUrl    newBaseUrl = HttpUrl.parse(host.get(0));
+                    HttpUrl newBaseUrls=   httpUrl.newBuilder().host(newBaseUrl.host()).port(80).build();
+                    return chain.request().newBuilder().url(newBaseUrls)
+                            .build();
+                }
+
             }
         }
    /*     return chain.request().newBuilder().header("token", tokenId)

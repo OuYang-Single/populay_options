@@ -9,6 +9,7 @@ public class Request<T> implements Parcelable {
     private String timestamp;
     private String token;
     private String msg;
+    private String dts;
 
     public Request(){}
     public T getData() {
@@ -56,6 +57,7 @@ public class Request<T> implements Parcelable {
         timestamp = in.readString();
         token = in.readString();
         msg = in.readString();
+        dts = in.readString();
     }
 
     @Override
@@ -64,6 +66,7 @@ public class Request<T> implements Parcelable {
         dest.writeString(timestamp);
         dest.writeString(token);
         dest.writeString(msg);
+        dest.writeString(dts);
     }
 
     @Override
@@ -82,4 +85,12 @@ public class Request<T> implements Parcelable {
             return new Request[size];
         }
     };
+
+    public String getDts() {
+        return dts;
+    }
+
+    public void setDts(String dts) {
+        this.dts = dts;
+    }
 }

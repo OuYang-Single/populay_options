@@ -3,11 +3,14 @@ package com.pine.populay_options.mvp.model.mvp.model;
 import android.app.Application;
 import android.provider.ContactsContract;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.api.AliyunExchangeApi;
 import com.pine.populay_options.mvp.model.api.Api;
 import com.pine.populay_options.mvp.model.api.cache.CommonCache;
 import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
+import com.pine.populay_options.mvp.model.entity.Login;
+import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
@@ -35,6 +38,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.APP_DOMAIN;
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.appcode;
@@ -104,25 +108,25 @@ public class WaitModel extends BaseModel implements WaitContract.Model {
                     }
                 });
     }
-
+    @Override
+    public Observable<Request<Login>> doLogin2(OpenEntity openEntity, GoogleSignInAccount account, int type) {
+        Timber.w( "doLogin2   "+" openGoogle"+"   openEntity.getHost()=="+ openEntity.getHost()+"   account.getId()==="+account.getId()+"  account.getIdToken()==="+account.getDisplayName()+"  account.getEmail()==="+account.getEmail()+"   account.getSign()==="+openEntity.getSign());
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .doLogin2( openEntity.getHost(),account.getId(),account.getDisplayName()==null?"":account.getDisplayName(),account.getEmail(),type,openEntity.getSign())).flatMap(new Function<Observable<Request<Login>>, ObservableSource<Request<Login>>>() {
+            @Override
+            public ObservableSource<Request<Login>> apply(@NonNull Observable<Request<Login>> listObservable) throws Exception {
+                return mRepositoryManager.obtainCacheService(CommonCache.class)
+                        .doLogin2(listObservable
+                                , new DynamicKey(1)
+                                , new EvictDynamicKey(true))
+                        .map(Reply::getData);
+            }
+        })
+                ;
+    }
     @Override
     public void onStart() {
-        OkHttpClient okHttpClients= new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                //允许失败重试
-                .retryOnConnectionFailure(true)
-                .build();
-        mRetrofit=    new Retrofit.Builder()
-                //设置基站地址(基站地址+描述网络请求的接口上面注释的Post地址,就是要上传文件到服务器的地址,
-                // 这只是一种设置地址的方法,还有其他方式,不在赘述)
-                .baseUrl(APP_DOMAINS)
-                //设置委托,使用OKHttp联网,也可以设置其他的;
-                .client(okHttpClients)
-                .addConverterFactory(GsonConverterFactory.create())
-                //设置支持rxJava
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+
     }
 }

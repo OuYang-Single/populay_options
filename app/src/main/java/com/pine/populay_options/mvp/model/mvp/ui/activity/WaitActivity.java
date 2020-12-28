@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -27,12 +28,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -40,6 +45,8 @@ import com.pine.populay_options.R;
 
 import com.pine.populay_options.app.utils.SPManager;
 import com.pine.populay_options.mvp.model.di.component.DaggerWaitComponent;
+import com.pine.populay_options.mvp.model.entity.Login;
+import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.WaitPresenter;
@@ -48,6 +55,9 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -62,9 +72,11 @@ import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
 import static com.wq.photo.widget.CameraPreview.TAG;
+import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
 import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
+import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
 
 // setContentView(R.layout.activity_wait);
 public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitContract.View, DownloadListener {
@@ -77,6 +89,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     RelativeLayout mRelativeLayout;
     @BindView(R.id.view_live)
     View mView;
+    OpenEntity openEntity;
     androidx.appcompat.widget.Toolbar mToolbar;
     TextView toolbar_title;
     ValueCallback<Uri> mUploadMessage;
@@ -266,6 +279,33 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             webView.loadUrl(data.getH5Url());
         }
     }
+
+    @Override
+    public void setOpenEntity(OpenEntity openEntity) {
+        this.openEntity=openEntity;
+    }
+
+    @Override
+    public void doLogin2(OpenEntity openEntity, GoogleSignInAccount account) {
+        if (openEntity != null && account != null) {
+            this.openEntity = openEntity;
+            mPresenter.doLogin2(openEntity, account, 1);
+        }
+    }
+
+    @Override
+    public void doLogin2(Login data) {
+        if (data.getToken1() != null) {
+            CookieManager.getInstance().setCookie(openEntity.getHost(), "token1=" + data.getToken1() + ";expires=1; path=/");
+        }
+        if (data.getToken2() != null) {
+            CookieManager.getInstance().setCookie(openEntity.getHost(), "token2=" + data.getToken2() + ";expires=1; path=/");
+        }
+        if (data.getUrl() != null) {
+            webView.loadUrl(data.getUrl());
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -299,6 +339,37 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 mUploadMessage.onReceiveValue(result);
                 mUploadMessage = null;
             }
+
+        }else if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if (openEntity != null && account != null) {
+                    mPresenter.doLogin2(openEntity, account, 1);
+                }
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
+
+        } else  if (requestCode == ActivityRequestCode && data != null) {
+            String response = data.getStringExtra("response");
+            String message = data.getStringExtra("nativeSdkForMerchantMessage");
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(response!=null?response:"{}");
+                String status=    jsonObject.getString("STATUS");
+                if (status!=null) {
+                    Toast.makeText(
+                            this,
+                            status.replace("TXN_", ""),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //  Toast.makeText(this, data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
 
         }
 

@@ -7,7 +7,9 @@ public class BranchEvent<T> {
     private T Data;
     public static enum EVENT_KEY {
         ShowTitleBarEVent("showTitleBar"),
-        takePortraitPicture("takePortraitPicture");
+        takePortraitPicture("takePortraitPicture"),
+        openGoogle("openGoogle"),
+        openPayTm("openPayTm");
         private String value;
         private EVENT_KEY(String value) {
             this.value = value;

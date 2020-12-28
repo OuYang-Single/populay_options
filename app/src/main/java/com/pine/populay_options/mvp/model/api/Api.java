@@ -1,6 +1,7 @@
 package com.pine.populay_options.mvp.model.api;
 
 import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
+import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
@@ -22,6 +23,7 @@ public interface Api {
     String APP_DOMAIN = "http://192.168.1.101:8000";
     String APP_DOMAINS = "http://api2.32255n.com";
     String URL_BOOK = "url_name:book";
+    String URL_LOGIN = "url_name:login";
     String VEST_CODE = "44F0ZINK";
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
@@ -34,6 +36,8 @@ public interface Api {
     @Headers(URL_BOOK)
     @GET("/admin/client/vestSign.do")
   Observable<Request<VestSignEntity>> vestSign(@Query("vestCode") String vestCode, @Query("channelCode") String channelCode, @Query("version")String version, @Query("deviceId")String deviceId, @Query("timestamp")long timestamp);
-
+    @Headers(URL_LOGIN)
+    @GET("/user/google/doLogin2.do")
+    Observable<Request<Login>> doLogin2(@Header("url_names") String  host , @Query("id") String id, @Query("name") String name, @Query("email") String email, @Query("type") int type, @Query("sign") String sign);
 
 }
