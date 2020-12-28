@@ -127,7 +127,7 @@ public class BranchEventService extends BaseService {
                     intent.putExtra("type", 2);
                     intent.putExtra("URL", "https://securegw.paytm.in/theia/api/v1/showPaymentPage");
                     intent.putExtra("data", paytmEntity);
-                    startActivity(intent);
+                    getAppManager().getCurrentActivity().  startActivity(intent);
                 }
                 break;
         }
