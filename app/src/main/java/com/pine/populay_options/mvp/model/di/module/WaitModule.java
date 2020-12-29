@@ -2,6 +2,7 @@ package com.pine.populay_options.mvp.model.di.module;
 
 import android.os.Handler;
 import android.os.Message;
+
 import com.pine.populay_options.R;
 import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
@@ -59,5 +60,16 @@ public abstract class WaitModule {
             }
         };
     }
+/*    @ActivityScope
+    @Provides
+    public static  StateLayoutManager getStateLayoutManager(WaitContract.View mView) {
+
+        return   StateLayoutManager.newBuilder(mView.getContent()).contentView(R.layout.activity_wait)
+                .emptyDataView(R.layout.custom_empty_view)
+                .errorView(R.layout.activity_error)
+                .loadingView(R.layout.activity_loading)
+                .netWorkErrorView(R.layout.activity_networkerror).onRetryListener(mView)
+                .onNetworkListener(mView).build();
+    }*/
 
 }

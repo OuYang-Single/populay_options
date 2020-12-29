@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
+
 import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.Request;
@@ -38,6 +39,12 @@ public interface WaitContract {
         void setShouldForbidBackPress(int data);
 
         void setBackPressJSMethod(Object o);
+
+        @Override
+        void showMessage(@NonNull String message);
+
+
+        void onError();
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

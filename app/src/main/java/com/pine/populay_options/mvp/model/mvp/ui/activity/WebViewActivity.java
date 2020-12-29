@@ -2,8 +2,10 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +18,8 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +48,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import am.widget.stateframelayout.StateFrameLayout;
 import butterknife.BindView;
 
 import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
@@ -55,7 +60,7 @@ import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
 import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
 
-public class WebViewActivity extends BaseActivity<WebViewPresenter> implements WebViewContract.View, DownloadListener {
+public class WebViewActivity extends BaseActivity<WebViewPresenter> implements WebViewContract.View, DownloadListener, View.OnClickListener {
     @BindView(R.id.webview)
     WebView webView;
     @BindView(R.id.view_live)
@@ -72,6 +77,12 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
     int   returns;
     String BackPressJSMethod;
     PureBrowserEntity mPureBrowserEntity;
+    @BindView(R.id.sfl_lyt_state)
+    StateFrameLayout lytState;
+    View activity_error;
+    ImageView activity_error_img;
+    TextView activity_error_text;
+    Button tv_btn;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWebViewComponent //如找不到该类,请编译一下项目
@@ -92,6 +103,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setVisibility(View.GONE);
+        lytState.loading();
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             String url = getIntent().getStringExtra("URL");
@@ -124,25 +136,30 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
                }else {
                    setStatusBarMode(this, false , Color.parseColor(mPureBrowserEntity.getTitleColor()));
                }
-               toolbar_title.setText(mPureBrowserEntity.getTitleTextColor());
-             //  webView.setpa
+               toolbar_title.setTextColor(  Color.parseColor(mPureBrowserEntity.getTitleTextColor()));
+               toolbar_title.setText( mPureBrowserEntity.getTitle());
            }
 
         }
+        activity_error=  getLayoutInflater().inflate(R.layout.activity_error, null, false);
+        activity_error_img=   activity_error.findViewById(R.id.image);
+        activity_error_text=   activity_error.findViewById(R.id.tv_content);
+        tv_btn=   activity_error.findViewById(R.id.tv_btn);
+        tv_btn.setOnClickListener(this);
+        lytState.setStateViews(getLayoutInflater().inflate(R.layout.custom_app_loading, null, false),activity_error,getLayoutInflater().inflate(R.layout.custom_network_error, null, false));
 
 
         mPresenter.initWebSettings(webView.getSettings());
         appJs = new AppJs(this, webView);
         mPresenter.initWebView(webView, appJs);
-
         webView.setDownloadListener(this);
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 String title = view.getTitle();
                 if (!TextUtils.isEmpty(title)) {
-
                     if (toolbar_title != null) {
                         if (type==0){
                             if (mPureBrowserEntity!=null){
@@ -153,10 +170,21 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
                         }else {
                             toolbar_title.setText(title);
                         }
-
                     }
-
                 }
+                lytState.normal();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {// 网页页面开始加载的时候
+                super.onPageStarted(view, url, favicon);
+
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) { // 网页加载时的连接的网址
+
+                return true;
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {
@@ -364,4 +392,47 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
 
     }
 
+    @Override
+    public void onClick(View v) {
+        String url;
+        switch (type){
+            case 0:
+                mPureBrowserEntity=   getIntent().getParcelableExtra("data");
+                if (mPureBrowserEntity!=null){
+                    setTitle(mPureBrowserEntity.getTitle());
+                    mToolbar.setVisibility(mPureBrowserEntity.isHasTitleBar()?View.VISIBLE:View.GONE);
+                    webView.loadUrl(mPureBrowserEntity.getUrl());
+                    view_live.setVisibility(mPureBrowserEntity.isHasTitleBar()?View.VISIBLE:View.GONE);
+                    if ("black".equals(mPureBrowserEntity.getStateBarTextColor())){
+                        setStatusBarMode(this, true , Color.parseColor(mPureBrowserEntity.getTitleColor()));
+                        // toolbar_title.setTextColor(Color.parseColor("#000000"));
+                    }else {
+                        setStatusBarMode(this, false , Color.parseColor(mPureBrowserEntity.getTitleColor()));
+                    }
+                    toolbar_title.setText(mPureBrowserEntity.getTitleTextColor());
+                }
+
+                break;
+            case 1:
+                 url = getIntent().getStringExtra("URL");
+                if (url != null) {
+                    webView.loadUrl(url);
+                }
+                break;
+            case 2:
+                 url = getIntent().getStringExtra("URL");
+                paytmEntity=  getIntent().getParcelableExtra("data");
+                if (url != null&&paytmEntity!=null) {
+                    StringBuilder postData = new StringBuilder();
+                    String postUrl =
+                            url + "?mid=" + paytmEntity.getMid() + "&orderId=" + paytmEntity.getOrderId();
+                    postData.append("MID=").append(paytmEntity.getMid())
+                            .append("&txnToken=").append(paytmEntity.getTextToken())
+                            .append("&AMOUNT=").append(paytmEntity.getAmount())
+                            .append("&ORDER_ID=").append(paytmEntity.getOrderId());
+                    webView.postUrl(postUrl, postData.toString().getBytes());
+                }
+                break;
+        }
+    }
 }

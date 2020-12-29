@@ -146,6 +146,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
                     public void onError(Throwable t) {
                         super.onError(t);
 
+                     //   mRootView.onError(m);
                     }
                 });;
     }
