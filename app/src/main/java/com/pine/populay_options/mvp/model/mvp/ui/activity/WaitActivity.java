@@ -3,75 +3,60 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
-import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.jess.arms.base.BaseActivity;
+import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.R;
-
-import com.pine.populay_options.app.utils.SPManager;
 import com.pine.populay_options.mvp.model.di.component.DaggerWaitComponent;
 import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.WaitPresenter;
-import com.pine.populay_options.mvp.model.mvp.ui.CustomizeView.FullScreenVideoView;
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import timber.log.Timber;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import static com.jess.arms.integration.AppManager.getAppManager;
-import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
+import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
 import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
-import static com.wq.photo.widget.CameraPreview.TAG;
 import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
 import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
@@ -95,7 +80,10 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     ValueCallback<Uri> mUploadMessage;
     ValueCallback<Uri[]> uploadMessageAboveL;
     String URL = "";
+    String BackPressJSMethod ;
     AppJs appJs;
+
+    int returns;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWaitComponent //如找不到该类,请编译一下项目
@@ -241,8 +229,10 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 }
             }
             if ("black".equals(data.getFieldCol())){
-                toolbar_title.setTextColor(Color.parseColor("#000000"));
+               setStatusBarMode(this, true ,Color.parseColor(data.getBackgroundCol()));
+               toolbar_title.setTextColor(Color.parseColor("#000000"));
             }else {
+                setStatusBarMode(this, false ,Color.parseColor(data.getBackgroundCol()));
                 toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
             }
 
@@ -276,6 +266,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     public void showTitleBar(boolean visible){
         if (mToolbar!=null){
             mToolbar.setVisibility(visible?View.VISIBLE:View.GONE);
+            mView.setVisibility(visible?View.VISIBLE:View.GONE);
             webView.loadUrl(data.getH5Url());
         }
     }
@@ -291,6 +282,16 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             this.openEntity = openEntity;
             mPresenter.doLogin2(openEntity, account, 1);
         }
+    }
+
+    @Override
+    public void setShouldForbidBackPress(int data) {
+        returns=data;
+    }
+
+    @Override
+    public void setBackPressJSMethod(Object o) {
+        BackPressJSMethod= (String) o;
     }
 
     @Override
@@ -416,4 +417,22 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
      * webview没有选择文件也要传null，防止下次无法执行
      */
 
+    //重写onBackPressed方法
+
+
+    @Override
+    public void onBackPressed() {
+        if (returns==0){
+          super.onBackPressed();
+        }else {
+            if (BackPressJSMethod!=null&&!"".equals(BackPressJSMethod)){
+                String javaScript = "javascript:" + BackPressJSMethod + "(" + ")";
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    webView.evaluateJavascript(javaScript, null);
+                } else {
+                    webView.loadUrl(javaScript);
+                }
+            }
+        }
+    }
 }

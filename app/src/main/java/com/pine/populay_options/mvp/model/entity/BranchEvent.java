@@ -3,13 +3,18 @@ package com.pine.populay_options.mvp.model.entity;
 public class BranchEvent<T> {
     public static final String CALLBACKMETHOD="callbackMethod";
     public static final String NAME="name";
+    public static final String FORBID="forbid";
     private EVENT_KEY EventName;
     private T Data;
     public static enum EVENT_KEY {
         ShowTitleBarEVent("showTitleBar"),
         takePortraitPicture("takePortraitPicture"),
         openGoogle("openGoogle"),
-        openPayTm("openPayTm");
+        openPayTm("openPayTm"),
+        isContainsName("isContainsName"),
+        shouldForbidSysBackPress("shouldForbidSysBackPress"),
+        forbidBackForJS("forbidBackForJS"),
+        openPureBrowser("openPureBrowser");
         private String value;
         private EVENT_KEY(String value) {
             this.value = value;

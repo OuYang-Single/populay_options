@@ -1,46 +1,23 @@
 package com.pine.populay_options.mvp.model.wigth.chatkit.utils;
 
 import android.app.Activity;
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.facebook.appevents.AppEventsLogger;
-
-
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.jess.arms.utils.ArmsUtils;
-import com.pine.populay_options.R;
 import com.pine.populay_options.app.utils.SPManager;
-import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.PaytmEntity;
-import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
-import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
-import com.pine.populay_options.mvp.model.mvp.ui.activity.WebViewActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -55,12 +32,8 @@ import java.util.UUID;
 import io.branch.referral.util.BranchEvent;
 import timber.log.Timber;
 
-import static com.jess.arms.integration.AppManager.getAppManager;
 import static com.pine.populay_options.BuildConfig.APPLICATION_ID;
 import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
-import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.checkApkExist;
-import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.goToPaytm;
-import static com.wq.photo.widget.CameraPreview.TAG;
 
 public class AppJs {
     String TOG=AppJs.class.getName();
@@ -200,22 +173,6 @@ public class AppJs {
         ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
         EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.takePortraitPicture,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
 
-        // EventBus.getDefault().post(new BranchEvent<String>(BranchEvent.ShowTitleBarEVent,callbackMethod));
-        // TODO
-        // 参考实现：成员变量记录下js方法名，图片转成base64字符串后调用该js方法传递给H5
-        // 下面一段代码仅供参考，能实现功能即可
-  /*      if (!TextUtils.isEmpty(callbackMethod)) {
-            StringBuilder builder = new StringBuilder(callbackMethod).append("(");
-            builder.append("'").append("data:image/png;base64,").append(str).append("'");
-            builder.append(")");
-            String method = builder.toString();
-            String javaScript = "javascript:" + method;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                webView.evaluateJavascript(javaScript, null);
-            } else {
-                webView.loadUrl(javaScript);
-            }
-        }*/
     }
 
     /**
@@ -244,23 +201,8 @@ public class AppJs {
         map.put(CALLBACKMETHOD,callbackMethod);
         map.put( com.pine.populay_options.mvp.model.entity.BranchEvent.NAME,name);
         ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
-        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.ShowTitleBarEVent,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
-        boolean has = false;
-        //TODO 遍历所有提供的@JavascriptInterface，判断否含有name方法，把结果通过JavaScript反馈给H5
-    //	···
-     //   has =
-   // 	···
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.isContainsName,ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map)));
 
-        //以下是回调给H5的部分
-      /* activity.runOnUiThread {
-            WebView webView = mContext.getWebView();
-            String javaScript = "javascript:" + callbackMethod + "(" + has + ")";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                webView.evaluateJavascript(javaScript, null);
-            } else {
-                webView.loadUrl(javaScript);
-            }
-        }*/
     }
 
     /**
@@ -272,7 +214,9 @@ public class AppJs {
         Timber.w(TOG + " shouldForbidSysBackPress"+"   forbid=="+forbid);
         //TODO 以下仅供参考
         //WebActivity成员变量记录下是否禁止
-      //  mContext.setShouldForbidBackPress(forbid);
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent<Integer>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.isContainsName,forbid));
+
+        //mContext.setShouldForbidBackPress(forbid);
         //WebActivity 重写onBackPressed方法 变量为1时禁止返回操作
     }
 
@@ -286,9 +230,14 @@ public class AppJs {
     public void forbidBackForJS(int forbid, String methodName) {
         Timber.w(TOG + " forbidBackForJS"+"   forbid=="+forbid+"   methodName=="+methodName);
         //TODO 以下仅供参考
-      //  mContext.setShouldForbidBackPress(forbid);
+        //mContext.setShouldForbidBackPress(forbid);
         //同上
       //  mContext.setBackPressJSMethod(methodName);
+        Map<String ,Object >map=new HashMap<>();
+        map.put(CALLBACKMETHOD,methodName);
+        map.put( com.pine.populay_options.mvp.model.entity.BranchEvent.FORBID,forbid);
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent< Map<String ,Object >>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.forbidBackForJS,map));
+
         //WebActivity成员变量记录下js方法名 在禁止返回时调用js方法
     }
 
@@ -337,6 +286,9 @@ public class AppJs {
     public void openPureBrowser(String json) {
         //TODO
         Timber.w(TOG + " openPureBrowser"+"   json"+json);
+        EventBus.getDefault().post(new  com.pine.populay_options.mvp.model.entity.BranchEvent< String>( com.pine.populay_options.mvp.model.entity.BranchEvent.EVENT_KEY.openPureBrowser,json));
+
+
     }
 
     /**

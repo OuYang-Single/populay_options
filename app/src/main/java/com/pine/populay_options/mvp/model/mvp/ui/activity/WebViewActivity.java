@@ -2,9 +2,9 @@ package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Application;
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,22 +29,14 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.http.imageloader.ImageLoader;
-import com.jess.arms.integration.AppManager;
-import com.jess.arms.mvp.BasePresenter;
 import com.pine.populay_options.R;
-import com.pine.populay_options.mvp.model.di.component.DaggerWaitComponent;
 import com.pine.populay_options.mvp.model.di.component.DaggerWebViewComponent;
 import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.PaytmEntity;
-import com.pine.populay_options.mvp.model.mvp.contract.TradersContract;
-import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
+import com.pine.populay_options.mvp.model.entity.PureBrowserEntity;
 import com.pine.populay_options.mvp.model.mvp.contract.WebViewContract;
-import com.pine.populay_options.mvp.model.mvp.presenter.WaitPresenter;
 import com.pine.populay_options.mvp.model.mvp.presenter.WebViewPresenter;
-import com.pine.populay_options.mvp.model.mvp.ui.adapter.TradersAdapter;
 import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
 
 import org.json.JSONException;
@@ -52,11 +44,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
+import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
 import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
 import static com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity.selectImage;
 import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
@@ -68,6 +58,9 @@ import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
 public class WebViewActivity extends BaseActivity<WebViewPresenter> implements WebViewContract.View, DownloadListener {
     @BindView(R.id.webview)
     WebView webView;
+    @BindView(R.id.view_live)
+    View view_live;
+
     androidx.appcompat.widget.Toolbar mToolbar;
     TextView toolbar_title;
     AppJs appJs;
@@ -76,6 +69,9 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
     ValueCallback<Uri[]> uploadMessageAboveL;
     OpenEntity openEntity;
     PaytmEntity paytmEntity;
+    int   returns;
+    String BackPressJSMethod;
+    PureBrowserEntity mPureBrowserEntity;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWebViewComponent //如找不到该类,请编译一下项目
@@ -93,6 +89,9 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setVisibility(View.GONE);
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             String url = getIntent().getStringExtra("URL");
@@ -108,19 +107,34 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
                         url + "?mid=" + paytmEntity.getMid() + "&orderId=" + paytmEntity.getOrderId();
                 postData.append("MID=").append(paytmEntity.getMid())
                         .append("&txnToken=").append(paytmEntity.getTextToken())
+                        .append("&AMOUNT=").append(paytmEntity.getAmount())
                         .append("&ORDER_ID=").append(paytmEntity.getOrderId());
                 webView.postUrl(postUrl, postData.toString().getBytes());
             }
         }else {
+            mPureBrowserEntity=   getIntent().getParcelableExtra("data");
+           if (mPureBrowserEntity!=null){
+               setTitle(mPureBrowserEntity.getTitle());
+               mToolbar.setVisibility(mPureBrowserEntity.isHasTitleBar()?View.VISIBLE:View.GONE);
+               webView.loadUrl(mPureBrowserEntity.getUrl());
+               view_live.setVisibility(mPureBrowserEntity.isHasTitleBar()?View.VISIBLE:View.GONE);
+               if ("black".equals(mPureBrowserEntity.getStateBarTextColor())){
+                   setStatusBarMode(this, true , Color.parseColor(mPureBrowserEntity.getTitleColor()));
+                   // toolbar_title.setTextColor(Color.parseColor("#000000"));
+               }else {
+                   setStatusBarMode(this, false , Color.parseColor(mPureBrowserEntity.getTitleColor()));
+               }
+               toolbar_title.setText(mPureBrowserEntity.getTitleTextColor());
+             //  webView.setpa
+           }
 
         }
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setVisibility(View.GONE);
+
+
         mPresenter.initWebSettings(webView.getSettings());
         appJs = new AppJs(this, webView);
         mPresenter.initWebView(webView, appJs);
-        setTitle("");
+
         webView.setDownloadListener(this);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -130,7 +144,16 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
                 if (!TextUtils.isEmpty(title)) {
 
                     if (toolbar_title != null) {
-                        toolbar_title.setText(title);
+                        if (type==0){
+                            if (mPureBrowserEntity!=null){
+                                if (mPureBrowserEntity.isHasTitleBar()) {
+                                    toolbar_title.setText(title);
+                                }
+                            }
+                        }else {
+                            toolbar_title.setText(title);
+                        }
+
                     }
 
                 }
@@ -300,6 +323,45 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
         if (data.getUrl() != null) {
             webView.loadUrl(data.getUrl());
         }
+    }
+
+    @Override
+    public void setShouldForbidBackPress(int data) {
+        returns=data;
+    }
+
+    @Override
+    public void setBackPressJSMethod(Object o) {
+        BackPressJSMethod= (String) o;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (type==0){
+            if (mPureBrowserEntity.isWebBack()){
+                if (webView.canGoBack()){
+                    webView.goBack(); // 后退
+                }else {
+                    super.onBackPressed();
+                }
+            }else {
+                super.onBackPressed();
+            }
+        }else {
+            if (returns==0){
+                super.onBackPressed();
+            }else {
+                if (BackPressJSMethod!=null&&!"".equals(BackPressJSMethod)){
+                    String javaScript = "javascript:" + BackPressJSMethod + "(" + ")";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        webView.evaluateJavascript(javaScript, null);
+                    } else {
+                        webView.loadUrl(javaScript);
+                    }
+                }
+            }
+        }
+
     }
 
 }

@@ -1,17 +1,12 @@
 package com.pine.populay_options.mvp.model.mvp.ui.Service;
 
-import android.Manifest;
 import android.app.Application;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.IBinder;
+import android.os.Build;
 import android.view.View;
 import android.webkit.WebView;
-
-import androidx.annotation.CallSuper;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -23,30 +18,27 @@ import com.pine.populay_options.R;
 import com.pine.populay_options.mvp.model.entity.BranchEvent;
 import com.pine.populay_options.mvp.model.entity.OpenEntity;
 import com.pine.populay_options.mvp.model.entity.PaytmEntity;
-import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
+import com.pine.populay_options.mvp.model.entity.PureBrowserEntity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.WaitActivity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.WebViewActivity;
+import com.pine.populay_options.mvp.model.wigth.chatkit.utils.AppJs;
+import com.pine.populay_options.mvp.model.wigth.chatkit.utils.MethodUtil;
 import com.wq.photo.widget.PickConfig;
 import com.yalantis.ucrop.UCrop;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
-import kr.co.namee.permissiongen.PermissionGen;
-import timber.log.Timber;
-
 import static com.jess.arms.integration.AppManager.getAppManager;
 import static com.pine.populay_options.mvp.model.entity.BranchEvent.CALLBACKMETHOD;
 import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.checkApkExist;
 import static com.pine.populay_options.mvp.model.wigth.chatkit.utils.Paytm.goToPaytm;
-import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
 import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
 
@@ -129,6 +121,52 @@ public class BranchEventService extends BaseService {
                     intent.putExtra("data", paytmEntity);
                     getAppManager().getCurrentActivity().  startActivity(intent);
                 }
+                break;
+            case isContainsName:
+                Map maps= ArmsUtils.obtainAppComponentFromContext(this).gson().fromJson(message.getData().toString(),Map.class);
+                String callbackMethod= (String) maps.get(CALLBACKMETHOD);
+               String name= (String) maps.get( BranchEvent.NAME);
+                boolean has = false;
+                Method[] methods=   new  MethodUtil().getClassMethods(AppJs.class);
+                for (int i=0;i<methods.length;i++){
+                    if (methods[i].getName().equals(name)  ) {
+                        has=true;
+                    }
+                }
+
+                WebView webView =  getAppManager().getCurrentActivity().findViewById(R.id.webview);;
+                String javaScript = "javascript:" + callbackMethod + "(" + has + ")";
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    webView.evaluateJavascript(javaScript, null);
+                } else {
+                    webView.loadUrl(javaScript);
+                }
+
+               // ArmsUtils.obtainAppComponentFromContext(mContext).gson().toJson(map);
+                break;
+            case shouldForbidSysBackPress:
+                if (getAppManager().getCurrentActivity() instanceof WaitActivity) {
+                    ((WaitActivity) getAppManager().getCurrentActivity()).setShouldForbidBackPress((Integer) message.getData());
+                } else if (getAppManager().getCurrentActivity() instanceof WebViewActivity) {
+                    ((WebViewActivity) getAppManager().getCurrentActivity()).setShouldForbidBackPress((Integer) message.getData());
+                }
+                break;
+
+            case forbidBackForJS:
+                Map<String ,Object >forbidBackForJS= (Map<String, Object>) message.getData();
+                if (getAppManager().getCurrentActivity() instanceof WaitActivity) {
+                    ((WaitActivity) getAppManager().getCurrentActivity()).setShouldForbidBackPress((Integer) forbidBackForJS.get(BranchEvent.FORBID));
+                    ((WaitActivity) getAppManager().getCurrentActivity()).setBackPressJSMethod(forbidBackForJS.get(CALLBACKMETHOD));
+                } else if (getAppManager().getCurrentActivity() instanceof WebViewActivity) {
+                    ((WebViewActivity) getAppManager().getCurrentActivity()).setShouldForbidBackPress((Integer) forbidBackForJS.get(BranchEvent.FORBID));
+                    ((WebViewActivity) getAppManager().getCurrentActivity()).setBackPressJSMethod(forbidBackForJS.get(CALLBACKMETHOD));
+                }
+                break;
+            case openPureBrowser:
+                PureBrowserEntity mPureBrowserEntity= ArmsUtils.obtainAppComponentFromContext(this).gson().fromJson((String) message.getData(),PureBrowserEntity.class);
+                Intent intent = new Intent(getAppManager().getCurrentActivity(), WebViewActivity.class);
+                intent.putExtra("data", mPureBrowserEntity);
+                getAppManager().getCurrentActivity().startActivity(intent);
                 break;
         }
     }

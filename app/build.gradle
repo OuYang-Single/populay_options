@@ -148,5 +148,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }
 apply plugin: 'com.google.gms.google-services'
