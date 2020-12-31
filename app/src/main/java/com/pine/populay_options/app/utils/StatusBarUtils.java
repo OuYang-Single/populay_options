@@ -1,5 +1,6 @@
 package com.pine.populay_options.app.utils;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
@@ -8,8 +9,17 @@ import android.view.WindowManager;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import cz.kinst.jakub.view.StatefulLayout;
+
 public class StatusBarUtils {
 
+  public class State extends StatefulLayout.State {
+    // Note: CONTENT state is inherited from parent
+    public static  final String  LOADING="loading";
+    public static final String NONETWORK_ERROR="no_netowork_error";
+    public static final String ERROR="error";
+    public static final String NODATA="no_data";
+  }
   /**
    * 设置状态栏黑色字体图标，
    * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
@@ -38,15 +48,21 @@ public class StatusBarUtils {
    * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
    */
   public static void setStatusBarLightMode(Window window) {
-    int type = getStatusBarLightMode(window);
-    if (type == 1) {
-      MIUISetStatusBarLightMode(window, true);
-    } else if (type == 2) {
-      FlymeSetStatusBarLightMode(window, true);
-    } else if (type == 3) {
-      window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    } else {//5.0
-      
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+              | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+      window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+              | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+              | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      window.setStatusBarColor(Color.TRANSPARENT);
+      window.setNavigationBarColor(Color.TRANSPARENT);
+    }
+    else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+      window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
   }
 

@@ -20,7 +20,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,11 +34,9 @@ import com.google.android.gms.tasks.Task;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.ResponseErrorListenerImpl;
 import com.pine.populay_options.mvp.model.di.component.DaggerWaitComponent;
-import com.pine.populay_options.mvp.model.entity.BranchEvent;
 import com.pine.populay_options.mvp.model.entity.ErrorEntity;
 import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.OpenEntity;
@@ -57,24 +54,27 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import am.widget.stateframelayout.StateFrameLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cz.kinst.jakub.view.SimpleStatefulLayout;
+import cz.kinst.jakub.view.StatefulLayout;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import timber.log.Timber;
 
-import static am.widget.stateframelayout.StateRelativeLayout.STATE_LOADING;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
+import static com.pine.populay_options.app.utils.StatusBarUtils.State.ERROR;
+import static com.pine.populay_options.app.utils.StatusBarUtils.State.NONETWORK_ERROR;
 import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
 import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
 import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
 import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
 import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
+import static cz.kinst.jakub.view.SimpleStatefulLayout.State.PROGRESS;
 
 // setContentView(R.layout.activity_wait);
 public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitContract.View, DownloadListener, View.OnClickListener {
@@ -88,7 +88,9 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @BindView(R.id.view_live)
     View mView;
     @BindView(R.id.sfl_lyt_state)
-    StateFrameLayout lytState;
+    SimpleStatefulLayout statefulLayout;
+  /*  @BindView(R.id.sfl_lyt_state)
+    StateFrameLayout lytState;*/
     OpenEntity openEntity;
     androidx.appcompat.widget.Toolbar mToolbar;
     TextView toolbar_title;
@@ -98,10 +100,13 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     String BackPressJSMethod ;
     AppJs appJs;
     View activity_error;
-    ImageView activity_error_img;
+
     TextView activity_error_text;
     Button tv_btn;
     int returns;
+
+    @Inject
+    StatefulLayout.StateController mStateController;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWaitComponent //如找不到该类,请编译一下项目
@@ -126,12 +131,14 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ).request();
-        activity_error=  getLayoutInflater().inflate(R.layout.activity_error, null, false);
+       // statefulLayout.stateController(mStateController.getStates());
+        statefulLayout.setStateController(mStateController);
+ /*       activity_error=  getLayoutInflater().inflate(R.layout.activity_error, null, false);
         activity_error_img=   activity_error.findViewById(R.id.image);
         activity_error_text=   activity_error.findViewById(R.id.tv_content);
-        tv_btn=   activity_error.findViewById(R.id.tv_btn);
-        tv_btn.setOnClickListener(this);
-        lytState.setStateViews(getLayoutInflater().inflate(R.layout.custom_app_loading, null, false),activity_error,getLayoutInflater().inflate(R.layout.custom_network_error, null, false));
+        tv_btn=   activity_error.findViewById(R.id.tv_btn);*/
+      //  tv_btn.setOnClickListener(this);
+       // lytState.setStateViews(getLayoutInflater().inflate(R.layout.custom_app_loading, null, false),activity_error,getLayoutInflater().inflate(R.layout.custom_network_error, null, false));
         mPresenter.getToken();
         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         mToolbar =(androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
@@ -144,7 +151,9 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
-                    lytState.normal();
+                    //lytState.normal();
+                    statefulLayout.showContent();
+                   // mStateController.setState("");
                     String title = view.getTitle();
                     if (!TextUtils.isEmpty(title)) {
 
@@ -251,8 +260,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     VestSignEntity data;
     @Override
     public void vestSign(VestSignEntity data) {
-        data=data;
-        if (data.getStatus()==0){
+        this.data=data;
+        if (data.getStatus()!=0){
             webView.setVisibility(View.VISIBLE);
             mRelativeLayout.setVisibility(View.GONE);
             webView.loadUrl(data.getH5Url());
@@ -271,7 +280,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
             }
         }else {
-            lytState.normal();
+            statefulLayout.showContent();
             setFullscreen(this);
             webView.setVisibility(View.GONE);
             mRelativeLayout.setVisibility(View.VISIBLE);
@@ -290,19 +299,31 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
        // activity_error_img
 
     }
+
+    @Override
+    public void setText(TextView viewById) {
+        activity_error_text=viewById;
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBranchEvent(ErrorEntity message) {
-        int img=R.mipmap.icon_network_error;
+        //int img=R.mipmap.icon_network_error;
         if (message.EventName == ResponseErrorListenerImpl.EVENT_KEY.Network_Unavailable) {
-            img = R.drawable.view_icon_network_error;
+            mStateController.setState(NONETWORK_ERROR);
+        }else {
+            mStateController.setState(ERROR);
+            if (activity_error_text!=null){
+                activity_error_text.setText(message.messing);
+            }
         }
-        activity_error_img.setImageResource(img);
-        activity_error_text.setText(message.messing);
-        lytState.error();
+
+      /*  activity_error_img.setImageResource(img);
+        activity_error_text.setText(message.messing);*/
+
     }
     @Override
     public void showLoading() {
-        lytState.setState(STATE_LOADING);
+        mStateController.setState(PROGRESS);
     }
 
     @Override
@@ -493,7 +514,6 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
     @Override
     public void onClick(View v) {
-
         mPresenter.vestSign(appJs);
     }
 }

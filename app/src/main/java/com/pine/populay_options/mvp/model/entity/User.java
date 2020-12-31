@@ -2,29 +2,34 @@ package com.pine.populay_options.mvp.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Transient;
 
-import java.util.Collection;
 import java.util.Date;
 @Entity
 public class User implements Parcelable {
     @Id
     private  Long id;
-    private  String username;
-    private  String password;
-    private  String avatar;
-    private  String email;
-    private  String phone;
-    private  String dept;
-    private  String job;
-    @Transient
-    private Collection<String> roles;
-    private  boolean enabled;
-    private String createTime;
-    private  Date lastPasswordResetDate;
+
+    private String username;
+
+    private String password;
+
+    private String email;
+
+    private String phone;
+
+    private String question;
+
+    private String answer;
+
+    private Integer role;
+
+    private Date createTime;
+
+    private Date updateTime;
 
 
     protected User(Parcel in) {
@@ -35,58 +40,74 @@ public class User implements Parcelable {
         }
         username = in.readString();
         password = in.readString();
-        avatar = in.readString();
         email = in.readString();
         phone = in.readString();
-        dept = in.readString();
-        job = in.readString();
-        enabled = in.readByte() != 0;
-        createTime = in.readString();
+        question = in.readString();
+        answer = in.readString();
+        if (in.readByte() == 0) {
+            role = null;
+        } else {
+            role = in.readInt();
+        }
     }
 
-    @Generated(hash = 302930083)
-    public User(Long id, String username, String password, String avatar,
-            String email, String phone, String dept, String job, boolean enabled,
-            String createTime, Date lastPasswordResetDate) {
+    @Generated(hash = 792808875)
+    public User(Long id, String username, String password, String email,
+            String phone, String question, String answer, Integer role,
+            Date createTime, Date updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.avatar = avatar;
         this.email = email;
         this.phone = phone;
-        this.dept = dept;
-        this.job = job;
-        this.enabled = enabled;
+        this.question = question;
+        this.answer = answer;
+        this.role = role;
         this.createTime = createTime;
-        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.updateTime = updateTime;
     }
 
     @Generated(hash = 586692638)
     public User() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
-        dest.writeString(username);
-        dest.writeString(password);
-        dest.writeString(avatar);
-        dest.writeString(email);
-        dest.writeString(phone);
-        dest.writeString(dept);
-        dest.writeString(job);
-        dest.writeByte((byte) (enabled ? 1 : 0));
-        dest.writeString(createTime);
-    }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(username);
+        parcel.writeString(password);
+        parcel.writeString(email);
+        parcel.writeString(phone);
+        parcel.writeString(question);
+        parcel.writeString(answer);
+        if (role == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(role);
+        }
     }
 
     public Long getId() {
@@ -113,14 +134,6 @@ public class User implements Parcelable {
         this.password = password;
     }
 
-    public String getAvatar() {
-        return this.avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public String getEmail() {
         return this.email;
     }
@@ -137,55 +150,43 @@ public class User implements Parcelable {
         this.phone = phone;
     }
 
-    public String getDept() {
-        return this.dept;
+    public String getQuestion() {
+        return this.question;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public String getJob() {
-        return this.job;
+    public String getAnswer() {
+        return this.answer;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
-    public boolean getEnabled() {
-        return this.enabled;
+    public Integer getRole() {
+        return this.role;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return this.createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Date getLastPasswordResetDate() {
-        return this.lastPasswordResetDate;
+    public Date getUpdateTime() {
+        return this.updateTime;
     }
 
-    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }

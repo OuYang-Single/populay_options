@@ -16,12 +16,14 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.firebase.FirebaseApp;
 import com.pine.populay_options.R;
 import com.pine.populay_options.mvp.model.mvp.ui.Service.BranchEventService;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.LogInActivity;
 import com.pine.populay_options.mvp.model.mvp.ui.activity.VideoActivity;
 
 import io.branch.referral.Branch;
 import timber.log.Timber;
 
 import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
+import static com.pine.populay_options.app.utils.StatusBarUtils.setStatusBarLightMode;
 
 /**
  * ================================================
@@ -46,8 +48,12 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
 
     @Override
     public void onActivityStarted(Activity activity) {
+        if (! (activity instanceof LogInActivity)){
+            setStatusBarMode(activity, true , Color.parseColor("#ffffff"));
+        }else {
+           setStatusBarLightMode(activity.getWindow());
+        }
 
-        setStatusBarMode(activity, true , Color.parseColor("#ffffff"));
         Timber.i(activity + " - onActivityStarted");
        // StatusBarUtil.setStatusBarLightMode(activity.getWindow());
         ARouter.getInstance().inject(this);

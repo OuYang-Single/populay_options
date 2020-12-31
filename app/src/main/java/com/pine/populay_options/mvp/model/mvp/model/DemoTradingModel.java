@@ -9,7 +9,6 @@ import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.pine.populay_options.mvp.model.api.AliyunExchangeApi;
 import com.pine.populay_options.mvp.model.entity.AliyunRequest;
-
 import com.pine.populay_options.mvp.model.entity.ExchangEreal;
 import com.pine.populay_options.mvp.model.mvp.contract.DemoTradingContract;
 
@@ -20,12 +19,9 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.APP_DOMAIN;
 import static com.pine.populay_options.mvp.model.api.AliyunExchangeApi.appcode;

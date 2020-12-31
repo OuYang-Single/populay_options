@@ -2,15 +2,25 @@ package com.pine.populay_options.mvp.model.di.module;
 
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
+import com.jess.arms.di.scope.ActivityScope;
 import com.pine.populay_options.R;
 import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
 import com.pine.populay_options.mvp.model.mvp.model.WaitModel;
-import com.jess.arms.di.scope.ActivityScope;
+
+import cz.kinst.jakub.view.StatefulLayout;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+
+import static com.pine.populay_options.app.utils.StatusBarUtils.State.ERROR;
+import static com.pine.populay_options.app.utils.StatusBarUtils.State.NODATA;
+import static com.pine.populay_options.app.utils.StatusBarUtils.State.NONETWORK_ERROR;
+import static cz.kinst.jakub.view.SimpleStatefulLayout.State.PROGRESS;
 
 
 /**
@@ -60,16 +70,20 @@ public abstract class WaitModule {
             }
         };
     }
-/*    @ActivityScope
+    @ActivityScope
     @Provides
-    public static  StateLayoutManager getStateLayoutManager(WaitContract.View mView) {
-
-        return   StateLayoutManager.newBuilder(mView.getContent()).contentView(R.layout.activity_wait)
-                .emptyDataView(R.layout.custom_empty_view)
-                .errorView(R.layout.activity_error)
-                .loadingView(R.layout.activity_loading)
-                .netWorkErrorView(R.layout.activity_networkerror).onRetryListener(mView)
-                .onNetworkListener(mView).build();
-    }*/
+    public static StatefulLayout.StateController getStateController(WaitContract.View mView) {
+        View error= LayoutInflater.from(mView.getContent()).inflate(R.layout.activity_error, null);
+        View no_error=     LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_network_error, null);
+        mView.setText(((TextView)error.findViewById(R.id.tv_content)));
+        error.findViewById(R.id.tv_btn).setOnClickListener(mView);
+        no_error.findViewById(R.id.tv_btn).setOnClickListener(mView);
+        return  StatefulLayout.StateController.create()
+                .withState(PROGRESS, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_app_loading, null))
+                .withState(NONETWORK_ERROR,  no_error)
+                .withState(ERROR,error)
+                .withState(NODATA, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_network_error, null))
+                .build();
+    }
 
 }

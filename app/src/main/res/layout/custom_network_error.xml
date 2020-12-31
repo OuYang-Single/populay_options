@@ -21,6 +21,17 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
-        android:text="没有网络，请设置网络" />
-
+        android:text="当前网络不可用，请检查网络设置" />
+    <Button
+        android:layout_marginTop="@dimen/log_bt_log_in_margin_top"
+        android:layout_marginLeft="@dimen/input_button_width"
+        android:layout_marginRight="@dimen/input_button_width"
+        android:background="@drawable/log_bt_log_in_bgs"
+        android:id="@+id/tv_btn"
+        android:text="@string/do_thing"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

@@ -20,7 +20,7 @@ import retrofit2.http.*;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "http://192.168.1.101:8000";
+    String APP_DOMAIN = "http://10.200.162.66:8081";
     String APP_DOMAINS = "http://api2.32255n.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
@@ -28,7 +28,7 @@ public interface Api {
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
-    @POST("/auth/login")
+    @POST("/mmall_war/login.do")
     Observable<Request<User>> getUsers(@Body AuthorizationUser mAuthorizationUser);
 
     @GET("/ad/{File}/{FileName}")

@@ -76,4 +76,9 @@
     <color name="dialog_date_text">@color/warm_grey_two</color>
     <color name="dialog_unread_text">@color/white</color>
     <color name="dialog_unread_bubble">@color/dark_mint</color>
+
+
+    <color name="triangle">#aa72d572</color>
+    <color name="circle">#aa738ffe</color>
+    <color name="rect">#aae84e40</color>
 </resources>

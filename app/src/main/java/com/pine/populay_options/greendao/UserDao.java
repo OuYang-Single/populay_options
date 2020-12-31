@@ -27,14 +27,13 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Username = new Property(1, String.class, "username", false, "USERNAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property Avatar = new Property(3, String.class, "avatar", false, "AVATAR");
-        public final static Property Email = new Property(4, String.class, "email", false, "EMAIL");
-        public final static Property Phone = new Property(5, String.class, "phone", false, "PHONE");
-        public final static Property Dept = new Property(6, String.class, "dept", false, "DEPT");
-        public final static Property Job = new Property(7, String.class, "job", false, "JOB");
-        public final static Property Enabled = new Property(8, boolean.class, "enabled", false, "ENABLED");
-        public final static Property CreateTime = new Property(9, String.class, "createTime", false, "CREATE_TIME");
-        public final static Property LastPasswordResetDate = new Property(10, java.util.Date.class, "lastPasswordResetDate", false, "LAST_PASSWORD_RESET_DATE");
+        public final static Property Email = new Property(3, String.class, "email", false, "EMAIL");
+        public final static Property Phone = new Property(4, String.class, "phone", false, "PHONE");
+        public final static Property Question = new Property(5, String.class, "question", false, "QUESTION");
+        public final static Property Answer = new Property(6, String.class, "answer", false, "ANSWER");
+        public final static Property Role = new Property(7, Integer.class, "role", false, "ROLE");
+        public final static Property CreateTime = new Property(8, java.util.Date.class, "createTime", false, "CREATE_TIME");
+        public final static Property UpdateTime = new Property(9, java.util.Date.class, "updateTime", false, "UPDATE_TIME");
     }
 
 
@@ -53,14 +52,13 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"USERNAME\" TEXT," + // 1: username
                 "\"PASSWORD\" TEXT," + // 2: password
-                "\"AVATAR\" TEXT," + // 3: avatar
-                "\"EMAIL\" TEXT," + // 4: email
-                "\"PHONE\" TEXT," + // 5: phone
-                "\"DEPT\" TEXT," + // 6: dept
-                "\"JOB\" TEXT," + // 7: job
-                "\"ENABLED\" INTEGER NOT NULL ," + // 8: enabled
-                "\"CREATE_TIME\" TEXT," + // 9: createTime
-                "\"LAST_PASSWORD_RESET_DATE\" INTEGER);"); // 10: lastPasswordResetDate
+                "\"EMAIL\" TEXT," + // 3: email
+                "\"PHONE\" TEXT," + // 4: phone
+                "\"QUESTION\" TEXT," + // 5: question
+                "\"ANSWER\" TEXT," + // 6: answer
+                "\"ROLE\" INTEGER," + // 7: role
+                "\"CREATE_TIME\" INTEGER," + // 8: createTime
+                "\"UPDATE_TIME\" INTEGER);"); // 9: updateTime
     }
 
     /** Drops the underlying database table. */
@@ -88,40 +86,39 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(3, password);
         }
  
-        String avatar = entity.getAvatar();
-        if (avatar != null) {
-            stmt.bindString(4, avatar);
-        }
- 
         String email = entity.getEmail();
         if (email != null) {
-            stmt.bindString(5, email);
+            stmt.bindString(4, email);
         }
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(6, phone);
+            stmt.bindString(5, phone);
         }
  
-        String dept = entity.getDept();
-        if (dept != null) {
-            stmt.bindString(7, dept);
+        String question = entity.getQuestion();
+        if (question != null) {
+            stmt.bindString(6, question);
         }
  
-        String job = entity.getJob();
-        if (job != null) {
-            stmt.bindString(8, job);
+        String answer = entity.getAnswer();
+        if (answer != null) {
+            stmt.bindString(7, answer);
         }
-        stmt.bindLong(9, entity.getEnabled() ? 1L: 0L);
  
-        String createTime = entity.getCreateTime();
+        Integer role = entity.getRole();
+        if (role != null) {
+            stmt.bindLong(8, role);
+        }
+ 
+        java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(10, createTime);
+            stmt.bindLong(9, createTime.getTime());
         }
  
-        java.util.Date lastPasswordResetDate = entity.getLastPasswordResetDate();
-        if (lastPasswordResetDate != null) {
-            stmt.bindLong(11, lastPasswordResetDate.getTime());
+        java.util.Date updateTime = entity.getUpdateTime();
+        if (updateTime != null) {
+            stmt.bindLong(10, updateTime.getTime());
         }
     }
 
@@ -144,40 +141,39 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(3, password);
         }
  
-        String avatar = entity.getAvatar();
-        if (avatar != null) {
-            stmt.bindString(4, avatar);
-        }
- 
         String email = entity.getEmail();
         if (email != null) {
-            stmt.bindString(5, email);
+            stmt.bindString(4, email);
         }
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(6, phone);
+            stmt.bindString(5, phone);
         }
  
-        String dept = entity.getDept();
-        if (dept != null) {
-            stmt.bindString(7, dept);
+        String question = entity.getQuestion();
+        if (question != null) {
+            stmt.bindString(6, question);
         }
  
-        String job = entity.getJob();
-        if (job != null) {
-            stmt.bindString(8, job);
+        String answer = entity.getAnswer();
+        if (answer != null) {
+            stmt.bindString(7, answer);
         }
-        stmt.bindLong(9, entity.getEnabled() ? 1L: 0L);
  
-        String createTime = entity.getCreateTime();
+        Integer role = entity.getRole();
+        if (role != null) {
+            stmt.bindLong(8, role);
+        }
+ 
+        java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(10, createTime);
+            stmt.bindLong(9, createTime.getTime());
         }
  
-        java.util.Date lastPasswordResetDate = entity.getLastPasswordResetDate();
-        if (lastPasswordResetDate != null) {
-            stmt.bindLong(11, lastPasswordResetDate.getTime());
+        java.util.Date updateTime = entity.getUpdateTime();
+        if (updateTime != null) {
+            stmt.bindLong(10, updateTime.getTime());
         }
     }
 
@@ -192,14 +188,13 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // username
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // password
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // avatar
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // email
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // phone
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // dept
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // job
-            cursor.getShort(offset + 8) != 0, // enabled
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // createTime
-            cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)) // lastPasswordResetDate
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // email
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // phone
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // question
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // answer
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // role
+            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)), // createTime
+            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)) // updateTime
         );
         return entity;
     }
@@ -209,14 +204,13 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUsername(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setPassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setAvatar(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPhone(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setDept(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setJob(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setEnabled(cursor.getShort(offset + 8) != 0);
-        entity.setCreateTime(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setLastPasswordResetDate(cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)));
+        entity.setEmail(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setPhone(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setQuestion(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setAnswer(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setRole(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setCreateTime(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
+        entity.setUpdateTime(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
      }
     
     @Override
