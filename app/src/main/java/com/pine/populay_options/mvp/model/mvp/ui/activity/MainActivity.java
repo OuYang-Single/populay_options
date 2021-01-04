@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.jess.arms.di.component.AppComponent;
 import javax.inject.Inject;
 
 import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
+import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.nav_view)
@@ -73,22 +75,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_home_black_click);
                 mVpContent.setCurrentItem(0);
+                setStatusBarMode(this, true , Color.parseColor("#ffffff"));
                 return true;
             case R.id.navigation_periphery:
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_quotes_black_click);
                 mVpContent.setCurrentItem(1);
+                setStatusBarMode(this, true , Color.parseColor("#ffffff"));
                 return true;
 
-            case R.id.navigation_message:
-                selectedItemId = item.getItemId();
-                item.setIcon(R.mipmap.ic_message_black_click);
-                mVpContent.setCurrentItem(2);
-                return true;
             case R.id.navigation_mine:
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_mine_black_click);
                 mVpContent.setCurrentItem(3);
+                setStatusBarMode(this, false , Color.parseColor("#2e343e"));
                 return true;
         }
         return false;
@@ -97,7 +97,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private void RestoreIcon() {
         mNavView.getMenu().findItem(R.id.navigation_home).setIcon(R.mipmap.ic_home_black);
         mNavView.getMenu().findItem(R.id.navigation_periphery).setIcon(R.mipmap.ic_quotes_black);
-        mNavView.getMenu().findItem(R.id.navigation_message).setIcon(R.mipmap.ic_message_black);
         mNavView.getMenu().findItem(R.id.navigation_mine).setIcon(R.mipmap.ic_mine_black);
     }
 

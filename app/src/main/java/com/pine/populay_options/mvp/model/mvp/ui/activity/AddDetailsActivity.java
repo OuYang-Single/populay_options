@@ -1,9 +1,12 @@
 package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +28,8 @@ import com.pine.populay_options.mvp.model.mvp.ui.adapter.DetailsAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 
 
 public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implements AddDetailsContract.View{
@@ -34,6 +39,10 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
     TextView mTvRightToolbar;
     @BindView(R.id.toolbar_back)
     RelativeLayout mToolbarBack;
+    @BindView(R.id.tab_text)
+    EditText tab_text;
+    @Inject
+    PromptDialog promptDialog ;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerAddDetailsComponent //如找不到该类,请编译一下项目
@@ -56,12 +65,37 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
         mTvRightToolbar.setVisibility(View.VISIBLE);
         mToolbarBack.setVisibility(View.VISIBLE);
     }
-
     @Override
-    public void showMessage(@NonNull String message) {
-
+    public void showLoading() {
+        promptDialog.showLoading("Loading...");
+    }
+    @Override
+    public void hideLoading() {
+        promptDialog.dismiss();
     }
 
+    @OnClick({R.id.tv_right_toolbar})
+    public void OnClick(View view){
+        switch (view.getId()){
+            case R.id.tv_right_toolbar:
+                mPresenter.add(tab_text.getText().toString());
+                break;
+        }
+    }
+    @Override
+    public void showMessage(@NonNull String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
-    //getTitle
+    @Override
+    public void success() {
+        showMessage("添加成功");
+        finish();
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
 }

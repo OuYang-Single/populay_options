@@ -1,11 +1,14 @@
 package com.pine.populay_options.mvp.model.mvp.contract;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
+
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 
@@ -28,6 +31,8 @@ public interface LogInContract {
         Context getContent();
 
         void statusService(Intent intent);
+
+        Activity getActivity();
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -35,5 +40,7 @@ public interface LogInContract {
         Observable<Request<User>> getUsers(String Neme, String Password, boolean b);
 
         void seve(Request<User> users);
+
+        Observable<Request<String>>  password(String name);
     }
 }

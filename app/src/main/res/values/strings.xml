@@ -1,24 +1,25 @@
 <resources>
     <string name="app_name">sfd</string>
-    <string name="username">请输入您的手机号</string>
-    <string name="code">输入密码</string>
+    <string name="username">Please enter your mobile number</string>
+    <string name="code">enter password</string>
     <string name="get_cold">获取验证码</string>
-    <string name="log_bt_log_in">登录</string>
-    <string name="log_linearl_other_forget_password_txt">忘记密码 ?</string>
-    <string name="log_linearl_other_registered_txt">现在注册 ></string>
-    <string name="log_in_account_null">请输入手机号！！！</string>
-    <string name="log_in_password_null">请输入密码！！！</string>
-    <string name="log_in_no_phone">请输入正确的手机号</string>
+    <string name="log_bt_log_in">log in</string>
+    <string name="log_bt_registered_in">registered</string>
+    <string name="log_linearl_other_forget_password_txt">reset Password ?</string>
+    <string name="log_linearl_other_registered_txt">Register now ></string>
+    <string name="log_in_account_null">Please enter phone number！！！</string>
+    <string name="log_in_password_null">Please enter password！！！</string>
+    <string name="log_in_no_phone">please enter a valid phone number</string>
     <string name="title_activity_wait">WaitActivity</string>
-    <string name="wait_jump_over">跳过</string>
+    <string name="wait_jump_over">jump</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">主页</string>
+    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications"></string>
     <string name="title_add">Notifications</string>
-    <string name="title_periphery">行情</string>
+    <string name="title_periphery">Quotes</string>
     <string name="title_message">消息</string>
-    <string name="title_mine">我的</string>
+    <string name="title_mine">mine</string>
 
     <string name="trad_high">High  </string>
     <string name="trad_low">Low  </string>
@@ -91,4 +92,8 @@
     <string name="empty">当前页面空空如也</string>
     <string name="no_data">暂无数据</string>
     <string name="do_thing">重新加载</string>
-    </resources>
+    <string name="log_bt_log_out">logout</string>
+    <string name="log_out" >是否退出登录？</string>
+    <string name="log_outs" >是否重置密码？</string>
+
+</resources>

@@ -1,6 +1,7 @@
 package com.pine.populay_options.mvp.model.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+
+import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
 
 public class QuotesFragment extends BaseFragment<QuotesFragmentPresenter> implements QuotesFragmentContract.View, View.OnClickListener, DefaultAdapter.OnRecyclerViewItemClickListener {
     @BindView(R.id.recycler_quotes)

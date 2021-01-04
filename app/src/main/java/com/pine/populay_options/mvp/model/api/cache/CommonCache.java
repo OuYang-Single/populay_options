@@ -17,17 +17,20 @@ package com.pine.populay_options.mvp.model.api.cache;
 
 import com.pine.populay_options.mvp.model.entity.Login;
 import com.pine.populay_options.mvp.model.entity.Request;
+import com.pine.populay_options.mvp.model.entity.Topics;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 
 import io.reactivex.Observable;
 import io.rx_cache2.DynamicKey;
+import io.rx_cache2.EvictDynamicKey;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
 import io.rx_cache2.internal.RxCache;
 import okhttp3.ResponseBody;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -43,6 +46,8 @@ import java.util.concurrent.TimeUnit;
 public interface CommonCache {
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<Request<User>>> getLogin(Observable<Request<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    @LifeCache(duration = 1, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<Request<String>>> getRegistered(Observable<Request<String>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
   @LifeCache(duration = 3, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<ResponseBody>> getdownload(Observable<ResponseBody> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
     @LifeCache(duration = 4, timeUnit = TimeUnit.MINUTES)
@@ -51,4 +56,12 @@ public interface CommonCache {
    Observable<Reply<Request<VestSignEntity>>> vestSign( Observable<Request<VestSignEntity>>  users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
     @LifeCache(duration =6, timeUnit = TimeUnit.MINUTES)
    Observable<Reply<Request<Login>>> doLogin2(Observable<Request<Login>>  users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 7, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<Request<String>>> logOut(Observable<Request<String>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 8, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<Request<List<Topics>>>> initData(Observable<Request<List<Topics>>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    @LifeCache(duration =9, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<Request<String>>> addDetails(Observable<Request<String>> listObservable, DynamicKey dynamicKey, EvictDynamicKey evictDynamicKey);
 }

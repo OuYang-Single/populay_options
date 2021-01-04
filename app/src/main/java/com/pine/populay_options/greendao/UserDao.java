@@ -32,8 +32,9 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Question = new Property(5, String.class, "question", false, "QUESTION");
         public final static Property Answer = new Property(6, String.class, "answer", false, "ANSWER");
         public final static Property Role = new Property(7, Integer.class, "role", false, "ROLE");
-        public final static Property CreateTime = new Property(8, java.util.Date.class, "createTime", false, "CREATE_TIME");
-        public final static Property UpdateTime = new Property(9, java.util.Date.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property CreateTime = new Property(8, long.class, "createTime", false, "CREATE_TIME");
+        public final static Property UpdateTime = new Property(9, long.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property Token = new Property(10, String.class, "token", false, "TOKEN");
     }
 
 
@@ -57,8 +58,9 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"QUESTION\" TEXT," + // 5: question
                 "\"ANSWER\" TEXT," + // 6: answer
                 "\"ROLE\" INTEGER," + // 7: role
-                "\"CREATE_TIME\" INTEGER," + // 8: createTime
-                "\"UPDATE_TIME\" INTEGER);"); // 9: updateTime
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 8: createTime
+                "\"UPDATE_TIME\" INTEGER NOT NULL ," + // 9: updateTime
+                "\"TOKEN\" TEXT);"); // 10: token
     }
 
     /** Drops the underlying database table. */
@@ -110,15 +112,12 @@ public class UserDao extends AbstractDao<User, Long> {
         if (role != null) {
             stmt.bindLong(8, role);
         }
+        stmt.bindLong(9, entity.getCreateTime());
+        stmt.bindLong(10, entity.getUpdateTime());
  
-        java.util.Date createTime = entity.getCreateTime();
-        if (createTime != null) {
-            stmt.bindLong(9, createTime.getTime());
-        }
- 
-        java.util.Date updateTime = entity.getUpdateTime();
-        if (updateTime != null) {
-            stmt.bindLong(10, updateTime.getTime());
+        String token = entity.getToken();
+        if (token != null) {
+            stmt.bindString(11, token);
         }
     }
 
@@ -165,15 +164,12 @@ public class UserDao extends AbstractDao<User, Long> {
         if (role != null) {
             stmt.bindLong(8, role);
         }
+        stmt.bindLong(9, entity.getCreateTime());
+        stmt.bindLong(10, entity.getUpdateTime());
  
-        java.util.Date createTime = entity.getCreateTime();
-        if (createTime != null) {
-            stmt.bindLong(9, createTime.getTime());
-        }
- 
-        java.util.Date updateTime = entity.getUpdateTime();
-        if (updateTime != null) {
-            stmt.bindLong(10, updateTime.getTime());
+        String token = entity.getToken();
+        if (token != null) {
+            stmt.bindString(11, token);
         }
     }
 
@@ -193,8 +189,9 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // question
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // answer
             cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // role
-            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)), // createTime
-            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)) // updateTime
+            cursor.getLong(offset + 8), // createTime
+            cursor.getLong(offset + 9), // updateTime
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // token
         );
         return entity;
     }
@@ -209,8 +206,9 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setQuestion(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setAnswer(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setRole(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setCreateTime(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
-        entity.setUpdateTime(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
+        entity.setCreateTime(cursor.getLong(offset + 8));
+        entity.setUpdateTime(cursor.getLong(offset + 9));
+        entity.setToken(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

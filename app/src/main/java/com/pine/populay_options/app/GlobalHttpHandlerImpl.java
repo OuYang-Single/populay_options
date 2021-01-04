@@ -5,12 +5,23 @@ import android.content.Context;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.jess.arms.http.GlobalHttpHandler;
+import com.pine.populay_options.greendao.ManagerFactory;
+import com.pine.populay_options.mvp.model.api.Api;
+import com.pine.populay_options.mvp.model.entity.User;
+import com.squareup.okhttp.FormEncodingBuilder;
 
+
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.pine.populay_options.mvp.model.api.Api.APP_DOMAINS;
@@ -54,11 +65,49 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
         如果使用 Okhttp 将新的请求, 请求成功后, 再将 Okhttp 返回的 Response return 出去即可
         如果不需要返回新的结果, 则直接把参数 response 返回出去即可*/
      Log.w("body",response.body().toString()) ;
-     if (response.code()!=200){//HttpException\
+     if (response.code()==200){//HttpException\
          Gson gson=new Gson();
-         com.pine.populay_options.mvp.model.entity.Request mRequest= null;
+         OkHttpClient okHttpClient = new OkHttpClient();
+          com.pine.populay_options.mvp.model.entity.Request mRequest= null;
           mRequest = gson.fromJson(httpResult, com.pine.populay_options.mvp.model.entity.Request.class);
-         response=response.newBuilder().message(mRequest.getMsg()).build();
+          if (mRequest!=null){
+              if (mRequest.getStatus()==1){
+                  List<User> users= ManagerFactory.getInstance().getStudentManager(context).queryAll();
+                  if (users.size()>0){
+                      MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                      builder.addFormDataPart("password", users.get(0).getPassword());//传递键值对参数
+                      builder.addFormDataPart("username", users.get(0).getUsername());//传递键值对参数
+                      Request request = new Request.Builder()
+                              .url(Api.APP_DOMAIN+"/untitled_war/user/login.do")
+                              .post(builder.build())
+                              .build();
+                      final Call call = okHttpClient.newCall(request);
+                      Response a=null;
+                      Response execute=null;
+
+                      try {
+                          execute=  call.execute();
+                          try {
+                              String tokem= gson.fromJson(execute.body().string(), com.pine.populay_options.mvp.model.entity.Request.class).getToken();
+                              users.get(0).setToken(tokem);
+                              ManagerFactory.getInstance().getStudentManager(context).update(users);
+                              Request newRequest =    chain.request().newBuilder() .addHeader("Set-Cookie",  tokem)
+                                      .build();
+                              final Call calls=  okHttpClient.newCall(newRequest);
+                              a=   calls.execute();
+                          } catch (IOException e) {
+                              e.printStackTrace();
+                          }
+
+                      } catch (IOException e) {
+                          e.printStackTrace();
+                      }
+
+                  }
+
+
+              }
+          }
 
         }
 
@@ -93,11 +142,15 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
                     return chain.request().newBuilder().url(newBaseUrls)
                             .build();
                 }
-
             }
+        }else {
+         List<User> user= ManagerFactory.getInstance().getStudentManager(context).queryAll();
+         if (user.size()>0){
+            chain.request().newBuilder().header("Set-Cookie", user.get(0).getToken() )
+                     .build();
+         }
         }
-   /*     return chain.request().newBuilder().header("token", tokenId)
-                .build();*/
+
         return request;
     }
 }

@@ -83,7 +83,12 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
                 if (anInt != 0) {
                     mHandler.postDelayed(mRunnable, Time);
                 }else{
-                    Jump();
+                    if (mRootView.isJump()){
+                        Jump();
+                    }else {
+                        mRootView.Jumps();
+                    }
+
                 }
                 Message message = new Message();
                 message.what = TIMEJUMPTXT;
@@ -114,6 +119,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
 
     public void Jump() {
         Intent intent = null;
+        mHandler.removeCallbacks(mRunnable);
         if (mModel.isUserPresence()) {
             intent = new Intent(mRootView  .getContent(), MainActivity.class);
         }else {
@@ -248,5 +254,9 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
 
                     }
                 });;
+    }
+
+    public void Jumps() {
+        mHandler.removeCallbacks(mRunnable);
     }
 }

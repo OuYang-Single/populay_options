@@ -1,11 +1,14 @@
 package com.pine.populay_options.mvp.model.di.module;
 
+import com.jess.arms.di.scope.ActivityScope;
 import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.mvp.contract.LogInContract;
+import com.pine.populay_options.mvp.model.mvp.contract.RegisteredContract;
 import com.pine.populay_options.mvp.model.mvp.model.LogInModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import me.leefeng.promptlibrary.PromptDialog;
 
 
 /**
@@ -28,5 +31,11 @@ public abstract class LogInModule {
     @Provides
     public static ManagerFactory getManagerFactory() {
         return ManagerFactory.getInstance();
+    }
+
+    @ActivityScope
+    @Provides
+    public static PromptDialog getPromptDialog(LogInContract.View view){
+        return new PromptDialog(view.getActivity());
     }
 }

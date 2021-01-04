@@ -59,6 +59,8 @@
         </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity">
         </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.RegisteredActivity">
+        </activity>
         <activity android:name=".mvp.model.mvp.ui.activity.BrokersActivity">
 
         </activity>

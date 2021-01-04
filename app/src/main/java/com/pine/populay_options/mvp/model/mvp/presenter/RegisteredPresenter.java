@@ -1,18 +1,21 @@
 package com.pine.populay_options.mvp.model.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
-import com.pine.populay_options.mvp.model.entity.CommentsEntity;
+import com.pine.populay_options.R;
+import com.pine.populay_options.mvp.model.entity.PositionOrder;
 import com.pine.populay_options.mvp.model.entity.Request;
-import com.pine.populay_options.mvp.model.entity.Topics;
-import com.pine.populay_options.mvp.model.mvp.contract.AddDetailsContract;
-import com.pine.populay_options.mvp.model.mvp.contract.DetailsContract;
-import com.pine.populay_options.mvp.model.mvp.ui.adapter.DetailsAdapter;
+import com.pine.populay_options.mvp.model.entity.User;
+import com.pine.populay_options.mvp.model.mvp.contract.PaperFragmentContract;
+import com.pine.populay_options.mvp.model.mvp.contract.RegisteredContract;
+import com.pine.populay_options.mvp.model.mvp.ui.activity.MainActivity;
+import com.pine.populay_options.mvp.model.mvp.ui.adapter.PaperAdapter;
 
 import java.util.List;
 
@@ -24,8 +27,12 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
+import static com.pine.populay_options.app.utils.DateUtil.isMobile;
+import static com.pine.populay_options.app.utils.DateUtil.isNull;
+import static com.pine.populay_options.app.utils.DateUtil.isPhone;
+
 @ActivityScope
-public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model, AddDetailsContract.View> {
+public class RegisteredPresenter extends BasePresenter<RegisteredContract.Model, RegisteredContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -36,14 +43,13 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
     AppManager mAppManager;
 
     @Inject
-    public AddDetailsPresenter(AddDetailsContract.Model model, AddDetailsContract.View rootView) {
+    public RegisteredPresenter(RegisteredContract.Model model, RegisteredContract.View rootView) {
         super(model, rootView);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -55,8 +61,13 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
         this.mApplication = null;
     }
 
-    public void add(String content) {
-        mModel.add(content).subscribeOn(Schedulers.io())
+
+
+    public void Registered(String Name, String Password) {
+        if (Verification(Name,Password)) {
+            return;
+        }
+        mModel.getRegistered(Name,Password,false) .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -70,11 +81,8 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
                 .subscribe(new ErrorHandleSubscriber<Request<String>>(mErrorHandler) {
                     @Override
                     public void onNext(Request<String> users) {
-                        if (users.getStatus()==0){
-                            mRootView.success();
-                        }else {
-                            mRootView.showMessage(users.getMsg());
-                        }
+
+                        mRootView.showMessage(users.getMsg());
                     }
 
                     @Override
@@ -82,7 +90,22 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
                         super.onError(t);
 
                     }
-                });;
-
+                });
     }
+    public boolean Verification(String Neme, String Password){
+        if (isNull(Neme)) {
+            mRootView.showMessage(mApplication.getString(R.string.log_in_account_null));
+            return true;
+        }
+        if (isNull(Password)) {
+            mRootView.showMessage(mApplication.getString(R.string.log_in_password_null));
+            return true;
+        }
+        if (!(isMobile(Neme)||isPhone(Neme))){
+            mRootView.showMessage(mApplication.getString(R.string.log_in_no_phone));
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -10,10 +10,7 @@
             android:icon="@drawable/ic_periphery_black"
             android:title="@string/title_periphery"/>
 
-    <item
-            android:id="@+id/navigation_message"
-            android:icon="@drawable/ic_message_black"
-            android:title="@string/title_message"/>
+
     <item
             android:id="@+id/navigation_mine"
             android:icon="@drawable/ic_mine_black"

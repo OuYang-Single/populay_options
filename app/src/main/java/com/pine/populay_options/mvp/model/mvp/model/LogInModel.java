@@ -12,6 +12,9 @@ import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
@@ -57,14 +60,12 @@ public class LogInModel extends BaseModel implements LogInContract.Model {
 
     @Override
     public Observable<Request<User>> getUsers(String Neme, String Password, boolean b) {
-        AuthorizationUser mAuthorizationUser=new AuthorizationUser();
-        mAuthorizationUser.setCode("");
+        User mAuthorizationUser=new User();
         mAuthorizationUser.setUsername(Neme);
         mAuthorizationUser.setPassword(Password);
-        mAuthorizationUser.setUuid("");
         return Observable.just(mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .getUsers(mAuthorizationUser))
+                .getUsers(Neme,Password))
                 .flatMap(new Function<Observable<Request<User>>, ObservableSource<Request<User>>>() {
                     @Override
                     public ObservableSource<Request<User>> apply(@NonNull Observable<Request<User>> listObservable) throws Exception {
@@ -81,5 +82,24 @@ public class LogInModel extends BaseModel implements LogInContract.Model {
     public void seve(Request<User> users) {
         mManagerFactory.getStudentManager(mApplication.getApplicationContext()).deleteAll();
         mManagerFactory.getStudentManager(mApplication.getApplicationContext()).save(users.getData());
+    }
+
+    @Override
+    public Observable<Request<String>> password(String s) {
+
+
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .password(s))
+                .flatMap(new Function<Observable<Request<String>>, ObservableSource<Request<String>>>() {
+                    @Override
+                    public ObservableSource<Request<String>> apply(@NonNull Observable<Request<String>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .addDetails(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
     }
 }

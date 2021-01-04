@@ -82,7 +82,7 @@ public abstract class WaitModule {
                 .withState(PROGRESS, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_app_loading, null))
                 .withState(NONETWORK_ERROR,  no_error)
                 .withState(ERROR,error)
-                .withState(NODATA, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_network_error, null))
+                .withState(NODATA, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_empty_view, null))
                 .build();
     }
 

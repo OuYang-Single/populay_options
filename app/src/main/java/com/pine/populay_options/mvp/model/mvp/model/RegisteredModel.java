@@ -2,23 +2,17 @@ package com.pine.populay_options.mvp.model.mvp.model;
 
 import android.app.Application;
 
-import androidx.fragment.app.Fragment;
-
 import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
-import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.api.Api;
 import com.pine.populay_options.mvp.model.api.cache.CommonCache;
+import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
 import com.pine.populay_options.mvp.model.entity.Request;
-import com.pine.populay_options.mvp.model.entity.Topics;
 import com.pine.populay_options.mvp.model.entity.User;
-import com.pine.populay_options.mvp.model.mvp.contract.MainContract;
-import com.pine.populay_options.mvp.model.mvp.contract.TopicsFragmentContract;
-import com.pine.populay_options.mvp.model.mvp.ui.adapter.ViewPagerContentAdapter;
-
-import java.util.List;
+import com.pine.populay_options.mvp.model.mvp.contract.RegisteredContract;
+import com.pine.populay_options.mvp.model.mvp.contract.StudyForexContract;
 
 import javax.inject.Inject;
 
@@ -31,14 +25,14 @@ import io.rx_cache2.EvictDynamicKey;
 import io.rx_cache2.Reply;
 
 @ActivityScope
-public class TopicsFragmentModel  extends BaseModel implements TopicsFragmentContract.Model {
+public class RegisteredModel  extends BaseModel implements RegisteredContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public TopicsFragmentModel(IRepositoryManager repositoryManager) {
+    public RegisteredModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
@@ -48,20 +42,21 @@ public class TopicsFragmentModel  extends BaseModel implements TopicsFragmentCon
         this.mGson = null;
         this.mApplication = null;
     }
-
     @Override
-    public Observable<Request<List<Topics>>> initData(int pageNum,int pageSize) {
-
+    public Observable<Request<String>> getRegistered(String Neme, String Password, boolean b) {
+        User mAuthorizationUser=new User();
+        mAuthorizationUser.setUsername(Neme);
+        mAuthorizationUser.setPassword(Password);
         return Observable.just(mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .initData(pageNum,pageSize))
-                .flatMap(new Function<Observable<Request<List<Topics>>>, ObservableSource<Request<List<Topics>>>>() {
+                .getRegistered(Neme,Password))
+                .flatMap(new Function<Observable<Request<String>>, ObservableSource<Request<String>>>() {
                     @Override
-                    public ObservableSource<Request<List<Topics>>> apply(@NonNull Observable<Request<List<Topics>>> listObservable) throws Exception {
+                    public ObservableSource<Request<String>> apply(@NonNull Observable<Request<String>> listObservable) throws Exception {
                         return mRepositoryManager.obtainCacheService(CommonCache.class)
-                                .initData(listObservable
+                                .getRegistered(listObservable
                                         , new DynamicKey(1)
-                                        , new EvictDynamicKey(true))
+                                        , new EvictDynamicKey(b))
                                 .map(Reply::getData);
                     }
                 });

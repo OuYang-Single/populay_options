@@ -58,9 +58,6 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             case R.id.navigation_periphery:
                 image=    R.mipmap.ic_quotes_black_click;
                 break;
-            case R.id.navigation_message:
-                image=    R.mipmap.ic_message_black_click;
-                break;
             case R.id.navigation_mine:
                 image=    R.mipmap.ic_mine_black_click;
                 break;

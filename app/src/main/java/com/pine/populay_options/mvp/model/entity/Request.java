@@ -6,12 +6,14 @@ import android.os.Parcelable;
 public class Request<T> implements Parcelable {
     private T data;
     private int code;
+    private int status;
     private String timestamp;
     private String token;
     private String msg;
     private String dts;
+    public Request(){
 
-    public Request(){}
+    }
     public T getData() {
         return data;
     }
@@ -26,6 +28,14 @@ public class Request<T> implements Parcelable {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getTimestamp() {
@@ -52,8 +62,17 @@ public class Request<T> implements Parcelable {
         this.msg = msg;
     }
 
+    public String getDts() {
+        return dts;
+    }
+
+    public void setDts(String dts) {
+        this.dts = dts;
+    }
+
     protected Request(Parcel in) {
         code = in.readInt();
+        status = in.readInt();
         timestamp = in.readString();
         token = in.readString();
         msg = in.readString();
@@ -63,6 +82,7 @@ public class Request<T> implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(code);
+        dest.writeInt(status);
         dest.writeString(timestamp);
         dest.writeString(token);
         dest.writeString(msg);
@@ -85,12 +105,4 @@ public class Request<T> implements Parcelable {
             return new Request[size];
         }
     };
-
-    public String getDts() {
-        return dts;
-    }
-
-    public void setDts(String dts) {
-        this.dts = dts;
-    }
 }

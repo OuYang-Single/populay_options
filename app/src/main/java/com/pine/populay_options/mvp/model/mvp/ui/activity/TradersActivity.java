@@ -1,5 +1,6 @@
 package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -72,5 +73,10 @@ public class TradersActivity extends BaseAseActivitys<TradersPresenter> implemen
         Intent mIntent=   new Intent(this, TradersDetailsActivity.class);
         mIntent.putExtra("TradersEntity",mTradersAdapter.getInfos().get(position));
         startActivity(mIntent);
+    }
+
+    @Override
+    public Context getContent() {
+        return this;
     }
 }

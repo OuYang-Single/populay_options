@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 import com.pine.populay_options.R;
 import com.pine.populay_options.app.ResponseErrorListenerImpl;
@@ -68,6 +71,7 @@ import static com.pine.populay_options.app.utils.RxUtils.setFullscreen;
 import static com.pine.populay_options.app.utils.StatusBarUtil.setStatusBarMode;
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.ERROR;
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.NONETWORK_ERROR;
+import static com.pine.populay_options.app.utils.StatusBarUtils.setStatusBarLightMode;
 import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
 import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
 import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
@@ -81,6 +85,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     String Tog=WaitActivity.class.getName();
     @BindView(R.id.webview)
     WebView webView;
+    @BindView(R.id.advertising)
+    ImageView advertising;
     @BindView(R.id.wait_time_jump_txt)
     TextView mWaitTimeJumpTxt;
     @BindView(R.id.wait_jump)
@@ -100,7 +106,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     String BackPressJSMethod ;
     AppJs appJs;
     View activity_error;
-
+    @Inject
+    ImageLoader mImageLoader;
     TextView activity_error_text;
     Button tv_btn;
     int returns;
@@ -222,11 +229,24 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
     }
-    @OnClick({R.id.wait_time_jump_txt})
+
+    @OnClick({R.id.wait_time_jump_txt,R.id.advertising})
     public void OnClick(View mView) {
         switch (mView.getId()) {
             case R.id.wait_time_jump_txt:
-                mPresenter.Jump();
+                if (data.getStatus()==0){
+                    mPresenter.Jumps();
+                    Jumps();
+                }else {
+                    mPresenter.Jump();
+                }
+
+                break;
+            case R.id.advertising:
+                Intent  intent=new Intent(this, WebViewActivity.class);
+                intent.putExtra("type",1);
+                intent.putExtra("URL",data.getAdvUrl());
+                startActivity(intent);
                 break;
         }
     }
@@ -261,7 +281,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @Override
     public void vestSign(VestSignEntity data) {
         this.data=data;
-        if (data.getStatus()!=0){
+        if (data.getStatus()==0){
             webView.setVisibility(View.VISIBLE);
             mRelativeLayout.setVisibility(View.GONE);
             webView.loadUrl(data.getH5Url());
@@ -279,6 +299,22 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 setStatusBarMode(this, false ,Color.parseColor(data.getBackgroundCol()));
                 toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
             }
+            if (data.getAdvOn()==1&&data.getAdvImg()!=null){
+             //   String url="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.bbra.cn%2F%28S%28cdh0n4ymxynm2bnschrajp55%29%29%2FUploadfiles%2Fimgs%2F2013%2F02%2F20%2Fmm2%2FXbzs_013.jpg&refer=http%3A%2F%2Fwww.bbra.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612284293&t=01b98a85533acbf538d61edec0a66235";
+                mImageLoader.loadImage(this, ImageConfigImpl.builder().imageView(advertising).url(data.getAdvImg()).build());
+                advertising.setVisibility(View.VISIBLE);
+                mRelativeLayout.setVisibility(View.VISIBLE);
+                mPresenter.WaitingTime();
+                webView.setVisibility(View.GONE);
+                setStatusBarLightMode(getWindow());
+               /*  private   String advImg;  //广告图片地址
+                private   String advUrl;  //广告业务链接地址)*/
+            } else {
+                webView.setVisibility(View.VISIBLE);
+                advertising.setVisibility(View.GONE);
+                mRelativeLayout.setVisibility(View.GONE);
+            }
+
         }else {
             statefulLayout.showContent();
             setFullscreen(this);
@@ -515,5 +551,25 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @Override
     public void onClick(View v) {
         mPresenter.vestSign(appJs);
+    }
+
+    @Override
+    public boolean isJump() {
+
+        return data.getStatus()!=0;
+    }
+
+    @Override
+    public void Jumps() {
+        webView.setVisibility(View.VISIBLE);
+        advertising.setVisibility(View.GONE);
+        mRelativeLayout.setVisibility(View.GONE);
+        if ("black".equals(data.getFieldCol())){
+            setStatusBarMode(this, true ,Color.parseColor(data.getBackgroundCol()));
+            toolbar_title.setTextColor(Color.parseColor("#000000"));
+        }else {
+            setStatusBarMode(this, false ,Color.parseColor(data.getBackgroundCol()));
+            toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
+        }
     }
 }

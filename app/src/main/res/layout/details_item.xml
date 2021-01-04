@@ -63,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="25dp">
         <ImageView
+            android:visibility="gone"
                 android:layout_marginLeft="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="10dp"
@@ -72,6 +73,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"/>
         <TextView
+            android:visibility="gone"
                 android:layout_toRightOf="@+id/image_comment"
                 android:layout_centerVertical="true"
                 android:id="@+id/tv_comment"

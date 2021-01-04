@@ -42,6 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                     android:id="@+id/chart_text"
                     android:textColor="@color/chart_text"
                     android:text="3 days ago"
                     android:textSize="@dimen/sp14"
@@ -52,6 +53,7 @@
 
         </RelativeLayout>
         <TextView
+                android:id="@+id/chart_texts"
                 android:textColor="@color/chart_highlight"
                 android:textSize="@dimen/sp14"
                 android:layout_marginTop="10dp"
@@ -69,11 +71,13 @@
                 app:maxSize="9"
                 />
         <RelativeLayout
+
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="25dp">
 
             <TextView
+                android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:id="@+id/tv_comment"
                     android:layout_alignParentRight="true"
@@ -83,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <ImageView
+                android:visibility="gone"
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tv_comment"
@@ -91,6 +96,7 @@
                     android:layout_width="15dp"
                     android:layout_height="25dp"/>
             <TextView
+                android:visibility="gone"
                  android:id="@+id/tv_like"
                     android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
@@ -101,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <ImageView
+                android:visibility="gone"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/tv_like"
                     android:id="@+id/image_like"

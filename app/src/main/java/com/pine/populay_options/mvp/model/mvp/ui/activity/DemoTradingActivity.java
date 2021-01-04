@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -69,7 +70,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.pine.populay_options.app.utils.DateUtil.timeStamp2Date;
 @Route(path = "/analogDisk/demoTrading")
 public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> implements DemoTradingContract.View, IActivity, ActivityLifecycleable, View.OnClickListener, OptionMenuView.OnOptionMenuClickListener {
-
+    @BindView(R.id.toolbar_back)
+    RelativeLayout toolbar_back;
     @BindView(R.id.vp_content)
     NoScrollViewPager vpContent;
     @BindView(R.id.toolbar)
@@ -145,6 +147,7 @@ public class DemoTradingActivity  extends BaseActivity<DemoTradingPresenter> imp
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 //
+        toolbar_back.setVisibility(View.VISIBLE);
         if (mExchangEreal==null){
             mExchangEreal=     getIntent().getParcelableExtra("exchangEreal");
         }

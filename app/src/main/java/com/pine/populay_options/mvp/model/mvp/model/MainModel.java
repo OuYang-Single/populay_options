@@ -45,7 +45,6 @@ public class MainModel extends BaseModel implements MainContract.Model {
     public void onStart() {
         fragmentList.add(new TopicsFragment());
         fragmentList.add(new QuotesFragment());
-        fragmentList.add(new ForexCalendarFragment());
         fragmentList.add(new MineFragment());
         mViewPagerContentAdapterl.notifyDataSetChanged();
     }

@@ -27,9 +27,10 @@ public class User implements Parcelable {
 
     private Integer role;
 
-    private Date createTime;
+    private long createTime;
 
-    private Date updateTime;
+    private long updateTime;
+    private String token;
 
 
     protected User(Parcel in) {
@@ -49,12 +50,15 @@ public class User implements Parcelable {
         } else {
             role = in.readInt();
         }
+        createTime = in.readLong();
+        updateTime = in.readLong();
+        token = in.readString();
     }
 
-    @Generated(hash = 792808875)
+    @Generated(hash = 459206246)
     public User(Long id, String username, String password, String email,
             String phone, String question, String answer, Integer role,
-            Date createTime, Date updateTime) {
+            long createTime, long updateTime, String token) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -65,6 +69,7 @@ public class User implements Parcelable {
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.token = token;
     }
 
     @Generated(hash = 586692638)
@@ -89,25 +94,28 @@ public class User implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
-            parcel.writeByte((byte) 0);
+            dest.writeByte((byte) 0);
         } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id);
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        parcel.writeString(username);
-        parcel.writeString(password);
-        parcel.writeString(email);
-        parcel.writeString(phone);
-        parcel.writeString(question);
-        parcel.writeString(answer);
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(email);
+        dest.writeString(phone);
+        dest.writeString(question);
+        dest.writeString(answer);
         if (role == null) {
-            parcel.writeByte((byte) 0);
+            dest.writeByte((byte) 0);
         } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(role);
+            dest.writeByte((byte) 1);
+            dest.writeInt(role);
         }
+        dest.writeLong(createTime);
+        dest.writeLong(updateTime);
+        dest.writeString(token);
     }
 
     public Long getId() {
@@ -174,19 +182,27 @@ public class User implements Parcelable {
         this.role = role;
     }
 
-    public Date getCreateTime() {
+    public long getCreateTime() {
         return this.createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public long getUpdateTime() {
         return this.updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -73,7 +73,7 @@ public class BranchEventService extends BaseService {
                 options.setCompressionQuality(2);
                 new PickConfig.Builder(getAppManager().getCurrentActivity())
                         .maxPickSize(1)//最多选择几张
-                        .isneedcamera(true)//是否需要第一项是相机
+                        .isneedcamera(false)//是否需要第一项是相机
                         .spanCount(4)//一行显示几张照片
                         .actionBarcolor(Color.parseColor("#ffffff"))//设置toolbar的颜色
                         .statusBarcolor(Color.parseColor("#ffffff")) //设置状态栏的颜色(5.0以上)
