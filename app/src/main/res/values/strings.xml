@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sfd</string>
+    <string name="app_name">RupeeOption</string>
     <string name="username">Please enter your mobile number</string>
     <string name="code">enter password</string>
     <string name="get_cold">获取验证码</string>

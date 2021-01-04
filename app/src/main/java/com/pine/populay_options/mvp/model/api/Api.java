@@ -23,7 +23,7 @@ import retrofit2.http.*;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "http://192.168.2.10:8083";
+    String APP_DOMAIN = "http://3659w9i901.goho.co";
     String APP_DOMAINS = "http://api2.32255n.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
@@ -31,28 +31,28 @@ public interface Api {
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @FormUrlEncoded
-    @POST("/untitled_war/user/login.do")
+    @POST("/unnamed/user/login.do")
     Observable<Request<User>> getUsers( @Field("username") String username,
                                         @Field("password") String password);
 
 
-    @POST("/untitled_war/user/logout.do")
+    @POST("/unnamed/user/logout.do")
     Observable<Request<String>> getLogout();
 
     @FormUrlEncoded
-    @POST("/untitled_war/user/password.do")
+    @POST("/unnamed/user/password.do")
     Observable<Request<String>> password(@Field("username") String password);
 
     @FormUrlEncoded
-    @POST("/untitled_war/user/register.do")
+    @POST("/unnamed/user/register.do")
     Observable<Request<String>> getRegistered(  @Field("username") String username,
                                                 @Field("password") String password);
     @FormUrlEncoded
-    @POST("/untitled_war/Topics/topics.do")
+    @POST("/unnamed/Topics/topics.do")
     Observable<Request<List<Topics>>> initData(@Field("pageNum") int pageNum,
                                                @Field("pageSize") int pageSize);
     @FormUrlEncoded
-    @POST("/untitled_war/Topics/add_topics.do")
+    @POST("/unnamed/Topics/add_topics.do")
     Observable<Request<String>> addDetails(@Field("userId") int userId,@Field("content")String content);
 
     @GET("/ad/{File}/{FileName}")

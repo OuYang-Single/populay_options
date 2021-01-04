@@ -13,6 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
@@ -87,6 +89,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     WebView webView;
     @BindView(R.id.advertising)
     ImageView advertising;
+
     @BindView(R.id.wait_time_jump_txt)
     TextView mWaitTimeJumpTxt;
     @BindView(R.id.wait_jump)
@@ -132,6 +135,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
         PermissionGen.with(this)
                 .addRequestCode(100)
                 .permissions(
@@ -159,7 +163,15 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     //lytState.normal();
+
                     statefulLayout.showContent();
+                    if ("black".equals(data.getFieldCol())){
+                        setStatusBarMode(WaitActivity.this, true ,Color.parseColor(data.getBackgroundCol()));
+                        toolbar_title.setTextColor(Color.parseColor("#000000"));
+                    }else {
+                        setStatusBarMode(WaitActivity.this, false ,Color.parseColor(data.getBackgroundCol()));
+                        toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
+                    }
                    // mStateController.setState("");
                     String title = view.getTitle();
                     if (!TextUtils.isEmpty(title)) {
@@ -292,13 +304,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                     Timber.i(Tog + " setBackgroundColor=="+e);
                 }
             }
-            if ("black".equals(data.getFieldCol())){
-               setStatusBarMode(this, true ,Color.parseColor(data.getBackgroundCol()));
-               toolbar_title.setTextColor(Color.parseColor("#000000"));
-            }else {
-                setStatusBarMode(this, false ,Color.parseColor(data.getBackgroundCol()));
-                toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
-            }
+
             if (data.getAdvOn()==1&&data.getAdvImg()!=null){
              //   String url="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.bbra.cn%2F%28S%28cdh0n4ymxynm2bnschrajp55%29%29%2FUploadfiles%2Fimgs%2F2013%2F02%2F20%2Fmm2%2FXbzs_013.jpg&refer=http%3A%2F%2Fwww.bbra.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612284293&t=01b98a85533acbf538d61edec0a66235";
                 mImageLoader.loadImage(this, ImageConfigImpl.builder().imageView(advertising).url(data.getAdvImg()).build());
@@ -316,6 +322,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             }
 
         }else {
+            advertising.setVisibility(View.VISIBLE);
             statefulLayout.showContent();
             setFullscreen(this);
             webView.setVisibility(View.GONE);

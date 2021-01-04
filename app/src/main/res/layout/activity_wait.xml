@@ -10,7 +10,6 @@
     custom:sflState="normal">
     <FrameLayout
         android:id="@+id/FrameLayout"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -43,12 +42,12 @@
         <ImageView
             android:scaleType="fitXY"
             android:visibility="gone"
+            android:src="@mipmap/start_img"
             android:id="@+id/advertising"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
         <RelativeLayout
-
             android:id="@+id/wait_jump"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -61,5 +60,6 @@
                 android:textSize="14sp" />
 
         </RelativeLayout>
+
     </FrameLayout>
 </cz.kinst.jakub.view.SimpleStatefulLayout>

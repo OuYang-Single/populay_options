@@ -5,6 +5,7 @@
     android:background="@android:color/white">
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +21,12 @@
             android:indeterminateDrawable="@drawable/animation_list_load"
             android:layout_gravity="center"/>
     </LinearLayout>
-
+    <ImageView
+        android:src="@mipmap/start_img"
+        android:scaleType="fitXY"
+        android:id="@+id/advertisings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>

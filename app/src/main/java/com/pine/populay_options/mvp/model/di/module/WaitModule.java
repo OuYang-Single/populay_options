@@ -79,7 +79,7 @@ public abstract class WaitModule {
         error.findViewById(R.id.tv_btn).setOnClickListener(mView);
         no_error.findViewById(R.id.tv_btn).setOnClickListener(mView);
         return  StatefulLayout.StateController.create()
-                .withState(PROGRESS, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_app_loading, null))
+                .withState(PROGRESS, LayoutInflater.from(mView.getContent()).inflate(R.layout.activity_loading3, null))
                 .withState(NONETWORK_ERROR,  no_error)
                 .withState(ERROR,error)
                 .withState(NODATA, LayoutInflater.from(mView.getContent()).inflate(R.layout.custom_empty_view, null))

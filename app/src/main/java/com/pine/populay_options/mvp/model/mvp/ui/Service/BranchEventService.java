@@ -52,7 +52,7 @@ public class BranchEventService extends BaseService {
     public void init() {
 
     }
-
+ /*=pYux9/rkg9a*/
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBranchEvent(BranchEvent message) {
         switch (message.getEventName()) {

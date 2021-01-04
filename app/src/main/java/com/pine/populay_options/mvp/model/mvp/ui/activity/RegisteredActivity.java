@@ -93,6 +93,7 @@ public class RegisteredActivity extends BaseActivity<RegisteredPresenter> implem
         //int img=R.mipmap.icon_network_error;
         if (message.EventName == ResponseErrorListenerImpl.EVENT_KEY.Network_Unavailable) {
            showMessage(message.messing);
+           fileList();
         }else {
             showMessage("注册失败");
 
