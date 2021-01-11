@@ -98,19 +98,24 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
         return R.layout.activity_web_view;
     }
 
+
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setVisibility(View.GONE);
+        view_live.setVisibility(View.GONE);
         lytState.loading();
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
+
             String url = getIntent().getStringExtra("URL");
             if (url != null) {
                 webView.loadUrl(url);
             }
         } else if (type==2){
+
             String url = getIntent().getStringExtra("URL");
             paytmEntity=  getIntent().getParcelableExtra("data");
             if (url != null&&paytmEntity!=null) {
@@ -122,6 +127,14 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
                         .append("&AMOUNT=").append(paytmEntity.getAmount())
                         .append("&ORDER_ID=").append(paytmEntity.getOrderId());
                 webView.postUrl(postUrl, postData.toString().getBytes());
+            }
+        }else if (type==3){
+            findViewById(R.id.toolbar_back).setVisibility(View.VISIBLE);
+            mToolbar.setVisibility(View.VISIBLE);
+            view_live.setVisibility(View.VISIBLE);
+            String url = getIntent().getStringExtra("URL");
+            if (url != null) {
+                webView.loadUrl(url);
             }
         }else {
             mPureBrowserEntity=   getIntent().getParcelableExtra("data");

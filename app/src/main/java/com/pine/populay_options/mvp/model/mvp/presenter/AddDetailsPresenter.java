@@ -55,8 +55,39 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
         this.mApplication = null;
     }
 
-    public void add(String content) {
-        mModel.add(content).subscribeOn(Schedulers.io())
+    public void add(String content,List<String>paths) {
+        mModel.add(content,paths).subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<Request<String>>(mErrorHandler) {
+                    @Override
+                    public void onNext(Request<String> users) {
+                        if (users.getStatus()==0){
+                            mRootView.success();
+                        }else {
+                            mRootView.showMessage(users.getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+
+                    }
+                });;
+
+    }
+
+    public void adds(String toString) {
+        mModel.adds(toString).subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {

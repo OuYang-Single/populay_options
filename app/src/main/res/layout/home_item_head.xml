@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <!--<androidx.viewpager.widget.ViewPager
+            android:overScrollMode="never"
+            android:id="@+id/home_item_vp_ad"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">-->
+        <com.pine.populay_options.mvp.model.wigth.AutoScrollViewPager
+            android:id="@+id/home_item_vp_ad"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+        </com.pine.populay_options.mvp.model.wigth.AutoScrollViewPager>
+  <!--  </androidx.viewpager.widget.ViewPager>-->
+</FrameLayout>

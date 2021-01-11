@@ -1,15 +1,19 @@
 package com.pine.populay_options.mvp.model.api;
 
 import com.pine.populay_options.mvp.model.entity.AuthorizationUser;
+import com.pine.populay_options.mvp.model.entity.CommentsEntity;
 import com.pine.populay_options.mvp.model.entity.Login;
+import com.pine.populay_options.mvp.model.entity.PageInfo;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.Topics;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.entity.VestSignEntity;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.*;
 
@@ -23,47 +27,99 @@ import retrofit2.http.*;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "http://3659w9i901.goho.co";
+    String APP_DOMAIN = "http://192.168.2.10:8083";
     String APP_DOMAINS = "http://api2.32255n.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
     String VEST_CODE = "44F0ZINK";
+    String AppDomain = "/untitled_war";
+    String file = "/upload/";
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @FormUrlEncoded
-    @POST("/unnamed/user/login.do")
-    Observable<Request<User>> getUsers( @Field("username") String username,
-                                        @Field("password") String password);
+    @POST(AppDomain + "/user/login.do")
+    Observable<Request<User>> getUsers(@Field("username") String username,
+                                       @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST(AppDomain + "/user/login1.do")
+    Observable<Request<User>> codeLogin(@Field("username") String username);
 
-    @POST("/unnamed/user/logout.do")
+    @POST(AppDomain + "/user/logout.do")
     Observable<Request<String>> getLogout();
 
     @FormUrlEncoded
-    @POST("/unnamed/user/password.do")
+    @POST(AppDomain + "/user/password.do")
     Observable<Request<String>> password(@Field("username") String password);
 
     @FormUrlEncoded
-    @POST("/unnamed/user/register.do")
-    Observable<Request<String>> getRegistered(  @Field("username") String username,
-                                                @Field("password") String password);
+    @POST(AppDomain + "/user/register.do")
+    Observable<Request<String>> getRegistered(@Field("username") String username,
+                                              @Field("password") String password);
+
     @FormUrlEncoded
-    @POST("/unnamed/Topics/topics.do")
-    Observable<Request<List<Topics>>> initData(@Field("pageNum") int pageNum,
-                                               @Field("pageSize") int pageSize);
+    @POST(AppDomain + "/user/password.do")
+    Observable<Request<Boolean>> changePassword(@Field("username") String username, @Field("password") String password);
+
     @FormUrlEncoded
-    @POST("/unnamed/Topics/add_topics.do")
-    Observable<Request<String>> addDetails(@Field("userId") int userId,@Field("content")String content);
+    @POST(AppDomain + "/Topics/delete_topics.do")
+    Observable<Request<Boolean>> delete_topics(@Field("topicsId") int topicsId );
+
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/delete_comments.do")
+    Observable<Request<Boolean>> delete_comments(@Field("commentId") int topicsId );
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/topics.do")
+    Observable<Request<PageInfo<Topics>>> initData(@Field("pageNum") int pageNum,
+                                                   @Field("pageSize") int pageSize,
+                                                   @Field("userId") long userId);
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/Unlike.do")
+    Observable<Request<Boolean>> Unlike(@Field("topicsId") Integer id, @Field("userId")  Long userId);
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/like.do")
+    Observable<Request<Boolean>> like( @Field("topicsId") Integer id,  @Field("userId") Long userId);
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/shield.do")
+    Observable<Request<Boolean>> shield( @Field("topicsId") Integer id,  @Field("userId") Long userId);
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/comment.do")
+    Observable<Request<List<CommentsEntity>>>  comment( @Field("topicsId") Integer id);
+
+    @Multipart
+    @POST(AppDomain + "/Topics/add_topics.do")
+    Observable<Request<String>> addDetails(@Query("userId") int userId, @Query("content") String content,@PartMap Map<String, RequestBody>maps);
+
+
+    @POST(AppDomain + "/Topics/add_topicss.do")
+    Observable<Request<String>>  addDetailss(@Query("userId") int userId, @Query("content") String content);
+
+
+    @FormUrlEncoded
+    @POST(AppDomain + "/Topics/addComments.do")
+    Observable<Request<Boolean>> SubmitComments( @Field("userId") int userId,@Field("topicsId") Integer id, @Field("comment") String content);
+    @FormUrlEncoded
+    @POST(AppDomain + "/user/is_user_exists.do")
+    Observable<Request<Boolean>> isUserExists(@Field("username") String username, @Field("defaultRegion") String defaultRegion);
+
 
     @GET("/ad/{File}/{FileName}")
     Observable<ResponseBody> download(@Path("File") String File, @Path("FileName") String FileName);
 
     @Headers(URL_BOOK)
     @GET("/admin/client/vestSign.do")
-    Observable<Request<VestSignEntity>> vestSign(@Query("vestCode") String vestCode, @Query("channelCode") String channelCode, @Query("version")String version, @Query("deviceId")String deviceId, @Query("timestamp")long timestamp);
+    Observable<Request<VestSignEntity>> vestSign(@Query("vestCode") String vestCode, @Query("channelCode") String channelCode, @Query("version") String version, @Query("deviceId") String deviceId, @Query("timestamp") long timestamp);
 
     @Headers(URL_LOGIN)
     @GET("/user/google/doLogin2.do")
-    Observable<Request<Login>> doLogin2(@Header("url_names") String  host , @Query("id") String id, @Query("name") String name, @Query("email") String email, @Query("type") int type, @Query("sign") String sign);
+    Observable<Request<Login>> doLogin2(@Header("url_names") String host, @Query("id") String id, @Query("name") String name, @Query("email") String email, @Query("type") int type, @Query("sign") String sign);
+
+
 
 }

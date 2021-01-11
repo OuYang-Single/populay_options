@@ -61,4 +61,21 @@ public class RegisteredModel  extends BaseModel implements RegisteredContract.Mo
                     }
                 });
     }
+
+    @Override
+    public Observable<Request<Boolean>> isUserExists(String name, String defaultRegion) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .isUserExists(name,defaultRegion))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .isUserExists(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(false))
+                                .map(Reply::getData);
+                    }
+                });
+    }
 }

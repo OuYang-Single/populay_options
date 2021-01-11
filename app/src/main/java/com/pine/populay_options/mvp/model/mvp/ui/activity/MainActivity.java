@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mPresenter.setBottomNavigationItem(mNavView, 40);
         selectedItemId = mNavView.getSelectedItemId();
         mVpContent.setAdapter(mViewPagerContentAdapterl);
+        mVpContent.setOffscreenPageLimit(3);
        // mVpContent.setCurrentItem(mNavView.getMaxItemCount());
     }
 
@@ -77,13 +78,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mVpContent.setCurrentItem(0);
                 setStatusBarMode(this, true , Color.parseColor("#ffffff"));
                 return true;
+            case R.id.navigation_message:
+                selectedItemId = item.getItemId();
+                item.setIcon(R.mipmap.ic_message_black_click);
+                mVpContent.setCurrentItem(1);
+                return true;
             case R.id.navigation_periphery:
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_quotes_black_click);
-                mVpContent.setCurrentItem(1);
+                mVpContent.setCurrentItem(2);
                 setStatusBarMode(this, true , Color.parseColor("#ffffff"));
                 return true;
-
             case R.id.navigation_mine:
                 selectedItemId = item.getItemId();
                 item.setIcon(R.mipmap.ic_mine_black_click);
@@ -97,6 +102,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private void RestoreIcon() {
         mNavView.getMenu().findItem(R.id.navigation_home).setIcon(R.mipmap.ic_home_black);
         mNavView.getMenu().findItem(R.id.navigation_periphery).setIcon(R.mipmap.ic_quotes_black);
+        mNavView.getMenu().findItem(R.id.navigation_message).setIcon(R.mipmap.ic_message_black);
         mNavView.getMenu().findItem(R.id.navigation_mine).setIcon(R.mipmap.ic_mine_black);
     }
 

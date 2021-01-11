@@ -25,6 +25,7 @@ import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.di.component.DaggerMineFragmentComponent;
 import com.pine.populay_options.mvp.model.di.component.DaggerPaperFragmentComponent;
 import com.pine.populay_options.mvp.model.entity.ErrorEntity;
+import com.pine.populay_options.mvp.model.entity.LoginEvent;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.pine.populay_options.mvp.model.mvp.contract.MineFragmentContract;
 import com.pine.populay_options.mvp.model.mvp.contract.PaperFragmentContract;
@@ -54,6 +55,8 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
     @Inject
     ManagerFactory mManagerFactory;
     AlertDialog alertDialog4 ;
+    List<User>UserAll;
+
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
         DaggerMineFragmentComponent //如找不到该类,请编译一下项目
@@ -75,13 +78,12 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mToolbarTitle.setText(R.string.Mine);
-       List<User>UserAll= mManagerFactory.getStudentManager(getContext()).queryAll();
-        if (UserAll.size()>0){
-            txt_user_name.setText(UserAll.get(0).getUsername());
-        }
+        onLogIn(null);
     }
 
-    @OnClick({R.id.mine_assets,R.id.mine_top_brokers,R.id.mine_forex_videos,R.id.mine_most_famous_forex_traders,R.id.mine_study_forex,R.id.mine_tools,R.id.mine_customer_service,R.id.log_bt_log_out})
+
+
+    @OnClick({R.id.mine_assets,R.id.mine_top_brokers,R.id.mine_forex_videos,R.id.mine_most_famous_forex_traders,R.id.mine_study_forex,R.id.mine_tools,R.id.mine_customer_service,R.id.log_bt_log_out,R.id.line_mine})
     public void OnClick(View view){
         Intent intent;
         switch (view.getId()){
@@ -105,6 +107,14 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
                 break;
             case R.id.mine_customer_service:
                 ARouter.getInstance().build("/analogDisk/customer_service").navigation();
+                break;
+            case R.id.line_mine:
+                if (UserAll.size()>0){
+
+                }else {
+                    ARouter.getInstance().build("/analogDisk/LogInActivity").navigation();
+                }
+
                 break;
             case R.id.log_bt_log_out:
 
@@ -147,7 +157,6 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
         if (getUserVisibleHint()){
             setStatusBarMode(getActivity(), false , Color.parseColor("#2e343e"));
         }
-
     }
 
     @Override
@@ -164,6 +173,14 @@ public class MineFragment extends BaseFragment<MineFragmentPresenter> implements
             showMessage(message.messing);
         }else {
             showMessage(message.messing);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogIn(LoginEvent message) {
+        UserAll= mManagerFactory.getStudentManager(getContext()).queryAll();
+        if (UserAll.size()>0){
+            txt_user_name.setText(UserAll.get(0).getUsername());
         }
     }
 }

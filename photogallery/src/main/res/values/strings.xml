@@ -14,5 +14,9 @@
 
     <string name="ucrop_menu_crop">裁剪</string>
     <string name="ucrop_error_input_data_is_absent">Both input and output Uri must be specified</string>
+    <string name="determine">确定</string>
+    <string name="recent">最近</string>
+    <string name="you_can_only_choose">你最多只能选择</string>
+    <string name="a_photograph">张照片</string>
 
 </resources>

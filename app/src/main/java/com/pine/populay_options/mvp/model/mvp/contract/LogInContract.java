@@ -3,6 +3,7 @@ package com.pine.populay_options.mvp.model.mvp.contract;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.User;
 import com.jess.arms.mvp.IModel;
@@ -33,6 +34,12 @@ public interface LogInContract {
         void statusService(Intent intent);
 
         Activity getActivity();
+
+        void getCode();
+
+        void initResult();
+
+        int getResult();
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -41,6 +48,10 @@ public interface LogInContract {
 
         void seve(Request<User> users);
 
-        Observable<Request<String>>  password(String name);
+        Observable<Request<String>> password(String name);
+
+        Observable<Request<Boolean>> isUserExists(String name, String defaultRegion);
+
+        Observable<Request<User>> codeLogin(String phone);
     }
 }

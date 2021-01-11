@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginTop="@dimen/home_item_txt_title_margin_left"
+        android:layout_marginLeft="@dimen/home_item_txt_title_margin_left"
+        android:layout_marginRight="@dimen/home_item_txt_title_margin_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/txt_context_item_head_title"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/home_context_item_margin"
+            android:layout_marginBottom="@dimen/home_context_item_margin"
+            android:text="涨幅榜"
+            android:textSize="@dimen/sp20"
+            style="@style/style_txt"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_quotes_text"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/sp14"
+                android:textStyle="bold"
+                android:textColor="#cccdd8"
+                android:text="名称"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:layout_marginRight="60dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/tv_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="跌涨幅"
+                    android:textStyle="bold"
+                    android:textColor="#cccdd8"
+                    android:textSize="@dimen/sp12" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginLeft="120dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="最新价"
+                android:textStyle="bold"
+                android:textColor="#cccdd8"
+                android:textSize="@dimen/sp12" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_item_context_recycler_view">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

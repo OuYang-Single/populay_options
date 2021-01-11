@@ -9,20 +9,22 @@
     app:contentInsetStart="0dp">
 
     <RelativeLayout
-        android:visibility="gone"
+         android:visibility="gone"
         android:id="@+id/toolbar_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="left">
 
         <ImageView
+
             android:tint="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:padding="5dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_back_white_24dp" />
+            android:src="@mipmap/ic_arrow_back_white_24dp" />
     </RelativeLayout>
 
     <TextView
@@ -30,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-            android:text="123"
+        android:text=""
         android:textColor="@color/chart_background"
         android:textSize="18sp"
         />
@@ -63,7 +65,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="right"
+                android:text=""
                 android:textColor="@color/toolbar_right_color"
                 android:textSize="14sp"/>
     </LinearLayout>

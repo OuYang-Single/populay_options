@@ -50,7 +50,7 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if (! (activity instanceof LogInActivity)&& !(activity instanceof RegisteredActivity)&& !(activity instanceof WaitActivity)){
+        if (  !(activity instanceof WaitActivity)){
             setStatusBarMode(activity, true , Color.parseColor("#ffffff"));
         }else {
            setStatusBarLightMode(activity.getWindow());

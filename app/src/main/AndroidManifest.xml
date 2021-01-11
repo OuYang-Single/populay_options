@@ -3,143 +3,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pine.populay_options">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="androidf.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="androidf.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-            android:name="com.jess.arms.base.BaseApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/app_img"
-            android:label="@string/app_name"
-            android:networkSecurityConfig="@xml/network_security_config"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
+        android:name="com.jess.arms.base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_img"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".mvp.model.mvp.ui.activity.MainActivity"
-                android:label="@string/title_activity_main">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.DemoTradingActivity">
-
-        </activity>
+            android:name=".mvp.model.mvp.ui.activity.MainActivity2"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-                android:name=".mvp.model.mvp.ui.activity.LogInActivity"
-                android:label="@string/title_activity_main">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.StudyForexActivity">
-        </activity>
-
+            android:name=".mvp.model.mvp.ui.activity.MainActivity"
+            android:label="@string/title_activity_main"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.DemoTradingActivity"></activity>
         <activity
-                android:theme="@style/WelcomeStyle"
-                android:name=".mvp.model.mvp.ui.activity.WaitActivity"
-                android:label="@string/title_activity_wait">
+            android:name=".mvp.model.mvp.ui.activity.LogInActivity"
+            android:label="@string/title_activity_main"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.StudyForexActivity"></activity>
+        <activity
+            android:name=".mvp.model.mvp.ui.activity.WaitActivity"
+            android:label="@string/title_activity_wait"
+            android:theme="@style/WelcomeStyle">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        <intent-filter>
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" android:host="wia3j.app.link" />
-            <data android:scheme="https" android:host="wia3j-alternate.app.link" />
-        </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="wia3j.app.link"
+                    android:scheme="https" />
+                <data
+                    android:host="wia3j-alternate.app.link"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.ForgetPasswordActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.RegisteredActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.BrokersActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.CustomerActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.TradersActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.VideosActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.TradersDetailsActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.CurrencyConverterActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.VideoActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.AddDetailsActivity"></activity>
+        <activity
+            android:name=".mvp.model.mvp.ui.activity.DetailsActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.PositionActivity">
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.RegisteredActivity">
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.BrokersActivity">
+        <activity android:name=".mvp.model.mvp.ui.activity.ForexActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.WebViewActivity"></activity>
+        <activity android:name=".mvp.model.mvp.ui.activity.BookDetalisActivity"></activity>
 
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.CustomerActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.TradersActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.VideosActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.TradersDetailsActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.CurrencyConverterActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.VideoActivity">
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.AddDetailsActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.DetailsActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.ForexActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.WebViewActivity">
-
-        </activity>
-        <activity android:name=".mvp.model.mvp.ui.activity.BookDetalisActivity">
-
-        </activity>
-        <service android:name=".mvp.model.mvp.ui.Service.BranchEventService"
-
-            >
-
-        </service>
+        <service android:name=".mvp.model.mvp.ui.Service.BranchEventService"></service>
         <!--
  只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize
             只要填写完设计图的尺寸, AutoSize 就会自动启动, 以下 dp 尺寸是根据公式 px / (dpi / 160) 求出, 运算时使用测试机的 dpi 即可
             AutoSize 的详细介绍请看这里 https://juejin.im/post/5bce688e6fb9a05cf715d1c2
         -->
         <meta-data
-                android:name="design_width_in_dp"
-                android:value="360"/>
+            android:name="design_width_in_dp"
+            android:value="360" />
         <meta-data
-                android:name="design_height_in_dp"
-                android:value="640"/> <!-- arms配置 -->
+            android:name="design_height_in_dp"
+            android:value="640" /> <!-- arms配置 -->
         <meta-data
-                android:name="com.pine.populay_options.app.GlobalConfiguration"
-                android:value="ConfigModule"/>
-        <!-- Branch init -->
-
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+            android:name="com.pine.populay_options.app.GlobalConfiguration"
+            android:value="ConfigModule" /> <!-- Branch init -->
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" /> <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
         <!-- Add this meta-data below, and change "key_live_xxxxxxx" to your actual live Branch key -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" /> <!-- For your test app, if you have one; Again, use your actual test Branch key -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" />
 
-        <!-- For your test app, if you have one; Again, use your actual test Branch key -->
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_live_imIW6J20HB2gYSnhCiHcCligqvg7wb0a" />
-
-      <service
+        <service
             android:name=".mvp.model.mvp.ui.Service.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
             android:value="false" />
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
-
-
     </application>
 
 </manifest>

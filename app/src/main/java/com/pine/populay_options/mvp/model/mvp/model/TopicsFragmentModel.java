@@ -11,6 +11,7 @@ import com.jess.arms.mvp.BaseModel;
 import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.api.Api;
 import com.pine.populay_options.mvp.model.api.cache.CommonCache;
+import com.pine.populay_options.mvp.model.entity.PageInfo;
 import com.pine.populay_options.mvp.model.entity.Request;
 import com.pine.populay_options.mvp.model.entity.Topics;
 import com.pine.populay_options.mvp.model.entity.User;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
@@ -50,14 +52,14 @@ public class TopicsFragmentModel  extends BaseModel implements TopicsFragmentCon
     }
 
     @Override
-    public Observable<Request<List<Topics>>> initData(int pageNum,int pageSize) {
+    public Observable<Request<PageInfo<Topics>>> initData(int pageNum, int pageSize, long UserId) {
 
         return Observable.just(mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .initData(pageNum,pageSize))
-                .flatMap(new Function<Observable<Request<List<Topics>>>, ObservableSource<Request<List<Topics>>>>() {
+                .initData(pageNum,pageSize,UserId))
+                .flatMap(new Function<Observable<Request<PageInfo<Topics>>>, ObservableSource<Request<PageInfo<Topics>>>>() {
                     @Override
-                    public ObservableSource<Request<List<Topics>>> apply(@NonNull Observable<Request<List<Topics>>> listObservable) throws Exception {
+                    public ObservableSource<Request<PageInfo<Topics>>> apply(@NonNull Observable<Request<PageInfo<Topics>>> listObservable) throws Exception {
                         return mRepositoryManager.obtainCacheService(CommonCache.class)
                                 .initData(listObservable
                                         , new DynamicKey(1)
@@ -66,4 +68,74 @@ public class TopicsFragmentModel  extends BaseModel implements TopicsFragmentCon
                     }
                 });
     }
+
+    @Override
+    public Observable<Request<Boolean>> Unlike(Integer id, Long userId) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .Unlike(id,userId))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .Unlike(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Request<Boolean>> like(Integer id, Long userId) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .like(id,userId))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .like(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Request<Boolean>> shield(Integer id, Long userId) {
+           return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .shield(id,userId))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .shield(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Request<Boolean>> delete(Integer id) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .delete_topics(id))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .delete_topics(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
+
+
 }

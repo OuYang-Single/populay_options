@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.pine.populay_options.R;
+import com.pine.populay_options.greendao.ManagerFactory;
 import com.pine.populay_options.mvp.model.entity.Topics;
+import com.pine.populay_options.mvp.model.mvp.contract.LogInContract;
 import com.pine.populay_options.mvp.model.mvp.contract.PositionContract;
 import com.pine.populay_options.mvp.model.mvp.contract.TopicsFragmentContract;
 import com.pine.populay_options.mvp.model.mvp.contract.TradersContract;
 import com.pine.populay_options.mvp.model.mvp.model.PositionModel;
 import com.pine.populay_options.mvp.model.mvp.model.TopicsFragmentModel;
+import com.pine.populay_options.mvp.model.mvp.ui.adapter.TopicsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import cz.kinst.jakub.view.StatefulLayout;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import me.leefeng.promptlibrary.PromptDialog;
 
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.ERROR;
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.NODATA;
@@ -37,6 +41,23 @@ public abstract class TopicsFragmentModule {
     public static List<Topics> getTopicsList(){
         return new ArrayList<>();
     }
+
+    @ActivityScope
+    @Provides
+    public static PromptDialog getPromptDialog(TopicsFragmentContract.View view){
+        return new PromptDialog(view.getActivity());
+    }
+    @ActivityScope
+    @Provides
+    public static TopicsAdapter getTopicsAdapter(List<Topics>view){
+        return new  TopicsAdapter(view);
+    }
+
+    @Provides
+    public static ManagerFactory getManagerFactory() {
+        return ManagerFactory.getInstance();
+    }
+
     @ActivityScope
     @Provides
     public static StatefulLayout.StateController getStateController(TopicsFragmentContract.View mView) {

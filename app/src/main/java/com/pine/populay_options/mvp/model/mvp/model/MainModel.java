@@ -15,6 +15,7 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.ForexCalendarFragment;
+import com.pine.populay_options.mvp.model.mvp.ui.fragment.HomeFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.MineFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.QuotesFragment;
 import com.pine.populay_options.mvp.model.mvp.ui.fragment.TopicsFragment;
@@ -43,6 +44,7 @@ public class MainModel extends BaseModel implements MainContract.Model {
     List<Fragment> fragmentList;
     @Override
     public void onStart() {
+        fragmentList.add(new HomeFragment());
         fragmentList.add(new TopicsFragment());
         fragmentList.add(new QuotesFragment());
         fragmentList.add(new MineFragment());
@@ -64,7 +66,6 @@ public class MainModel extends BaseModel implements MainContract.Model {
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             field.setAccessible(true);
-
             if (field.getName().equals("menuView")) {
                 try { //反射得到 mTabContainer
                     BottomNavigationMenuView barClasss =(BottomNavigationMenuView) field.get(mNavView);

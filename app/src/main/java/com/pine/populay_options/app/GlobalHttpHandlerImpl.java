@@ -69,45 +69,50 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
          Gson gson=new Gson();
          OkHttpClient okHttpClient = new OkHttpClient();
           com.pine.populay_options.mvp.model.entity.Request mRequest= null;
-          mRequest = gson.fromJson(httpResult, com.pine.populay_options.mvp.model.entity.Request.class);
-          if (mRequest!=null){
-              if (mRequest.getStatus()==1){
-                  List<User> users= ManagerFactory.getInstance().getStudentManager(context).queryAll();
-                  if (users.size()>0){
-                      MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                      builder.addFormDataPart("password", users.get(0).getPassword());//传递键值对参数
-                      builder.addFormDataPart("username", users.get(0).getUsername());//传递键值对参数
-                      Request request = new Request.Builder()
-                              .url(Api.APP_DOMAIN+"/untitled_war/user/login.do")
-                              .post(builder.build())
-                              .build();
-                      final Call call = okHttpClient.newCall(request);
-                      Response a=null;
-                      Response execute=null;
+          try {
+              mRequest = gson.fromJson(httpResult, com.pine.populay_options.mvp.model.entity.Request.class);
+              if (mRequest!=null){
+                  if (mRequest.getStatus()==1){
+                      List<User> users= ManagerFactory.getInstance().getStudentManager(context).queryAll();
+                      if (users.size()>0){
+                          MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                          builder.addFormDataPart("password", users.get(0).getPassword());//传递键值对参数
+                          builder.addFormDataPart("username", users.get(0).getUsername());//传递键值对参数
+                          Request request = new Request.Builder()
+                                  .url(Api.APP_DOMAIN+"/untitled_war/user/login.do")
+                                  .post(builder.build())
+                                  .build();
+                          final Call call = okHttpClient.newCall(request);
+                          Response a=null;
+                          Response execute=null;
 
-                      try {
-                          execute=  call.execute();
                           try {
-                              String tokem= gson.fromJson(execute.body().string(), com.pine.populay_options.mvp.model.entity.Request.class).getToken();
-                              users.get(0).setToken(tokem);
-                              ManagerFactory.getInstance().getStudentManager(context).update(users);
-                              Request newRequest =    chain.request().newBuilder() .addHeader("Set-Cookie",  tokem)
-                                      .build();
-                              final Call calls=  okHttpClient.newCall(newRequest);
-                              a=   calls.execute();
+                              execute=  call.execute();
+                              try {
+                                  String tokem= gson.fromJson(execute.body().string(), com.pine.populay_options.mvp.model.entity.Request.class).getToken();
+                                  users.get(0).setToken(tokem);
+                                  ManagerFactory.getInstance().getStudentManager(context).update(users);
+                                  Request newRequest =    chain.request().newBuilder() .addHeader("Set-Cookie",  tokem)
+                                          .build();
+                                  final Call calls=  okHttpClient.newCall(newRequest);
+                                  a=   calls.execute();
+                              } catch (IOException e) {
+                                  e.printStackTrace();
+                              }
+
                           } catch (IOException e) {
                               e.printStackTrace();
                           }
 
-                      } catch (IOException e) {
-                          e.printStackTrace();
                       }
 
+
                   }
-
-
               }
+          }catch (Exception e){
+
           }
+
 
         }
 

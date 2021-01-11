@@ -7,7 +7,7 @@
     <color name="prompt_txt_color">#b1b1b1</color>
     <color name="prompt_line_color">#e4e3e3</color>
     <color name="highlight_txt_color">#2acaff</color>
-    <color name="bt_color">#febf07</color>
+    <color name="bt_color">#2EB493</color>
     <color name="bt_wait_bg_color">#9AE4E3E3</color>
     <color name="prompt_other_line_color">#9f9f9f</color>
     <color name="other_txt_color">#aeaeae</color>
@@ -21,6 +21,7 @@
 
     <color name="chart_red">#ff7858</color>
     <color name="chart_green">#00c087</color>
+    <color name="chart_greens">#0da88f</color>
     <color name="chart_prompt">#cccccc</color>
     <color name="chart_table_line">#ddb060</color>
     <color name="chart_table_text">#edd3a4</color>

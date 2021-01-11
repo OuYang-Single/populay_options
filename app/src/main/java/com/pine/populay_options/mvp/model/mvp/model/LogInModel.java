@@ -102,4 +102,38 @@ public class LogInModel extends BaseModel implements LogInContract.Model {
                     }
                 });
     }
+
+    @Override
+    public Observable<Request<Boolean>> isUserExists(String name, String defaultRegion) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .isUserExists(name,defaultRegion))
+                .flatMap(new Function<Observable<Request<Boolean>>, ObservableSource<Request<Boolean>>>() {
+                    @Override
+                    public ObservableSource<Request<Boolean>> apply(@NonNull Observable<Request<Boolean>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .isUserExists(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Request<User>> codeLogin(String phone) {
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .codeLogin(phone))
+                .flatMap(new Function<Observable<Request<User>>, ObservableSource<Request<User>>>() {
+                    @Override
+                    public ObservableSource<Request<User>> apply(@NonNull Observable<Request<User>> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .codeLogin(listObservable
+                                        , new DynamicKey(1)
+                                        , new EvictDynamicKey(true))
+                                .map(Reply::getData);
+                    }
+                });
+    }
 }

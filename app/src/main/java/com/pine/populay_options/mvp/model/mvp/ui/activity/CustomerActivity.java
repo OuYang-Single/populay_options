@@ -104,6 +104,6 @@ public class CustomerActivity extends BaseActivity<CustomerPresenter> implements
         adapter.addToStart(message,true);
         messages.add(message);
         //mRecyclerCustomer.scrollToPosition(messages.size()-1);
-        return false;
+        return true;
     }
 }

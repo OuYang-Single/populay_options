@@ -66,8 +66,6 @@ public class QuotesFragment extends BaseFragment<QuotesFragmentPresenter> implem
         mRecyclerQuotes.setAdapter(mQuotesAdapter);
         mQuotesAdapter.setOnItemClickListener(this);
         mPresenter.initData();
-
-
     }
 
 

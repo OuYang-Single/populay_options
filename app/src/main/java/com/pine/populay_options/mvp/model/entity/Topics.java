@@ -12,7 +12,7 @@ public class Topics implements Parcelable {
 
     private long createTime;
 
-    private Integer userid;
+    private int userid;
 
     private Integer awesome;
 
@@ -20,9 +20,76 @@ public class Topics implements Parcelable {
 
     private String content;
 
+    private int islike;
+
     private String image;
 
     private String title;
+
+    private  List<ImageInfo> imageinfoList;
+
+
+    protected Topics(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        createTime = in.readLong();
+        userid = in.readInt();
+        if (in.readByte() == 0) {
+            awesome = null;
+        } else {
+            awesome = in.readInt();
+        }
+        updateTime = in.readLong();
+        content = in.readString();
+        islike = in.readInt();
+        image = in.readString();
+        title = in.readString();
+        imageinfoList = in.createTypedArrayList(ImageInfo.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeLong(createTime);
+        dest.writeInt(userid);
+        if (awesome == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(awesome);
+        }
+        dest.writeLong(updateTime);
+        dest.writeString(content);
+        dest.writeInt(islike);
+        dest.writeString(image);
+        dest.writeString(title);
+        dest.writeTypedList(imageinfoList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Topics> CREATOR = new Creator<Topics>() {
+        @Override
+        public Topics createFromParcel(Parcel in) {
+            return new Topics(in);
+        }
+
+        @Override
+        public Topics[] newArray(int size) {
+            return new Topics[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -40,11 +107,11 @@ public class Topics implements Parcelable {
         this.createTime = createTime;
     }
 
-    public Integer getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 
@@ -72,6 +139,14 @@ public class Topics implements Parcelable {
         this.content = content;
     }
 
+    public int getIslike() {
+        return islike;
+    }
+
+    public void setIslike(int islike) {
+        this.islike = islike;
+    }
+
     public String getImage() {
         return image;
     }
@@ -88,70 +163,11 @@ public class Topics implements Parcelable {
         this.title = title;
     }
 
-    protected Topics(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
-        createTime = in.readLong();
-        if (in.readByte() == 0) {
-            userid = null;
-        } else {
-            userid = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            awesome = null;
-        } else {
-            awesome = in.readInt();
-        }
-        updateTime = in.readLong();
-        content = in.readString();
-        image = in.readString();
-        title = in.readString();
+    public List<ImageInfo> getImageinfoList() {
+        return imageinfoList;
     }
 
-    public static final Creator<Topics> CREATOR = new Creator<Topics>() {
-        @Override
-        public Topics createFromParcel(Parcel in) {
-            return new Topics(in);
-        }
-
-        @Override
-        public Topics[] newArray(int size) {
-            return new Topics[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(id);
-        }
-        dest.writeLong(createTime);
-        if (userid == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(userid);
-        }
-        if (awesome == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(awesome);
-        }
-        dest.writeLong(updateTime);
-        dest.writeString(content);
-        dest.writeString(image);
-        dest.writeString(title);
+    public void setImageinfoList(List<ImageInfo> imageinfoList) {
+        this.imageinfoList = imageinfoList;
     }
 }

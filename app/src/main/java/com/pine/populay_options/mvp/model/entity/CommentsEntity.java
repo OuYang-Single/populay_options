@@ -1,69 +1,77 @@
 package com.pine.populay_options.mvp.model.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class CommentsEntity {
-    private int Image;
-    private String Time;
-    private String Title;
-    private String Content;
-    private int Like;
-    private int Comment;
-    private boolean Report;
+    /*    private int Image;
+        private String Time;
+        private String Title;
+        private String Content;
+        private int Like;
+        private int Comment;
+        private boolean Report;*/
+    private Integer id;
+    private Integer topicsId;
+    private long createTime;
+    private long updateTime;
+    private String comment;
+    private String image;
+    private String title;
 
-    public int getImage() {
-        return Image;
+    public Integer getId() {
+        return id;
     }
 
-    public void setImage(int image) {
-        Image = image;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getTime() {
-        return Time;
+    public Integer getTopicsId() {
+        return topicsId;
     }
 
-    public void setTime(String time) {
-        Time = time;
+    public void setTopicsId(Integer topicsId) {
+        this.topicsId = topicsId;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
-    }
-
-    public String getContent() {
-        return Content;
-    }
-
-    public void setContent(String content) {
-        Content = content;
-    }
-
-    public int getLike() {
-        return Like;
-    }
-
-    public void setLike(int like) {
-        Like = like;
-    }
-
-    public int getComment() {
-        return Comment;
-    }
-
-    public void setComment(int comment) {
-        Comment = comment;
-    }
-
-    public boolean isReport() {
-        return Report;
-    }
-
-    public void setReport(boolean report) {
-        Report = report;
+        this.title = title;
     }
 }

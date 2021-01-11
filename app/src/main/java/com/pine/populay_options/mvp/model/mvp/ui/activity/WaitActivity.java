@@ -132,7 +132,20 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
 
         return R.layout.activity_wait;
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (data!=null){
+            if ("black".equals(data.getFieldCol())){
+                setStatusBarMode(WaitActivity.this, true ,Color.parseColor(data.getBackgroundCol()));
+                toolbar_title.setTextColor(Color.parseColor("#000000"));
+            }else {
+                setStatusBarMode(WaitActivity.this, false ,Color.parseColor(data.getBackgroundCol()));
+                toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        }
 
+    }
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
@@ -292,6 +305,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     VestSignEntity data;
     @Override
     public void vestSign(VestSignEntity data) {
+        data.setStatus(1);
         this.data=data;
         if (data.getStatus()==0){
             webView.setVisibility(View.VISIBLE);

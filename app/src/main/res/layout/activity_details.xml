@@ -1,149 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="match_parent">
-    <include layout="@layout/include_title"/>
-    <View
-            android:background="#f5f5f5"
+        android:padding="5dp">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="8dp"/>
-    <LinearLayout
-            android:padding="5dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <RelativeLayout
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <com.github.siyamed.shapeimageview.CircularImageView
-                        android:id="@+id/neo"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_neo"
-                        app:siArrowPosition="right"
-                        app:siBorderWidth="1dp"
-                        android:layout_alignParentLeft="true"
-                        app:siBorderColor="@color/white"
-                        app:siSquare="true"/>
-                <TextView
-                        android:textStyle="bold"
-                        android:id="@+id/tv_name"
-                        android:textColor="@color/chart_highlight"
-                        android:textSize="@dimen/sp16"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/neo"
-                        android:layout_centerVertical="true"
-                        android:text="frankkn"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:id="@+id/chart_text"
-                        android:textColor="@color/chart_text"
-                        android:text="3 days ago"
-                        android:textSize="@dimen/sp14"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/contet"
-                    android:textColor="@color/chart_highlight"
-                    android:textSize="@dimen/sp14"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="70dp"
-                    android:text="It seems like price of gas is going up and down sharply..."
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <com.yds.library.MultiImageView
-                    android:visibility="gone"
-                    android:id="@+id/image_multi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:imgGap="3dp"
-                    app:maxSize="9"
-                    />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="25dp">
-        <ImageView
-                android:layout_marginLeft="30dp"
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/neo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/image_comment"
-                android:src="@mipmap/ic_bells"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:src="@mipmap/img_avatar"
+                app:siArrowPosition="right"
+                app:siBorderColor="@color/white"
+                app:siBorderWidth="1dp"
+                app:siSquare="true" />
+
             <TextView
-                    android:layout_toRightOf="@+id/image_comment"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/tv_comment"
-                    android:text="Report spam"
-                    android:textColor="@color/chart_text"
-                    android:textSize="@dimen/sp14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/neo"
+                android:text="frankkn"
+                android:textColor="#d984fa"
+                android:textSize="@dimen/sp16"
+                android:textStyle="bold" />
+            <!--  <ImageView
+                  android:src="@mipmap/ic_more"
+                  android:id="@+id/more_text"
+                  android:layout_alignParentTop="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>-->
 
         </RelativeLayout>
 
-    <View
-          android:visibility="gone"
-            android:layout_marginTop="30dp"
-            android:background="#f5f5f5"
+        <TextView
+            android:id="@+id/contet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="10dp"
+            android:text="It seems like price of gas is going up and down sharply..."
+            android:textColor="@color/chart_highlight"
+            android:textSize="@dimen/sp14" />
+
+        <com.yds.library.MultiImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:id="@+id/image_multi"
             android:layout_width="match_parent"
-            android:layout_height="5dp"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:imgGap="3dp"
+            app:maxSize="9" />
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/chart_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:text="2019.08.11"
+                android:textColor="@color/dialog_message_text"
+                android:textSize="@dimen/sp12" />
+
+            <ImageView
+                android:id="@+id/image_comment"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@mipmap/image_comment"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/image_like"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toLeftOf="@+id/image_comment"
+                android:padding="5dp"
+                android:src="@mipmap/image_like" />
+
+            <ImageView
+                android:id="@+id/image_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/image_like"
+                android:padding="5dp"
+                android:src="@mipmap/image_delete" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
 
     <LinearLayout
-        android:visibility="gone"
-            android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp">
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-    <TextView
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/chart_green"
-            android:layout_width="5dp"
-            android:layout_height="match_parent"/>
-    <TextView
-            android:layout_marginLeft="10dp"
-            android:text="Comments"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-</LinearLayout>
+
+            <TextView
+                android:layout_width="8dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/chart_green" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Comments"
+                android:textColor="@color/black" />
+        </LinearLayout>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="20dp"
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/SmartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <LinearLayout
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/mRecyclerView">
+            android:id="@+id/ll_empty_data"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:id="@+id/iv_empty_bg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/view_icon_no_data" />
+
+            <TextView
+                android:id="@+id/tv_empty_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/no_data"
+                android:textColor="#999999"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <com.pine.populay_options.mvp.model.wigth.chatkit.messages.MessageInput
+            android:id="@+id/message_input"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            app:inputBackground="@drawable/wait_jump_bgs"
+            app:inputHint="@string/hints"
+            app:inputHintColor="@color/white"
+            app:inputTextColor="@color/black"
+            app:inputTextSize="@dimen/sp12" />
+
+    </FrameLayout>
+
 </LinearLayout>

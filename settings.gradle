@@ -1,1 +1,1 @@
-include ':app',':MPChartLib',"photogallery"
+include ':app',':MPChartLib',"photogallery","intlphoneinput","keyboard"

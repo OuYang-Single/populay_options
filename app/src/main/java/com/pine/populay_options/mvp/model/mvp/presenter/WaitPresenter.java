@@ -120,11 +120,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
     public void Jump() {
         Intent intent = null;
         mHandler.removeCallbacks(mRunnable);
-        if (mModel.isUserPresence()) {
-            intent = new Intent(mRootView  .getContent(), MainActivity.class);
-        }else {
-            intent = new Intent(mRootView.getContent(), LogInActivity.class);
-        }
+        intent = new Intent(mRootView  .getContent(), MainActivity.class);
         mRootView.launchActivity(intent);
     }
 

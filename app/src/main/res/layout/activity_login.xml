@@ -1,90 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:orientation="vertical"
-             android:background="@color/white"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ImageView
-                android:src="@mipmap/log_bg_top"
-                style="@style/style_bg_top_image"/>
-    </RelativeLayout>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ImageView
-                android:id="@+id/icon_image"
-                android:src="@mipmap/log_icon"
-                style="@style/style_icon_image"/>
-        <LinearLayout style="@style/style_log_input_llayout">
-            <EditText
-                    android:id="@+id/log_edit_phone"
-                    android:hint="@string/username"
-                    style="@style/style_log_edit"/>
+    <include layout="@layout/include_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp">
             <TextView
-                    style="@style/style_log_line_txt"/>
-            <LinearLayout android:orientation="horizontal"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
-                <!--2acaff-->
-                <EditText
-                        android:id="@+id/log_edit_password"
-                        android:hint="@string/code"
-                        style="@style/style_log_cole_edit"/>
-                <TextView
-                        android:visibility="gone"
-                        android:id="@+id/log_txt_highlight"
-                        android:text="@string/get_cold"
-                        style="@style/style_log_highlight_txt"/>
-            </LinearLayout>
+                android:id="@+id/view"
+                android:background="@color/bt_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/log_bt_log_in"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
 
-            <TextView style="@style/style_log_line_txt"/>
 
-            <Button
-                    android:layout_marginTop="@dimen/log_bt_log_in_margin_top"
-                    android:layout_marginLeft="@dimen/log_bt_log_in_margin_left_right"
-                    android:layout_marginRight="@dimen/log_bt_log_in_margin_left_right"
-                    android:background="@drawable/log_bt_log_in_bg"
-                    android:id="@+id/log_bt_log_in"
-                    android:text="@string/log_bt_log_in"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center"
+        </FrameLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout style="@style/style_log_input_llayout">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <net.rimoto.intlphoneinput.IntlPhoneInput
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-            />
+                    app:textSize="14sp"
+                    style="@style/style_log_edit"
+                    android:id="@+id/log_edit_phone"
+                    app:flagPaddingEnd="4dp"
+                    app:flagPaddingStart="4dp"
+                    app:flagPaddingTop="4dp"
+                   />
+
+            </LinearLayout>
+
+
+            <TextView style="@style/style_log_line_txt" />
 
             <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:id="@+id/log_linearl_other"
-                    android:layout_marginTop="@dimen/log_linearl_other_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--2acaff-->
+                <EditText
+                    android:id="@+id/log_edit_password"
+                    style="@style/style_log_cole_edit"
+                    android:hint="@string/code" />
+
                 <TextView
-                        android:layout_marginRight="@dimen/log_forget_password_margin_left"
-                        android:id="@+id/log_linearl_other_forget_password_txt"
-                        android:text="@string/log_linearl_other_forget_password_txt"
-                        style="@style/style_other_txt"/>
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:id="@+id/log_txt_highlight"
+                    style="@style/style_log_highlight_txt"
+                    android:text="@string/get_cold" />
+            </LinearLayout>
+
+            <TextView style="@style/style_log_line_txt" />
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        style="@style/style_log_line_txt"
-                        android:background="@color/prompt_other_line_color"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                    android:textColor="@color/black"
+                    android:padding="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="13sp"
+                    android:id="@+id/txt_mobile_phone_quick_login"
+                    android:text="@string/Mobile_phone_quick_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="@color/black"
+                    android:padding="10dp"
+                    android:layout_alignParentRight="true"
+                    android:textSize="13sp"
+                    android:id="@+id/log_linearl_other_forget_password_txt"
+                    android:text="@string/log_linearl_other_forget_password_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/log_bt_log_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/log_bt_log_in_margin_left_right"
+                android:layout_marginTop="@dimen/log_bt_log_in_margin_top"
+                android:layout_marginRight="@dimen/log_bt_log_in_margin_left_right"
+                android:background="@drawable/log_bt_log_in_bg"
+                android:text="@string/log_bt_log_in"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/log_linearl_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/log_linearl_other_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_other_txt"
+                    android:layout_marginRight="@dimen/log_forget_password_margin_left"
+                  />
+
+                <TextView
+                    style="@style/style_log_line_txt"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/prompt_other_line_color" />
+
                 <TextView
 
-                        android:layout_marginLeft="@dimen/log_forget_password_margin_left"
-                        android:id="@+id/log_linearl_other_registered_txt"
-                        android:text="@string/log_linearl_other_registered_txt"
-                        style="@style/style_other_txt"/>
+                    android:id="@+id/log_linearl_other_registered_txt"
+                    style="@style/style_other_txt"
+                    android:layout_marginLeft="@dimen/log_forget_password_margin_left"
+                    android:text="@string/log_linearl_other_registered_txt" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
 
-</FrameLayout>
+</LinearLayout>

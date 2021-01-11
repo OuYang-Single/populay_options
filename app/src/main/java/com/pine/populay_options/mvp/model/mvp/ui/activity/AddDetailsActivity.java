@@ -1,9 +1,14 @@
 package com.pine.populay_options.mvp.model.mvp.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.pine.populay_options.R;
@@ -24,12 +33,26 @@ import com.pine.populay_options.mvp.model.mvp.contract.DetailsContract;
 import com.pine.populay_options.mvp.model.mvp.presenter.AddDetailsPresenter;
 import com.pine.populay_options.mvp.model.mvp.presenter.DetailsPresenter;
 import com.pine.populay_options.mvp.model.mvp.ui.adapter.DetailsAdapter;
+import com.pine.populay_options.mvp.model.mvp.ui.adapter.ImageAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.leefeng.promptlibrary.PromptDialog;
+
+import static com.pine.populay_options.mvp.model.mvp.ui.Service.FileUtils.imageToBase64;
+import static com.wq.photo.widget.PickConfig.ActivityRequestCode;
+import static com.wq.photo.widget.PickConfig.FILECHOOSER_RESULTCODE;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODE;
+import static com.wq.photo.widget.PickConfig.PICK_REQUEST_CODES;
+import static com.wq.photo.widget.PickConfig.RC_SIGN_IN;
 
 
 public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implements AddDetailsContract.View{
@@ -41,6 +64,12 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
     RelativeLayout mToolbarBack;
     @BindView(R.id.tab_text)
     EditText tab_text;
+    @BindView(R.id.img_grid)
+    GridView img_grid;
+    @Inject
+    ImageAdapter imageAdapter;
+    @Inject
+    List<String> strings;
     @Inject
     PromptDialog promptDialog ;
     @Override
@@ -64,6 +93,7 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
         mTvRightToolbar.setText(R.string.publish);
         mTvRightToolbar.setVisibility(View.VISIBLE);
         mToolbarBack.setVisibility(View.VISIBLE);
+        img_grid.setAdapter(imageAdapter);
     }
     @Override
     public void showLoading() {
@@ -78,7 +108,12 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
     public void OnClick(View view){
         switch (view.getId()){
             case R.id.tv_right_toolbar:
-                mPresenter.add(tab_text.getText().toString());
+                if (strings.size()>0){
+                    mPresenter.add(tab_text.getText().toString(),strings);
+                }else {
+                    mPresenter.adds(tab_text.getText().toString());
+                }
+
                 break;
         }
     }
@@ -89,13 +124,27 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
 
     @Override
     public void success() {
-        showMessage("添加成功");
+        showMessage(getString(R.string.successd));
         finish();
     }
 
     @Override
     public Activity getActivity() {
         return this;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }else if (requestCode == PICK_REQUEST_CODES && resultCode == Activity.RESULT_OK){
+            ArrayList<String> img = data.getStringArrayListExtra("data");
+            if (!img.isEmpty()){
+                strings.clear();
+                strings.addAll(img);
+                imageAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
 }
