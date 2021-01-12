@@ -20,6 +20,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,6 +137,9 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
             if (url != null) {
                 webView.loadUrl(url);
             }
+            LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) webView.getLayoutParams();
+            layoutParams.setMargins(20,0,20,0);
+            webView.setLayoutParams(layoutParams);
         }else {
             mPureBrowserEntity=   getIntent().getParcelableExtra("data");
            if (mPureBrowserEntity!=null){

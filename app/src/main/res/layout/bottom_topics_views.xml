@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/bottom_topics_view_shield"
+        style="@style/style_mine_linear">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="@string/Chinese"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f5f5f5" />
+    <LinearLayout
+        android:id="@+id/bottom_topics_view_complaint"
+        style="@style/style_mine_linear">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="@string/English"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f5f5f5" />
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/bottom_topics_view_cancel"
+        style="@style/style_mine_linear">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+</LinearLayout>

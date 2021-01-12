@@ -21,7 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
-        android:text="当前网络不可用，请检查网络设置" />
+        android:text="@string/network" />
     <Button
         android:layout_marginTop="@dimen/log_bt_log_in_margin_top"
         android:layout_marginLeft="@dimen/input_button_width"

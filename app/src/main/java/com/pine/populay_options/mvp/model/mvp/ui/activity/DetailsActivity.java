@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.imageloader.ImageLoader;
@@ -99,6 +100,8 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     LinearLayout ll_empty_data;
     @BindView(R.id.image_multi)
     MultiImageView mMultiImageView;
+    @BindView(R.id.neo)
+    CircularImageView mCircularImageView;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -129,6 +132,8 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
         message_input.setInputListener(this);
         mTopics = getIntent().getParcelableExtra("Topics");
+        mImageLoader.loadImage(mCircularImageView.getContext(), ImageConfigImpl.builder().imageView(mCircularImageView).url(APP_DOMAIN+AppDomain+file+mTopics.getImage()).placeholder(R.mipmap.img_avatar).errorPic(R.mipmap.img_avatar).build());
+
         UserId = getIntent().getLongExtra("UserId", -1);
         tv_name.setText(mTopics.getTitle());
         contet.setText(mTopics.getContent());

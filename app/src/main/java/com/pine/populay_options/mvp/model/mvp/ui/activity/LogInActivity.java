@@ -162,7 +162,7 @@ public class LogInActivity extends BaseActivity<LogInPresenter> implements LogIn
                         TimeJumpTxt=getString(R.string.get_cold);
                         anInt=60;
                     }else {
-                        TimeJumpTxt=arg1+TimeJumpTxt;
+                        TimeJumpTxt=TimeJumpTxt+ arg1;
                     }
                     if (txtHighlight!=null){
                         txtHighlight.setText(TimeJumpTxt+"");

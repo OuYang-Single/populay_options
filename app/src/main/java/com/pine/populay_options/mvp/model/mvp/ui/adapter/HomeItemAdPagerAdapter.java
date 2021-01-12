@@ -59,7 +59,9 @@ public class HomeItemAdPagerAdapter extends PagerAdapter {
                 }
             }
         });
-        Glide.with(mContext).load(mAdEntities.get(position).getImageAddress()).into(imageView);
+       // if ()
+      //  imageView.setImageResource(mAdEntities.get(position).getId());
+        Glide.with(mContext).load(mAdEntities.get(position).getJumpType()).into(imageView);
         (container).addView(view, 0);
         return view;
     }

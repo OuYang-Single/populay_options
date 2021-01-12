@@ -60,19 +60,22 @@ public class HomeFragmentModel extends BaseModel implements  HomeFragmentContrac
     public void initData() {
         BandItem<List<AdEntity>, HomeItemAdPagerAdapter> bandItem = new BandItem();
         AdEntity mAdEntity=new AdEntity();
-        mAdEntity.setJumpType(R.mipmap.ic_carousel);
-        mAdEntity.setImageAddress("https://fifin.com/weo/userimg/use/cover/20201229/1609205666PtZC44.jpeg");
+        mAdEntity.setJumpType(R.mipmap.a123);
+        mAdEntity.setId(R.mipmap.a123);
         mAdEntity.setWebsiteAddress(APP_DOMAIN+AppDomain+"/artile_details.html");
         mAdEntityList.add(mAdEntity);
         AdEntity  mAdEntity1=new AdEntity();
-        mAdEntity1.setJumpType(R.mipmap.ic_carousel);
-        mAdEntity1.setImageAddress("https://fifin.com/weo/userimg/use/cover/20201225/1608861909iktlZa.jpeg");
+        mAdEntity1.setJumpType(R.mipmap.a1234);
+      //  mAdEntity1.setImageAddress("https://fifin.com/weo/userimg/use/cover/20201225/1608861909iktlZa.jpeg");
+        mAdEntity.setId(R.mipmap.a1234);
         mAdEntity1.setWebsiteAddress(APP_DOMAIN+AppDomain+"/leading_position.html");
         mAdEntityList.add(mAdEntity1);
         AdEntity  mAdEntity2=new AdEntity();
-        mAdEntity2.setImageAddress("https://fifin.com/weo/userimg/use/cover/20201231/1609381620WQVZ4F.jpeg");
+        mAdEntity2.setId(R.mipmap.a12345);
+        mAdEntity2.setJumpType(R.mipmap.a12345);
+       // mAdEntity2.setImageAddress("https://fifin.com/weo/userimg/use/cover/20201231/1609381620WQVZ4F.jpeg");
         mAdEntity2.setWebsiteAddress(APP_DOMAIN+AppDomain+"/review.html");
-        mAdEntity2.setJumpType(R.mipmap.ic_carousel);
+        //mAdEntity2.setJumpType(R.mipmap.ic_carousel);
         mAdEntityList.add(mAdEntity2);
         bandItem.setAdapter(mHomeItmeAdPagerAdapter);
         bandItem.setData(mAdEntityList);

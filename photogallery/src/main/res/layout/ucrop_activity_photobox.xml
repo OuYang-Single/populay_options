@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:text="@string/ucrop_label_edit_photo"
             android:textColor="@color/ucrop_color_title"/>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.yalantis.ucrop.view.UCropView
         android:id="@+id/ucrop"

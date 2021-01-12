@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="username" translatable="false">Please enter your mobile number</string>
+    <string name="get_cold" translatable="false">Send code</string>
+    <string name="code" translatable="false">Please enter password</string>
+    <string name="log_bt_log_in" translatable="false">log in</string>
+    <string name="log_bt_registered_in" translatable="false">registered</string>
+    <string name="log_linearl_other_forget_password_txt" translatable="false">forget password</string>
+    <string name="change_Password_txt" translatable="false">change Password</string>
+    <string name="log_linearl_other_registered_txt" translatable="false">Register now></string>
+    <string name="log_in_account_null" translatable="false">Please enter phone number</string>
+    <string name="log_in_password_null" translatable="false">Please enter password</string>
+    <string name="log_in_password_nulls" translatable="false">The two passwords are inconsistent</string>
+    <string name="log_in_cold_null" translatable="false">please enter verification code</string>
+    <string name="log_in_cold_nulls" translatable="false">Please enter a new password</string>
+    <string name="log_in_cold_nullss" translatable="false">Please enter the password again</string>
+    <string name="log_in_no_phone" translatable="false">please enter a valid phone number</string>
+    <string name="title_activity_wait" translatable="false">WaitActivity</string>
+    <string name="wait_jump_over" translatable="false">hop</string>
+    <string name="wait_resend" translatable="false">resend after s</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_add" translatable="false">Notifications</string>
+    <string name="title_periphery" translatable="false">Quotes</string>
+    <string name="title_message" translatable="false">News</string>
+    <string name="title_mine" translatable="false">Mine</string>
+    <string name="trad_high" translatable="false">"High  "</string>
+    <string name="trad_low" translatable="false">"Low  "</string>
+    <string name="trad_vol" translatable="false">24h Vol</string>
+    <string name="sell" translatable="false">SELL</string>
+    <string name="buy" translatable="false">BUY</string>
+    <string name="lots" translatable="false">Lots</string>
+    <string name="margin" translatable="false">Margin (USD)</string>
+    <string name="Fee" translatable="false">Fee (USD)</string>
+    <string name="input_order_price" translatable="false">Input order price</string>
+    <string name="performance" translatable="false">Performance</string>
+    <string name="free_margin" translatable="false">Free Margin</string>
+    <string name="used_margin" translatable="false">Used Margin</string>
+    <string name="balance" translatable="false">Balance</string>
+    <string name="buying_price" translatable="false">Buying price</string>
+    <string name="current_price" translatable="false">Current prive</string>
+    <string name="close" translatable="false">Close</string>
+    <string name="Topics" translatable="false">Topics</string>
+    <string name="new_topic" translatable="false">New topic</string>
+    <string name="publish" translatable="false">Publish</string>
+    <string name="details" translatable="false">Details</string>
+    <string name="quotes" translatable="false">Quotes</string>
+    <string name="traders_title" translatable="false">Most Famous Forex Traders</string>
+    <string name="mine_string" translatable="false">Click to Login</string>
+    <string name="assets" translatable="false">Assets</string>
+    <string name="top_brokers" translatable="false">Brokers</string>
+    <string name="forex_videos" translatable="false">Forex Videos</string>
+    <string name="most_famous_forex_traders" translatable="false">Most Famous Forex Traders</string>
+    <string name="study_forex" translatable="false">Study</string>
+    <string name="tools" translatable="false">Tools</string>
+    <string name="customer_service" translatable="false">Customer service</string>
+    <string name="Mine" translatable="false">Mine</string>
+    <string name="videos" translatable="false">Forex Videos</string>
+    <string name="forex" translatable="false">Study Forex</string>
+    <string name="font_fontFamily_medium" translatable="false">sans-serif-medium</string>
+    <string name="book_detalis" translatable="false">Book Detalis</string>
+    <string name="hint">Input your words...</string>
+    <string name="message_text" translatable="false">Hello! I\'m your customer service.  Is there anything I can help?</string>
+    <string name="loading" translatable="false">Trying to load...</string>
+    <string name="load_failed" translatable="false">Loading failed, please click me to try again</string>
+    <string name="load_end" translatable="false">No more data</string>
+    <string name="network_error" translatable="false">network anomaly</string>
+    <string name="empty" translatable="false">The current page is empty</string>
+    <string name="no_data" translatable="false">No data</string>
+    <string name="do_thing" translatable="false">Reload</string>
+    <string name="log_bt_log_out" translatable="false">logout</string>
+    <string name="log_out" translatable="false">Do you want to log out?</string>
+    <string name="log_outs" translatable="false">delete or not?</string>
+    <string name="Mobile_phone_quick_login" translatable="false">Mobile phone quick login</string>
+    <string name="password_login" translatable="false">Account password login</string>
+    <string name="verification_code" translatable="false">please enter verification code</string>
+    <string name="log_bt_registered_ins" translatable="false">Sign up now</string>
+    <string name="registration_agreement" translatable="false">Registration means you have agreed to the \"Registration Agreement\"</string>
+    <string name="determine" translatable="false">determine</string>
+    <string name="new_passwored" translatable="false">new password</string>
+    <string name="resend_new_passwored" translatable="false">Password reset complete</string>
+    <string name="resend_new_passworedd" translatable="false">Repeat password</string>
+    <string name="resend_new_passwored_e" translatable="false">Password modification failed</string>
+    <string name="account_does_not_exist" translatable="false">Account does not exist</string>
+    <string name="account_does_not_exists" translatable="false">Account already exists</string>
+    <string name="load" translatable="false">Loading...</string>
+    <string name="verification_code_error" translatable="false">Verification code error</string>
+    <string name="login_success" translatable="false">login successful</string>
+    <string name="famous" translatable="false">Famous trader</string>
+    <string name="token_bank" translatable="false">TokenBank</string>
+    <string name="Go_to_login" translatable="false">Go to login</string>
+    <string name="to_login" translatable="false">The user is not logged in, please log in and operate</string>
+    <string name="cancel" translatable="false">cancel</string>
+    <string name="complaint" translatable="false">Complaint</string>
+    <string name="shield" translatable="false">shield</string>
+    <string name="title_activity_main2" translatable="false">MainActivity</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="submit" translatable="false">submit</string>
+    <string name="other" translatable="false">other</string>
+    <string name="Illegal_content" translatable="false">Illegal content</string>
+    <string name="Abusive_or_unfriendly" translatable="false">Abusive or unfriendly</string>
+    <string name="Advertising_or_spam" translatable="false">Advertising or spam</string>
+    <string name="Vulgar_or_pornographic" translatable="false">Vulgar or pornographic</string>
+    <string name="Submitted_successfully" translatable="false">Submitted successfully</string>
+    <string name="Request_failed" translatable="false">Request failed</string>
+    <string name="Blocked" translatable="false">Blocked</string>
+    <string name="Blockeds" translatable="false">Successful operation</string>
+    <string name="hints" translatable="false">Say something</string>
+    <string name="no_datas" translatable="false">No data</string>
+    <string name="successd" translatable="false">Added successfully</string>
+    <string name="Submission_Failed" translatable="false">fail to edit</string>
+    <string name="Submission_Faileds" translatable="false">Successfully modified</string>
+    <string name="launcher">语言选择</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="release">发布</string>
+    <string name="comment">评论</string>
+    <string name="like">点赞</string>
+    <string name="Chinese">中文</string>
+    <string name="English">English</string>
+    <string name="Cleared_successfully">清除成功</string>
+    <string name="increase_list">Increase Llist</string>
+    <string name="name">Name</string>
+    <string name="Decline_or_increase">Decline or increase</string>
+    <string name="no">the content can not be blank</string>
+    <string name="network">The current network is unavailable, please check the network settings</string>
+    <string name="No_datasss">No data yet, refresh again</string>
+</resources>

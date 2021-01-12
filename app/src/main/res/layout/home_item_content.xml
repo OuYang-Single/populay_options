@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/home_context_item_margin"
             android:layout_marginBottom="@dimen/home_context_item_margin"
-            android:text="涨幅榜"
+            android:text="@string/increase_list"
             android:textSize="@dimen/sp20"
             style="@style/style_txt"
             />
@@ -40,7 +40,7 @@
                 android:textSize="@dimen/sp14"
                 android:textStyle="bold"
                 android:textColor="#cccdd8"
-                android:text="名称"
+                android:text="@string/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <LinearLayout
@@ -57,7 +57,7 @@
                     android:id="@+id/tv_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="跌涨幅"
+                    android:text="@string/Decline_or_increase"
                     android:textStyle="bold"
                     android:textColor="#cccdd8"
                     android:textSize="@dimen/sp12" />
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="最新价"
+                android:text="@string/Latest_price"
                 android:textStyle="bold"
                 android:textColor="#cccdd8"
                 android:textSize="@dimen/sp12" />

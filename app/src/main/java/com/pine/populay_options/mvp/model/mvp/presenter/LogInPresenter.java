@@ -194,7 +194,7 @@ public class LogInPresenter extends BasePresenter<LogInContract.Model, LogInCont
                         if (isUserExists.getStatus()==0){
                           if (isUserExists.getData()){
                               mRootView.getCode();
-                              SMSSDK.getVerificationCode(defaultRegion, phone, null, new OnSendMessageHandler() {
+                              SMSSDK.getVerificationCode(defaultRegion, phone, "11773739", new OnSendMessageHandler() {
                                   @Override
                                   public boolean onSendMessage(String s, String s1) {
                                       return false;

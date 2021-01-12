@@ -138,7 +138,7 @@ public class RegisteredActivity extends BaseActivity<RegisteredPresenter> implem
                         TimeJumpTxt=getString(R.string.get_cold);
                         anInt=60;
                     }else {
-                        TimeJumpTxt=arg1+TimeJumpTxt;
+                        TimeJumpTxt=TimeJumpTxt +arg1;
                     }
                     if (txtHighlight!=null){
                         txtHighlight.setText(TimeJumpTxt+"");
@@ -205,7 +205,7 @@ public class RegisteredActivity extends BaseActivity<RegisteredPresenter> implem
         findViewById(R.id.txt_registration_agreement).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url=APP_DOMAIN+AppDomain+"/agreement.html";
+                String url=APP_DOMAIN+AppDomain+"/dsds.html";
                 Intent      intent=new Intent(RegisteredActivity.this, WebViewActivity.class);
                 intent.putExtra("type",3);
                 intent.putExtra("URL",url);

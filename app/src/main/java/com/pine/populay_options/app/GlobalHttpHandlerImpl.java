@@ -151,8 +151,10 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
         }else {
          List<User> user= ManagerFactory.getInstance().getStudentManager(context).queryAll();
          if (user.size()>0){
-            chain.request().newBuilder().header("Set-Cookie", user.get(0).getToken() )
-                     .build();
+             if (user!=null){
+               /*  chain.request().newBuilder().header("Set-Cookie", user.get(0).getToken() )
+                         .build();*/
+             }
          }
         }
 

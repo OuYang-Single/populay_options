@@ -127,7 +127,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
                         TimeJumpTxt=getString(R.string.get_cold);
                         anInt=60;
                     }else {
-                        TimeJumpTxt=arg1+TimeJumpTxt;
+                        TimeJumpTxt=TimeJumpTxt +arg1;
                     }
                     if (mTxtHighLight!=null){
                         mTxtHighLight.setText(TimeJumpTxt+"");

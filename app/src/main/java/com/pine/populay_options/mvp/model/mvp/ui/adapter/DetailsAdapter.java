@@ -22,6 +22,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
+import static com.pine.populay_options.mvp.model.api.Api.APP_DOMAIN;
+import static com.pine.populay_options.mvp.model.api.Api.AppDomain;
+import static com.pine.populay_options.mvp.model.api.Api.file;
+
 public class DetailsAdapter extends DefaultAdapter<CommentsEntity> {
     Long userId;
     ImageLoader mImageLoader;
@@ -70,7 +74,7 @@ public class DetailsAdapter extends DefaultAdapter<CommentsEntity> {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm");
             String dateString = formatter.format(data.getCreateTime());
             time.setText(dateString);
-            mImageLoader.loadImage(imageView.getContext(), ImageConfigImpl.builder().imageView(imageView).url(data.getImage()).placeholder(R.mipmap.img_avatar).errorPic(R.mipmap.img_avatar).build());
+            mImageLoader.loadImage(imageView.getContext(), ImageConfigImpl.builder().imageView(imageView).url(APP_DOMAIN+AppDomain+file+data.getImage()).placeholder(R.mipmap.img_avatar).errorPic(R.mipmap.img_avatar).build());
         }
     }
 }

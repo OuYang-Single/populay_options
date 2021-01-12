@@ -75,6 +75,8 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
     }
 
+
+
     @Override
     public void onTerminate(@NonNull Application application) {
                     ARouter.getInstance().destroy();

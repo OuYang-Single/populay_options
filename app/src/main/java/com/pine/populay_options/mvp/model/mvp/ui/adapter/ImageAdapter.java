@@ -77,7 +77,7 @@ public class ImageAdapter extends BaseAdapter {
                 //图片压缩比
                 options.setCompressionQuality(2);
                 new PickConfig.Builder(getAppManager().getCurrentActivity())
-                        .maxPickSize(9)//最多选择几张
+                        .maxPickSize(6)//最多选择几张
                         .isneedcamera(false)//是否需要第一项是相机
                         .spanCount(4)//一行显示几张照片
                         .actionBarcolor(Color.parseColor("#ffffff"))//设置toolbar的颜色

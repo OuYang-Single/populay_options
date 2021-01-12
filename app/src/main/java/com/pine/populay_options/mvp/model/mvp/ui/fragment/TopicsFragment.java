@@ -92,6 +92,7 @@ public class TopicsFragment extends BaseFragment<TopicsFragmentPresenter> implem
     TextView activity_error_text;
     @Inject
     ManagerFactory mManagerFactory;
+    Long UserId = -1L;
     @Inject
     ImageLoader mImageLoader;
     @Inject
@@ -104,7 +105,7 @@ public class TopicsFragment extends BaseFragment<TopicsFragmentPresenter> implem
         }
     };
     BottomShareMenu bottomShareMenu;
-    Long UserId = -1L;
+
     View mButtonView;
     Topics topics;
     int position;
@@ -135,7 +136,6 @@ public class TopicsFragment extends BaseFragment<TopicsFragmentPresenter> implem
         mTopicsAdapter.setOnItemClickListener(this);
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(this);
         bottomShareMenu = new BottomShareMenu(getContext()) {
-
             @Override
             protected View onBindView() {
                 mButtonView = getLayoutInflater().inflate(R.layout.bottom_topics_view, null);
@@ -217,7 +217,12 @@ public class TopicsFragment extends BaseFragment<TopicsFragmentPresenter> implem
 
             }
         };
-
+        bottomShareMenu.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                bottomShareMenu.dismiss();
+            }
+        });
     }
 
     @Override

@@ -81,7 +81,7 @@ public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContrac
                         if (isUserExists.getStatus()==0){
                             if (isUserExists.getData()){
                                 mRootView.getCode();
-                                SMSSDK.getVerificationCode(defaultRegion, phone, null, new OnSendMessageHandler() {
+                                SMSSDK.getVerificationCode(defaultRegion, phone, "11773733", new OnSendMessageHandler() {
                                     @Override
                                     public boolean onSendMessage(String s, String s1) {
                                         return false;

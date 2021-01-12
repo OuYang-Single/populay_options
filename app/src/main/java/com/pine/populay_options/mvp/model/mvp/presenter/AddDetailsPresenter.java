@@ -87,6 +87,9 @@ public class AddDetailsPresenter extends BasePresenter<AddDetailsContract.Model,
     }
 
     public void adds(String toString) {
+        if ("".equals(toString)){
+
+        }
         mModel.adds(toString).subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .subscribeOn(AndroidSchedulers.mainThread())

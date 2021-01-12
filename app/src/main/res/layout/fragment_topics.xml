@@ -61,7 +61,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            app:backgroundTint="@color/chart_table_text"
+            app:backgroundTint="@color/bt_color"
             app:fabSize="mini"
             app:srcCompat="@mipmap/ic_add_s" />
     </FrameLayout>

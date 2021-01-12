@@ -183,7 +183,7 @@ public class RegisteredPresenter extends BasePresenter<RegisteredContract.Model,
                                 mRootView.showMessage(mApplication.getString(R.string.account_does_not_exists));
                             }else {
                                 mRootView.getCode();
-                                SMSSDK.getVerificationCode(defaultRegion, phone, null, new OnSendMessageHandler() {
+                                SMSSDK.getVerificationCode(defaultRegion, phone, "11773733", new OnSendMessageHandler() {
                                     @Override
                                     public boolean onSendMessage(String s, String s1) {
                                         return false;

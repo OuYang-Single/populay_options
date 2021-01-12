@@ -16,7 +16,9 @@ public class ImageInfo implements Parcelable {
 
     private String img;
 
+   public   ImageInfo(){
 
+   };
     protected ImageInfo(Parcel in) {
         if (in.readByte() == 0) {
             id = null;

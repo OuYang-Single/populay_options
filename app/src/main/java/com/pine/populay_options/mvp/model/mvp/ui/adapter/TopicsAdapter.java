@@ -120,7 +120,7 @@ public class TopicsAdapter extends DefaultAdapter<Topics> {
         @Override
         public void setData(@NonNull Topics data, int position) {
             tv_name.setText(data.getTitle());
-            mImageLoader.loadImage(mCircularImageView.getContext(), ImageConfigImpl.builder().imageView(mCircularImageView).url(data.getImage()).placeholder(R.mipmap.img_avatar).errorPic(R.mipmap.img_avatar).build());
+            mImageLoader.loadImage(mCircularImageView.getContext(), ImageConfigImpl.builder().imageView(mCircularImageView).url(APP_DOMAIN+AppDomain+file+data.getImage()).placeholder(R.mipmap.img_avatar).errorPic(R.mipmap.img_avatar).build());
             chart_text.setText(data.getContent());
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm");
             String dateString = formatter.format(data.getCreateTime());

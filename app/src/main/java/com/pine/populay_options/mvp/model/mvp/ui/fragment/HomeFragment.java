@@ -82,7 +82,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mToolbarTitle.setText(R.string.token_bank);
+        mToolbarTitle.setText(R.string.title_home);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mHomeContentAdapter);
         mPresenter.initData();

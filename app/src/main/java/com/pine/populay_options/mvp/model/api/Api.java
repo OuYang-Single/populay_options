@@ -27,12 +27,12 @@ import retrofit2.http.*;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "http://192.168.2.10:8083";
+    String APP_DOMAIN = "http://ouyang.max.fgnwctvip.com";
     String APP_DOMAINS = "http://api2.32255n.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
     String VEST_CODE = "44F0ZINK";
-    String AppDomain = "/untitled_war";
+    String AppDomain = "/unnamed";
     String file = "/upload/";
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
@@ -60,6 +60,13 @@ public interface Api {
     @FormUrlEncoded
     @POST(AppDomain + "/user/password.do")
     Observable<Request<Boolean>> changePassword(@Field("username") String username, @Field("password") String password);
+
+
+    @Multipart
+    @POST(AppDomain + "/user/modify_avatar.do")
+    Observable<Request<User>> modifyAvatar(@Query("userId") int userId,@PartMap Map<String, RequestBody>maps);
+
+
 
     @FormUrlEncoded
     @POST(AppDomain + "/Topics/delete_topics.do")
