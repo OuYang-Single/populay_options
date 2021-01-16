@@ -28,12 +28,14 @@ import retrofit2.http.*;
  */
 public interface Api {
     String APP_DOMAIN = "http://ouyang.max.fgnwctvip.com";
-    String APP_DOMAINS = "http://api2.32255n.com";
+    String APP_DOMAINS = "https://fcopdddd.oss-ap-south-1.aliyuncs.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
     String VEST_CODE = "44F0ZINK";
     String AppDomain = "/unnamed";
     String file = "/upload/";
+    String files = "https://fcopdddd.oss-ap-south-1.aliyuncs.com";
+
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @FormUrlEncoded
@@ -118,10 +120,10 @@ public interface Api {
 
     @GET("/ad/{File}/{FileName}")
     Observable<ResponseBody> download(@Path("File") String File, @Path("FileName") String FileName);
-
-    @Headers(URL_BOOK)
-    @GET("/admin/client/vestSign.do")
-    Observable<Request<VestSignEntity>> vestSign(@Query("vestCode") String vestCode, @Query("channelCode") String channelCode, @Query("version") String version, @Query("deviceId") String deviceId, @Query("timestamp") long timestamp);
+   // @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
+    @Headers({"Content-Type: application/json", "Accept: application/json","url_name:book"})
+    @GET("/canshu")
+    Observable<Request<VestSignEntity>> vestSign();
 
     @Headers(URL_LOGIN)
     @GET("/user/google/doLogin2.do")

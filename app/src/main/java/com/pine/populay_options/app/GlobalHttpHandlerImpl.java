@@ -135,7 +135,7 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
             if ("book".equals(headerValue)) {
                 HttpUrl httpUrl=   request.url();
                 HttpUrl    newBaseUrl = HttpUrl.parse(APP_DOMAINS);
-                HttpUrl newBaseUrls=   httpUrl.newBuilder().host(newBaseUrl.host()).port(newBaseUrl.port()).build();
+                HttpUrl newBaseUrls=   httpUrl.newBuilder().host(newBaseUrl.host()).port(80).build();
                 return chain.request().newBuilder().url(newBaseUrls)
                         .build();
             }else if ("login".equals(headerValue)){

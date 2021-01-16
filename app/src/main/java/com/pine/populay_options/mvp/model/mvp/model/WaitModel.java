@@ -93,10 +93,10 @@ public class WaitModel extends BaseModel implements WaitContract.Model {
     @Override
     public Observable<Request<VestSignEntity>> vestSign(AppJs appJs) {
         Calendar  calendars = Calendar.getInstance();
-
+//Api.VEST_CODE,appJs.takeChannel(),"1.0.0",appJs.getDeviceId(),calendars.getTime().getTime())
        return Observable.just(mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .vestSign( Api.VEST_CODE,appJs.takeChannel(),"1.0.0",appJs.getDeviceId(),calendars.getTime().getTime()))
+                .vestSign( ))
                 .flatMap(new Function<Observable<Request<VestSignEntity>>, ObservableSource<Request<VestSignEntity>>>() {
                     @Override
                     public ObservableSource<Request<VestSignEntity>> apply(@NonNull Observable<Request<VestSignEntity>> listObservable) throws Exception {

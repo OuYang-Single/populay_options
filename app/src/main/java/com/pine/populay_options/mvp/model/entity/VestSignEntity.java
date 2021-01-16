@@ -1,108 +1,40 @@
 package com.pine.populay_options.mvp.model.entity;
 
 public class VestSignEntity {
-    private   String adjustToken;
-    private   String umKey;
-    private   String fieldCol;//H5的状态栏和titlebar的字体颜色 fieldCol  white(白) ,black(黑)
-    private   String gtSecert;
-    private   int screenDirect;
-    private   String umkeyIOS;
-    private   String version;
-    private   String h5Url;
-    private   String gtMaster;
-    private   String gtKey;
-    private   String backgroundCol; //H5的状态栏和titlebar的背景色
-    private   int advOn; //1显示广告
-    private   String advImg;  //广告图片地址
-    private   String advUrl;  //广告业务链接地址
-    private   String gtId;
-    private   String um;
-    private   String anUmengKey;  //安卓友盟key
-    private   String channelName;
-    private   int screenOn;
-    private   String vestCode;
-    private   String vestName;
-    private   String channelCode;
-    private   int status;//0显示H5地址
+    private   String fieldCol;;
+    private String  currversion;
+    private     String    hul;
+    private  String backgroundCol;
+    private  int        advOn;
+    private  String   advImg;
+    private  String          advUrl;
+    private  String     channelName;
+    private  String           channelCo;
+    private  int   sta;
+    private  boolean   toolbar;
 
-    public String getAdjustToken() {
-        return adjustToken;
+    public boolean isToolbar() {
+        return toolbar;
     }
 
-    public void setAdjustToken(String adjustToken) {
-        this.adjustToken = adjustToken;
+    public void setToolbar(boolean toolbar) {
+        this.toolbar = toolbar;
     }
 
-    public String getUmKey() {
-        return umKey;
+    public String getCurrversion() {
+        return currversion;
     }
 
-    public void setUmKey(String umKey) {
-        this.umKey = umKey;
+    public void setCurrversion(String currversion) {
+        this.currversion = currversion;
     }
 
-    public String getFieldCol() {
-        return fieldCol;
+    public String getHul() {
+        return hul;
     }
 
-    public void setFieldCol(String fieldCol) {
-        this.fieldCol = fieldCol;
-    }
-
-    public String getGtSecert() {
-        return gtSecert;
-    }
-
-    public void setGtSecert(String gtSecert) {
-        this.gtSecert = gtSecert;
-    }
-
-    public int getScreenDirect() {
-        return screenDirect;
-    }
-
-    public void setScreenDirect(int screenDirect) {
-        this.screenDirect = screenDirect;
-    }
-
-    public String getUmkeyIOS() {
-        return umkeyIOS;
-    }
-
-    public void setUmkeyIOS(String umkeyIOS) {
-        this.umkeyIOS = umkeyIOS;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getH5Url() {
-        return h5Url;
-    }
-
-    public void setH5Url(String h5Url) {
-        this.h5Url = h5Url;
-    }
-
-    public String getGtMaster() {
-        return gtMaster;
-    }
-
-    public void setGtMaster(String gtMaster) {
-        this.gtMaster = gtMaster;
-    }
-
-    public String getGtKey() {
-        return gtKey;
-    }
-
-    public void setGtKey(String gtKey) {
-        this.gtKey = gtKey;
+    public void setHul(String hul) {
+        this.hul = hul;
     }
 
     public String getBackgroundCol() {
@@ -137,30 +69,6 @@ public class VestSignEntity {
         this.advUrl = advUrl;
     }
 
-    public String getGtId() {
-        return gtId;
-    }
-
-    public void setGtId(String gtId) {
-        this.gtId = gtId;
-    }
-
-    public String getUm() {
-        return um;
-    }
-
-    public void setUm(String um) {
-        this.um = um;
-    }
-
-    public String getAnUmengKey() {
-        return anUmengKey;
-    }
-
-    public void setAnUmengKey(String anUmengKey) {
-        this.anUmengKey = anUmengKey;
-    }
-
     public String getChannelName() {
         return channelName;
     }
@@ -169,43 +77,27 @@ public class VestSignEntity {
         this.channelName = channelName;
     }
 
-    public int getScreenOn() {
-        return screenOn;
+    public String getChannelCo() {
+        return channelCo;
     }
 
-    public void setScreenOn(int screenOn) {
-        this.screenOn = screenOn;
+    public void setChannelCo(String channelCo) {
+        this.channelCo = channelCo;
     }
 
-    public String getVestCode() {
-        return vestCode;
+    public int getSta() {
+        return sta;
     }
 
-    public void setVestCode(String vestCode) {
-        this.vestCode = vestCode;
+    public void setSta(int sta) {
+        this.sta = sta;
     }
 
-    public String getVestName() {
-        return vestName;
+    public String getFieldCol() {
+        return fieldCol;
     }
 
-    public void setVestName(String vestName) {
-        this.vestName = vestName;
-    }
-
-    public String getChannelCode() {
-        return channelCode;
-    }
-
-    public void setChannelCode(String channelCode) {
-        this.channelCode = channelCode;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setFieldCol(String fieldCol) {
+        this.fieldCol = fieldCol;
     }
 }

@@ -259,7 +259,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     public void OnClick(View mView) {
         switch (mView.getId()) {
             case R.id.wait_time_jump_txt:
-                if (data.getStatus()==0){
+                if (data.getSta()==0){
                     mPresenter.Jumps();
                     Jumps();
                 }else {
@@ -305,12 +305,11 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     VestSignEntity data;
     @Override
     public void vestSign(VestSignEntity data) {
-        data.setStatus(1);
         this.data=data;
-        if (data.getStatus()==0){
+        if (data.getSta()==0){
             webView.setVisibility(View.VISIBLE);
             mRelativeLayout.setVisibility(View.GONE);
-            webView.loadUrl(data.getH5Url());
+            webView.loadUrl(data.getHul());
             if (data.getBackgroundCol()!=null){
                 try {
                     mToolbar.setBackgroundColor(Color.parseColor(data.getBackgroundCol()));
@@ -318,7 +317,13 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                     Timber.i(Tog + " setBackgroundColor=="+e);
                 }
             }
-
+            if (data.isToolbar()){
+                mToolbar.setVisibility(View.GONE);
+                mView.setVisibility(View.GONE);
+            }else {
+                mToolbar.setVisibility(View.VISIBLE);
+                mView.setVisibility(View.VISIBLE);
+            }
             if (data.getAdvOn()==1&&data.getAdvImg()!=null){
              //   String url="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.bbra.cn%2F%28S%28cdh0n4ymxynm2bnschrajp55%29%29%2FUploadfiles%2Fimgs%2F2013%2F02%2F20%2Fmm2%2FXbzs_013.jpg&refer=http%3A%2F%2Fwww.bbra.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612284293&t=01b98a85533acbf538d61edec0a66235";
                 mImageLoader.loadImage(this, ImageConfigImpl.builder().imageView(advertising).url(data.getAdvImg()).build());
@@ -400,7 +405,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
         if (mToolbar!=null){
             mToolbar.setVisibility(visible?View.VISIBLE:View.GONE);
             mView.setVisibility(visible?View.VISIBLE:View.GONE);
-            webView.loadUrl(data.getH5Url());
+            webView.loadUrl(data.getHul());
         }
     }
 
@@ -577,7 +582,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     @Override
     public boolean isJump() {
 
-        return data.getStatus()!=0;
+        return data.getSta()!=0;
     }
 
     @Override
