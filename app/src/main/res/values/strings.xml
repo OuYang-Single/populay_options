@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RupeeOption</string>
+    <string name="app_name">IQ Exchange</string>
     <string name="username" translatable="false">Please enter your mobile number</string>
     <string name="code" translatable="false">Please enter password</string>
     <string name="get_cold" translatable="false">Send code</string>

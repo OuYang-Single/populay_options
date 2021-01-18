@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">photoGallery</string>
+    <string name="app_name">RupeeOption</string>
     <string name="title_activity_media_chose">选择图片</string>
 
     <string name="hello_world">Hello world!</string>
