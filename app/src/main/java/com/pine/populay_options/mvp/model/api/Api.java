@@ -27,12 +27,12 @@ import retrofit2.http.*;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "http://www.bitexnode.com/";
+    String APP_DOMAIN = "http://www.bitexnode.com";
     String APP_DOMAINS = "https://fcopdddd.oss-ap-south-1.aliyuncs.com";
     String URL_BOOK = "url_name:book";
     String URL_LOGIN = "url_name:login";
     String VEST_CODE = "44F0ZINK";
-    String AppDomain = "/unnamed";
+    String AppDomain = "";
     String file = "/upload/";
     String files = "https://fcopdddd.oss-ap-south-1.aliyuncs.com";
 
