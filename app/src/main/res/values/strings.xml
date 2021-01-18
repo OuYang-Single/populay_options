@@ -159,4 +159,5 @@
     <string name="no">the content can not be blank</string>
     <string name="network">The current network is unavailable, please check the network settings</string>
     <string name="No_datasss">No data yet, refresh again</string>
+    <string name="registration_agreements"><![CDATA[agree <<Content Disribution Agreement>>]]></string>
 </resources>

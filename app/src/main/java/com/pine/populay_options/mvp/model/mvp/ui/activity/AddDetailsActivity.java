@@ -161,7 +161,7 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
         findViewById(R.id.txt_registration_agreement).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url=APP_DOMAIN+AppDomain+"/dsds.html";
+                String url=APP_DOMAIN+AppDomain+"/Content.html";
                 Intent      intent=new Intent(AddDetailsActivity.this, WebViewActivity.class);
                 intent.putExtra("type",3);
                 intent.putExtra("URL",url);
