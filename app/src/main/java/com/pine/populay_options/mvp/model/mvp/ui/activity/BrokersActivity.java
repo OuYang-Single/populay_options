@@ -29,6 +29,8 @@ import butterknife.BindView;
 public class BrokersActivity extends BaseActivity<BrokersPresenter> implements BrokersContract.View{
     @BindView(R.id.recycler_brokers)
     RecyclerView mRecyclerBrokers;
+    @BindView(R.id.toolbar_back)
+    RelativeLayout toolbar_back;
     @Inject
     BrokersAdapter mBrokersAdapter;
     @Override
@@ -49,6 +51,7 @@ public class BrokersActivity extends BaseActivity<BrokersPresenter> implements B
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         setTitle(R.string.top_brokers);
+        toolbar_back.setVisibility(View.VISIBLE);
         mRecyclerBrokers.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerBrokers.setAdapter(mBrokersAdapter);
         mPresenter.initData();
