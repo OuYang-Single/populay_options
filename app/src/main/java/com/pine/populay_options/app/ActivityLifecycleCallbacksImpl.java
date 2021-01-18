@@ -50,12 +50,12 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if (  !(activity instanceof WaitActivity)){
+        if (!(activity instanceof WaitActivity)){
             setStatusBarMode(activity, true , Color.parseColor("#ffffff"));
         }else {
            setStatusBarLightMode(activity.getWindow());
         }
-
+        activity. setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Timber.i(activity + " - onActivityStarted");
        // StatusBarUtil.setStatusBarLightMode(activity.getWindow());
         ARouter.getInstance().inject(this);

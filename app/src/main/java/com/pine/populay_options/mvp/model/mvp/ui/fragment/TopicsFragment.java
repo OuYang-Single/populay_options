@@ -242,8 +242,31 @@ public class TopicsFragment extends BaseFragment<TopicsFragmentPresenter> implem
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                Intent mIntent = new Intent(getContext(), AddDetailsActivity.class);
-                startActivity(mIntent);
+                if (UserId == -1) {
+                    alertDialog4 = new AlertDialog.Builder(getContext())
+                            .setMessage(R.string.to_login)
+                            .setPositiveButton(R.string.Go_to_login, new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ARouter.getInstance().build("/analogDisk/LogInActivity").navigation();
+                                }
+                            })
+
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加取消
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog4.dismiss();
+                                }
+                            }).create();
+                    alertDialog4.show();
+                    return;
+                }else {
+                    Intent mIntent = new Intent(getContext(), AddDetailsActivity.class);
+                    startActivity(mIntent);
+                }
+
+
+
                 break;
         }
     }

@@ -64,7 +64,7 @@ public class WaitPresenter extends BasePresenter<WaitContract.Model, WaitContrac
     Handler mHandler;
     Runnable mRunnable;
     int Time = 1000;
-    int anInt = 5;
+    int anInt = 1;
 
     @Inject
     public WaitPresenter(WaitContract.Model model, WaitContract.View rootView) {

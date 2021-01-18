@@ -66,6 +66,7 @@ import cz.kinst.jakub.view.StatefulLayout;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
+import me.leefeng.promptlibrary.PromptDialog;
 import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -98,6 +99,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     View mView;
     @BindView(R.id.sfl_lyt_state)
     SimpleStatefulLayout statefulLayout;
+    @Inject
+    PromptDialog promptDialog ;
   /*  @BindView(R.id.sfl_lyt_state)
     StateFrameLayout lytState;*/
     OpenEntity openEntity;
@@ -176,7 +179,7 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     //lytState.normal();
-
+                    promptDialog.dismiss();
                     statefulLayout.showContent();
                     if ("black".equals(data.getFieldCol())){
                         setStatusBarMode(WaitActivity.this, true ,Color.parseColor(data.getBackgroundCol()));
@@ -237,6 +240,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             }
         });
         mPresenter.vestSign(appJs);
+        mToolbar.setVisibility(View.GONE);
+        mView.setVisibility(View.GONE);
     }
 
     public   static void selectImage(Activity context) {
@@ -259,19 +264,26 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     public void OnClick(View mView) {
         switch (mView.getId()) {
             case R.id.wait_time_jump_txt:
-                if (data.getSta()==0){
-                    mPresenter.Jumps();
-                    Jumps();
+                if (data!=null){
+                    if (data.getSta()==0){
+                        mPresenter.Jumps();
+                        Jumps();
+                    }else {
+                        mPresenter.Jump();
+                    }
                 }else {
                     mPresenter.Jump();
                 }
-
                 break;
             case R.id.advertising:
-                Intent  intent=new Intent(this, WebViewActivity.class);
-                intent.putExtra("type",1);
-                intent.putExtra("URL",data.getAdvUrl());
-                startActivity(intent);
+                if (data!=null){
+                    if (data.getAdvOn()==1&&data.getAdvImg()!=null){
+                        Intent  intent=new Intent(this, WebViewActivity.class);
+                        intent.putExtra("type",1);
+                        intent.putExtra("URL",data.getAdvUrl());
+                        startActivity(intent);
+                    }
+                }
                 break;
         }
     }
@@ -307,6 +319,8 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
     public void vestSign(VestSignEntity data) {
         this.data=data;
         if (data.getSta()==0){
+            advertising.setVisibility(View.GONE);
+            promptDialog.showLoading(getString(R.string.load));
             webView.setVisibility(View.VISIBLE);
             mRelativeLayout.setVisibility(View.GONE);
             webView.loadUrl(data.getHul());
@@ -341,11 +355,9 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             }
 
         }else {
-            advertising.setVisibility(View.VISIBLE);
             statefulLayout.showContent();
             setFullscreen(this);
             webView.setVisibility(View.GONE);
-            mRelativeLayout.setVisibility(View.VISIBLE);
             mPresenter.WaitingTime();
         }
 
@@ -383,11 +395,17 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
         activity_error_text.setText(message.messing);*/
 
     }
+
     @Override
     public void showLoading() {
-        mStateController.setState(PROGRESS);
-    }
+        advertising.setVisibility(View.VISIBLE);
 
+    }
+    @Override
+    public void hideLoading() {
+
+        statefulLayout.showContent();
+    }
     @Override
     public void launchActivity(@io.reactivex.annotations.NonNull Intent intent) {
         checkNotNull(intent);
@@ -597,5 +615,10 @@ public class WaitActivity extends BaseActivity<WaitPresenter> implements WaitCon
             setStatusBarMode(this, false ,Color.parseColor(data.getBackgroundCol()));
             toolbar_title.setTextColor(Color.parseColor("#FFFFFF"));
         }
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 }

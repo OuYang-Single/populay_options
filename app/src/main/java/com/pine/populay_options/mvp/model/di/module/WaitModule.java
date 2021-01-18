@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.jess.arms.di.scope.ActivityScope;
 import com.pine.populay_options.R;
 import com.pine.populay_options.greendao.ManagerFactory;
+import com.pine.populay_options.mvp.model.mvp.contract.LogInContract;
 import com.pine.populay_options.mvp.model.mvp.contract.WaitContract;
 import com.pine.populay_options.mvp.model.mvp.model.WaitModel;
 
@@ -16,6 +17,7 @@ import cz.kinst.jakub.view.StatefulLayout;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import me.leefeng.promptlibrary.PromptDialog;
 
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.ERROR;
 import static com.pine.populay_options.app.utils.StatusBarUtils.State.NODATA;
@@ -69,6 +71,11 @@ public abstract class WaitModule {
                 }
             }
         };
+    }
+    @ActivityScope
+    @Provides
+    public static PromptDialog getPromptDialog(WaitContract.View view){
+        return new PromptDialog(view.getActivity());
     }
     @ActivityScope
     @Provides
