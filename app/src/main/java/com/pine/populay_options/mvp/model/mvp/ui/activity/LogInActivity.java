@@ -253,6 +253,7 @@ public class LogInActivity extends BaseActivity<LogInPresenter> implements LogIn
 
                 break;
             case R.id.log_linearl_other_forget_password_txt:
+               // ForgetPasswordActivity
 
                 ARouter.getInstance().build("/analogDisk/ForgetPasswordActivity").navigation();
               /*  if (isNull(logEditPhone.getText().toString())) {

@@ -24,6 +24,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true // this prevents "not mocked" error
     }
+
 }
 
 repositories {
