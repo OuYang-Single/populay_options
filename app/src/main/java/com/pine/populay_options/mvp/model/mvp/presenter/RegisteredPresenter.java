@@ -110,10 +110,7 @@ public class RegisteredPresenter extends BasePresenter<RegisteredContract.Model,
             mRootView.showMessage(mApplication.getString(R.string.log_in_password_null));
             return true;
         }
-        if (!(isMobile(Neme)||isPhone(Neme))){
-            mRootView.showMessage(mApplication.getString(R.string.log_in_no_phone));
-            return true;
-        }
+
         return false;
     }
     public void isUserExists(String phone, String defaultRegion) {

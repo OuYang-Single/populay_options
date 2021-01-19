@@ -135,10 +135,7 @@ public class LogInPresenter extends BasePresenter<LogInContract.Model, LogInCont
             mRootView.showMessage(mRootView.getContent().getString(R.string.log_in_password_null));
             return true;
         }
-        if (!(isMobile(Neme)||isPhone(Neme))){
-            mRootView.showMessage(mRootView.getContent().getString(R.string.log_in_no_phone));
-            return true;
-        }
+
         return false;
     }
 

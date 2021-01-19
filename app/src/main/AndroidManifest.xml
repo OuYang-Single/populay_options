@@ -40,7 +40,7 @@
         <activity android:name=".mvp.model.mvp.ui.activity.StudyForexActivity"></activity>
         <activity
             android:name=".mvp.model.mvp.ui.activity.WaitActivity"
-
+            android:screenOrientation="portrait"
             android:theme="@style/WelcomeStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

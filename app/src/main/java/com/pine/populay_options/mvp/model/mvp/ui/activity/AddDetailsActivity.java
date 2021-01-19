@@ -127,8 +127,9 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
 //类似键值对
 
         editor.commit();
+        mLinearLayout.setVisibility(View.VISIBLE);
         if (age==0){
-            mLinearLayout.setVisibility(View.VISIBLE);
+
             if (check_box.isChecked()){
                 mTvRightToolbar.setTextColor(ResourcesUtils.getColorStateList(AddDetailsActivity.this,R.color.black));
                 mTvRightToolbar.setEnabled(true);
@@ -137,7 +138,7 @@ public class AddDetailsActivity extends BaseActivity<AddDetailsPresenter> implem
                 mTvRightToolbar.setEnabled(false);
             }
         }else {
-            mLinearLayout.setVisibility(View.GONE);
+         //   mLinearLayout.setVisibility(View.GONE);
         }
 
         check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

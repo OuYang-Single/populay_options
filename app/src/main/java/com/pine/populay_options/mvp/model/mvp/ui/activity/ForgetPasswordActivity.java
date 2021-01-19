@@ -190,10 +190,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
                     showMessage(getString(R.string.log_in_account_null));
                     return ;
                 }
-                if (!(isMobile(mEditPhone.getPhone())||isPhone(mEditPhone.getPhone()))){
-                    showMessage(getString(R.string.log_in_no_phone));
-                    return ;
-                }
+
                 if (isNull(mEditCode.getText().toString())) {
                     showMessage(getString(R.string.log_in_cold_null));
                     return ;

@@ -5,7 +5,7 @@
     <string name="code" translatable="false">Please enter password</string>
     <string name="get_cold" translatable="false">Send code</string>
     <string name="log_bt_log_in" translatable="false">log in</string>
-    <string name="log_bt_registered_in" translatable="false">registered</string>
+    <string name="log_bt_registered_in" translatable="false">Sign Up</string>
     <string name="log_linearl_other_forget_password_txt" translatable="false">forget password</string>
     <string name="change_Password_txt" translatable="false">change Password</string>
     <string name="log_linearl_other_registered_txt" translatable="false">Register now></string>

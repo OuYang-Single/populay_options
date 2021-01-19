@@ -221,10 +221,7 @@ public class RegisteredActivity extends BaseActivity<RegisteredPresenter> implem
                     showMessage(getString(R.string.log_in_account_null));
                     return ;
                 }
-                if (!(isMobile(logEditPhone.getPhone())||isPhone(logEditPhone.getPhone()))){
-                    showMessage(getString(R.string.log_in_no_phone));
-                    return ;
-                }
+
                 if (txtHighlight.getText().toString().equals(getString(R.string.get_cold))){
                     mPresenter.isUserExists(logEditPhone.getPhone(),logEditPhone.getDefaultRegion());
                 }
