@@ -75,78 +75,31 @@ public class RegisteredPresenter extends BasePresenter<RegisteredContract.Model,
         if (Verification(Name,Password)) {
             return;
         }
-        if (isNull(code)) {
-           mRootView. showMessage(mApplication.getString(R.string.log_in_cold_null));
-            return ;
-        }
-        SMSSDK. submitVerificationCode(defaultRegion,Name,code);
-        Observable.create(new ObservableOnSubscribe<Integer>() {
-            // 1. 创建被观察者(Observable) & 定义需发送的事件
-            @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                while (true){
-                    if( mRootView.getResult()!=-2){
-                        emitter.onNext(mRootView.getResult());
-                        break;
+        mModel.getRegistered(Name,Password,false) .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<Request<String>>(mErrorHandler) {
+                    @Override
+                    public void onNext(Request<String> users) {
+
+                        mRootView.showMessage(users.getMsg());
+                        mRootView.killMyself();
                     }
-                }
-            }
-        }).subscribe(new Observer<Integer>() {
-            // 2. 创建观察者(Observer) & 定义响应事件的行为
-            // 3. 通过订阅（subscribe）连接观察者和被观察者
-            @Override
-            public void onSubscribe(Disposable d) {
 
-            }
-            // 默认最先调用复写的 onSubscribe（）
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
 
-            @Override
-            public void onNext(Integer value) {
-                if (value==SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE){
-                    mModel.getRegistered(Name,Password,false) .subscribeOn(Schedulers.io())
-                            .retryWhen(new RetryWithDelay(0, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                            .subscribeOn(AndroidSchedulers.mainThread())
-                            .doOnSubscribe(disposable -> {
-                                mRootView.showLoading();//显示下拉刷新的进度条
-                            })
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doFinally(() -> {
-                                mRootView.hideLoading();//隐藏下拉刷新的进度条
-                            })
-                            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                            .subscribe(new ErrorHandleSubscriber<Request<String>>(mErrorHandler) {
-                                @Override
-                                public void onNext(Request<String> users) {
-
-                                    mRootView.showMessage(users.getMsg());
-                                    mRootView.killMyself();
-                                }
-
-                                @Override
-                                public void onError(Throwable t) {
-                                    super.onError(t);
-
-                                }
-                            });
-
-                }else {
-                    mRootView.showMessage(mApplication.getString(R.string.verification_code_error));
-                }
-                mRootView.initResult();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "对Error事件作出响应");
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "对Complete事件作出响应");
-            }
-
-        });
-
+                    }
+                });
     }
     public boolean Verification(String Neme, String Password){
         if (isNull(Neme)) {

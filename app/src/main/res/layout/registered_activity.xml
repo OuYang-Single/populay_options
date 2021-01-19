@@ -59,6 +59,7 @@
             <TextView style="@style/style_log_line_txt" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
