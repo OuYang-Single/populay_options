@@ -54,9 +54,9 @@ public class HomeItemAdPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (OnClickHomeItmeAdListener!=null){
+              /*  if (OnClickHomeItmeAdListener!=null){
                     OnClickHomeItmeAdListener.onClick(view,mAdEntities.get(position),position);
-                }
+                }*/
             }
         });
        // if ()
