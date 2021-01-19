@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 101
-        versionName "1.0.1"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
     buildTypes {
         release {
